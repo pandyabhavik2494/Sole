@@ -197,6 +197,12 @@ final class StepStore {
         return DayDetail(day: start, hours: hours)
     }
 
+    /// Merged steps by hour start (every source, deduped as in `StepMath.merge`), for usual pace.
+    func hourlySteps(from start: Date, to end: Date) -> [Date: Double] {
+        StepMath.merge(rows(from: start, to: end).map { ($0.source, $0.sample) })
+            .compactMapValues { $0.steps > 0 ? Double($0.steps) : nil }
+    }
+
     /// Days in a row that met their goal, ending today (or yesterday if today isn't met yet).
     func currentStreak(now: Date = .now) -> Int {
         let start = calendar.date(byAdding: .day, value: -400, to: calendar.startOfDay(for: now)) ?? .distantPast

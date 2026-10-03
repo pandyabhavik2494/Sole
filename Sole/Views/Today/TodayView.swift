@@ -67,7 +67,12 @@ struct TodayView: View {
                     Button("Settings", systemImage: "gearshape") { router.sheet = .settings }
                 }
             }
-            .refreshable { await engine.sync() }
+            .refreshable {
+                await engine.sync()
+                metrics.stepsDidChange()
+                await metrics.refresh()
+            }
+            .onChange(of: today.steps) { _, steps in metrics.todayStepsDidChange(steps) }
         }
     }
 }

@@ -33,6 +33,8 @@ final class MetricsEngine {
     private(set) var lastError: String?
     /// The oldest day with any cached Health data, for "learned from 2 years of data".
     private(set) var historyStart: DayKey?
+    /// Usual ranges, statuses, trends and the headline for today.
+    private(set) var insights: Insights
 
     @ObservationIgnored let store: MetricsStore
     @ObservationIgnored let service: HealthMetricsService
@@ -41,6 +43,8 @@ final class MetricsEngine {
     @ObservationIgnored private var refreshAgain = false
     /// Active energy by hour for the last 8 weeks, for the energy "usual pace".
     @ObservationIgnored private(set) var hourlyActiveEnergy: [Date: Double] = [:]
+    /// Merged steps by hour for the 8 weeks before today, for the steps "usual pace".
+    @ObservationIgnored private var hourlySteps: [Date: Double] = [:]
 
     /// Days kept in memory for screens. Trends need 28 + 84 days; the Year chart needs 365.
     static let memoryDays = 400
@@ -57,6 +61,7 @@ final class MetricsEngine {
         self.service = service
         self.calendar = calendar
         self.units = UserDefaults.standard.data(forKey: Self.unitsKey).flatMap { try? JSONDecoder().decode(UnitPreferences.self, from: $0) } ?? .metric
+        self.insights = .empty(day: DayKey(.now, calendar: calendar))
         reloadFromCache()
     }
 
@@ -175,7 +180,7 @@ final class MetricsEngine {
         let today = DayKey(now, calendar: calendar)
         let window = SleepMath.lastNightWindow(for: today, calendar: calendar)
         let startOfToday = today.start(in: calendar)
-        let paceStart = today.adding(days: -57).start(in: calendar)
+        let paceStart = today.adding(days: -UsualPace.weeks * 7 - 1).start(in: calendar)
 
         async let sleep = try? service.asleepIntervals(from: window.start, to: window.end)
         async let heart = try? service.hourlyHeartRate(from: startOfToday, to: now)
@@ -220,6 +225,21 @@ final class MetricsEngine {
         series = loaded
         tags = store.tags(from: first, through: today)
         historyStart = store.oldestDay()
+        let startOfToday = today.start(in: calendar)
+        hourlySteps = stepStore.hourlySteps(from: today.adding(days: -UsualPace.weeks * 7 - 1).start(in: calendar), to: startOfToday)
+        rebuildInsights(now: now)
+    }
+
+    /// Recomputes statuses and the headline from what's in memory. Pure and fast (milliseconds).
+    func rebuildInsights(now: Date = .now) {
+        insights = InsightBuilder.build(InsightBuilder.Input(
+            series: series,
+            tags: tags,
+            hourlySteps: hourlySteps,
+            hourlyActiveEnergy: hourlyActiveEnergy,
+            now: now,
+            calendar: calendar
+        ))
     }
 
     /// Daily steps from v1's merged summaries, so steps here match the step screens exactly.
@@ -234,9 +254,28 @@ final class MetricsEngine {
         return result
     }
 
-    /// Call after steps change (live count, sync) so step baselines use the new totals.
-    func stepsDidChange() {
-        let today = DayKey(.now, calendar: calendar)
+    /// Call after a sync so step baselines use the new daily totals.
+    func stepsDidChange(now: Date = .now) {
+        let today = DayKey(now, calendar: calendar)
         series[.steps] = stepValues(from: today.adding(days: -Self.memoryDays))
+        hourlySteps = stepStore.hourlySteps(from: today.adding(days: -UsualPace.weeks * 7 - 1).start(in: calendar), to: today.start(in: calendar))
+        rebuildInsights(now: now)
+    }
+
+    /// Call as the live count moves: only today's total changes, so this skips the store.
+    func todayStepsDidChange(_ steps: Int, now: Date = .now) {
+        let today = DayKey(now, calendar: calendar)
+        guard series[.steps]?[today]?.value != Double(steps) else { return }
+        series[.steps, default: [:]][today] = DailyValue(day: today, metric: .steps, value: Double(steps), min: nil, max: nil)
+        rebuildInsights(now: now)
+    }
+
+    // MARK: Tags
+
+    func setTags(_ kinds: Set<DayTagKind>, on day: DayKey) {
+        store.setTags(kinds, on: day)
+        store.save()
+        tags[day] = kinds.isEmpty ? nil : kinds
+        rebuildInsights()
     }
 }
