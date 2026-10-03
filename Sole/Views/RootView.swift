@@ -10,6 +10,14 @@ struct RootView: View {
     @State private var tab = RootView.initialTab
 
     var body: some View {
+        if preferences.hasOnboarded {
+            tabs
+        } else {
+            OnboardingView()
+        }
+    }
+
+    private var tabs: some View {
         TabView(selection: $tab) {
             TodayView()
                 .tabItem { Label("Today", systemImage: "figure.walk") }
@@ -17,6 +25,9 @@ struct RootView: View {
             HistoryView()
                 .tabItem { Label("History", systemImage: "chart.bar.fill") }
                 .tag(AppTab.history)
+            SettingsView()
+                .tabItem { Label("Settings", systemImage: "gearshape.fill") }
+                .tag(AppTab.settings)
         }
         .tint(Palette.accent)
         .onChange(of: preferences.dailyGoal) { engine.goalDidChange() }
