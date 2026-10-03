@@ -86,3 +86,26 @@ Reduce Transparency fallback (flat `Palette.background`):
 - Text contrast: ink and muted on surface/background meet 4.5:1 in both modes (check muted on
   background in dark).
 - Increase Contrast: outlines already help; no extra work needed.
+
+## Animals (added 2026-10-03)
+
+Bhavik asked for the painting's animals in the background. These are new drawings of the same kinds
+in the bold outlined style, not traced figures: eagle, moose, bear, loon, turtle, fish.
+
+- Code: `docs/theme/LakeshoreAnimals.swift` (generated from `animals.json`, the shape source) goes in
+  `Sole/Views/Components/`. Each animal is a list of filled parts; `draw(in:rect:outline:flipped:)`
+  draws it into a `Canvas` with `Palette.outline` strokes. Animal fills are fixed colours (not
+  palette tokens), same in light and dark.
+- Placement, in the preview's 300×300 bottom scene (ridge line ≈ y 174–180, lake surface ≈ y 192–198);
+  translate to the real scene's geometry so the land animals stand on the ridge and the loon floats
+  on the lake surface:
+  - eagle: x 168, y 20, width 96, flying left, in the sky above the ridge
+  - moose: x 56, feet on the ridge, width ≈ 92
+  - bear: x 188, feet on the ridge, width ≈ 78
+  - loon: x 118, body sitting on the lake surface, width ≈ 60
+  - fish: x 22 just under the surface (width 40); a second smaller fish at x 120 facing right (width 30)
+  - turtle: x 196 just under the surface, width 30
+  - Draw order: eagle, ridge + pines, moose and bear, lake + waves, fish and turtle (90% opacity), loon.
+- Keep it quiet: the animals share the scenery's opacity (80% light / 95% dark) and never sit behind
+  the headline. They are static (no motion), hidden for VoiceOver, and dropped with Reduce
+  Transparency like the rest of the scene. On narrow widths keep the land animals clear of the pines.
