@@ -26,7 +26,7 @@ Keep every token name so no call site changes. Values are `light / dark`.
 | accentSoft | F7DFC3 | 4A3420 | |
 | good | 3F7A3A | 7DB86A | pine |
 | goodSoft | DCEBD5 | 21402A | |
-| watch | A8701C | E6BE5A | cattail (amber, never red) |
+| watch | 8A5A0C | E6BE5A | cattail (amber, never red) |
 | watchSoft | F3E3C0 | 3E3218 | |
 | heart | B8283F | F25A6E | loon eye |
 | energy | C2452A | F2774E | |
@@ -39,6 +39,7 @@ New tokens:
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
+| accentText | A8550F | EE9A3A | accent used as text or a text button (4.9:1 on surface) |
 | outline | 14262E | 08141A | the bold Woodland line on cards, chips, the step ring |
 | sky | F4EADA | 132C36 | top of the background gradient |
 | skyLow | E9D9BE | 1E4152 | bottom of the background gradient |
@@ -75,6 +76,10 @@ Reduce Transparency fallback (flat `Palette.background`):
 - Widgets: `containerBackground` uses `Palette.surface`; leave as is, it picks up new values.
 
 ## Accessibility
+
+- Accent as text uses `accentText`, not `accent` (light accent is only 3:1 on surface). Fills, the
+  ring and the tab tint keep `accent`.
+- Text on a `heart` fill (Connect Apple Health) uses `onAccent` in dark mode (5.7:1), not white.
 
 - Text contrast: ink and muted on surface/background meet 4.5:1 in both modes (check muted on
   background in dark).
