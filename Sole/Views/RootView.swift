@@ -9,6 +9,8 @@ enum AppTab: String {
 /// Sheets that can be opened from anywhere: the + button, the gear, Siri and Control Center.
 enum AppSheet: String, Identifiable {
     case add, settings
+    /// "Here's your normal", after connecting Health from Today.
+    case normal
     var id: String { rawValue }
 }
 
@@ -73,6 +75,8 @@ struct RootView: View {
             switch sheet {
             case .add:
                 AddSheet()
+            case .normal:
+                YourNormalView(buttonTitle: "Done") { router.sheet = nil }
             case .settings:
                 NavigationStack {
                     SettingsView()

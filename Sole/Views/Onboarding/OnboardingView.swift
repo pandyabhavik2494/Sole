@@ -5,12 +5,23 @@ import SwiftUI
 struct OnboardingView: View {
     @Environment(StepEngine.self) private var engine
     @Environment(Preferences.self) private var preferences
+    @Environment(MetricsEngine.self) private var metrics
     @State private var page = 0
+    @State private var showsNormal = false
     @State private var isRequesting = false
     @State private var motionAsked = false
     @State private var healthAsked = false
 
     var body: some View {
+        if showsNormal {
+            YourNormalView(onDone: finish)
+                .transition(.opacity)
+        } else {
+            pages
+        }
+    }
+
+    private var pages: some View {
         VStack(spacing: 0) {
             TabView(selection: $page) {
                 welcome.tag(0)
@@ -44,7 +55,7 @@ struct OnboardingView: View {
         page(
             symbol: "shoeprints.fill",
             title: "Every step, counted",
-            text: "Sole counts your steps with your iPhone's own motion sensor, all day, even when the app is closed. With Apple Health connected, your history comes back on a new iPhone too."
+            text: "Sole counts your steps with your iPhone's own motion sensor, and reads your heart, energy, weight and blood oxygen from Apple Health. It learns what's normal for you and tells you, in plain words, how you're doing."
         ) { EmptyView() }
     }
 
@@ -57,7 +68,7 @@ struct OnboardingView: View {
             VStack(spacing: 10) {
                 PermissionRow(symbol: "figure.walk.motion", tint: Color(uiColor: UIColor(rgb: 0xFF9F0A)), title: "Motion & Fitness", detail: "Counts steps, distance and floors", done: motionAsked)
                 if HealthService.isAvailable {
-                    PermissionRow(symbol: "heart.fill", tint: Color(uiColor: UIColor(rgb: 0xFF3B5C)), title: "Apple Health", detail: "Reads Watch steps, saves Sole's counts", done: healthAsked)
+                    PermissionRow(symbol: "heart.fill", tint: Color(uiColor: UIColor(rgb: 0xFF3B5C)), title: "Apple Health", detail: "Reads steps, heart, energy, weight and sleep", done: healthAsked)
                 }
                 Text("You can skip Health. Sole will count with the sensor alone.")
                     .font(.footnote)
@@ -114,10 +125,18 @@ struct OnboardingView: View {
 
     // MARK: Actions
 
+    private func finish() {
+        preferences.hasOnboarded = true
+        Task {
+            await engine.becameActive()
+            metrics.stepsDidChange()
+        }
+    }
+
     private var buttonTitle: String {
         switch page {
         case 1: motionAsked && (healthAsked || !HealthService.isAvailable) ? "Continue" : "Allow access"
-        case 2: "Start counting"
+        case 2: healthAsked ? "Continue" : "Start counting"
         default: "Continue"
         }
     }
@@ -132,13 +151,18 @@ struct OnboardingView: View {
                 if HealthService.isAvailable {
                     await engine.connectHealth()
                     healthAsked = true
+                    // Start learning "your normal" while the goal page is up.
+                    Task { await metrics.refresh() }
                 }
                 isRequesting = false
                 page = 2
             }
         case 2:
-            preferences.hasOnboarded = true
-            Task { await engine.becameActive() }
+            if healthAsked {
+                withAnimation { showsNormal = true }
+            } else {
+                finish()
+            }
         default:
             page += 1
         }

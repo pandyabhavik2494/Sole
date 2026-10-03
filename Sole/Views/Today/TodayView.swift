@@ -103,6 +103,7 @@ private struct MotionAccessBanner: View {
 /// and once after upgrading from v1 (which only asked for steps).
 struct ConnectHealthCard: View {
     @Environment(MetricsEngine.self) private var metrics
+    @Environment(Router.self) private var router
     @State private var isConnecting = false
 
     var body: some View {
@@ -118,6 +119,7 @@ struct ConnectHealthCard: View {
                 Task {
                     await metrics.connect()
                     isConnecting = false
+                    if metrics.access == .requested { router.sheet = .normal }
                 }
             } label: {
                 Text(isConnecting ? "Connecting…" : "Connect Apple Health")
