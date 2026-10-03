@@ -42,6 +42,12 @@ enum Format {
         return "\(value.formatted(.number.precision(.fractionLength(1)))) \(unit.symbol)"
     }
 
+    /// "7 h 20 m".
+    static func duration(_ seconds: TimeInterval) -> String {
+        let minutes = Int((seconds / 60).rounded())
+        return "\(minutes / 60) h \(minutes % 60) m"
+    }
+
     /// A compact count for tight spaces such as chart axes and Lock Screen widgets: 7.8k.
     static func compactSteps(_ value: Int) -> String {
         value.formatted(.number.notation(.compactName).precision(.significantDigits(1...2)))

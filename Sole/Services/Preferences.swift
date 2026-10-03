@@ -20,10 +20,16 @@ final class Preferences {
         didSet { defaults.set(hasOnboarded, forKey: Keys.onboarded) }
     }
 
+    /// Hides weight everywhere: Today, Trends, Recap, widgets, Siri and the doctor report.
+    var hidesWeight: Bool {
+        didSet { defaults.set(hidesWeight, forKey: Keys.hidesWeight) }
+    }
+
     private enum Keys {
         static let goal = "dailyGoal"
         static let unit = "distanceUnit"
         static let onboarded = "hasOnboarded"
+        static let hidesWeight = "hidesWeight"
     }
 
     @ObservationIgnored private let defaults: UserDefaults
@@ -34,5 +40,6 @@ final class Preferences {
         dailyGoal = storedGoal.map { min(max($0, Self.goalRange.lowerBound), Self.goalRange.upperBound) } ?? Self.defaultGoal
         distanceUnit = defaults.string(forKey: Keys.unit).flatMap(DistanceUnit.init(rawValue:)) ?? .localeDefault
         hasOnboarded = defaults.bool(forKey: Keys.onboarded)
+        hidesWeight = defaults.bool(forKey: Keys.hidesWeight)
     }
 }

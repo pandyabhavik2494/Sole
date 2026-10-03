@@ -5,6 +5,8 @@ struct ProgressArc: View {
     let steps: Int
     let goal: Int
     var lineWidth: CGFloat = 18
+    /// Where you usually are by now on this weekday, drawn as a tick across the arc.
+    var usualPace: Int?
 
     private var progress: Double {
         guard goal > 0 else { return 0 }
@@ -20,6 +22,10 @@ struct ProgressArc: View {
             arc(to: progress)
                 .stroke(goalMet ? Palette.good : Palette.accent, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                 .animation(.easeOut(duration: 0.6), value: progress)
+
+            if let usualPace, goal > 0 {
+                PaceTick(fraction: min(Double(usualPace) / Double(goal), 1), lineWidth: lineWidth)
+            }
 
             VStack(spacing: 4) {
                 Text(Format.steps(steps))
@@ -52,8 +58,32 @@ struct ProgressArc: View {
     }
 }
 
+/// A short bar across the arc at `fraction` of the way round.
+private struct PaceTick: View {
+    let fraction: Double
+    let lineWidth: CGFloat
+
+    var body: some View {
+        GeometryReader { proxy in
+            let size = min(proxy.size.width, proxy.size.height)
+            let radius = size / 2
+            let angle = Angle.degrees(135 + 270 * fraction)
+            Capsule()
+                .fill(Palette.ink)
+                .frame(width: lineWidth + 10, height: 3.5)
+                .overlay(Capsule().stroke(Palette.surface, lineWidth: 1))
+                .rotationEffect(angle)
+                .position(
+                    x: proxy.size.width / 2 + radius * cos(angle.radians),
+                    y: proxy.size.height / 2 + radius * sin(angle.radians)
+                )
+        }
+        .accessibilityHidden(true)
+    }
+}
+
 #Preview {
-    ProgressArc(steps: 7_842, goal: 10_000)
+    ProgressArc(steps: 7_842, goal: 10_000, usualPace: 6_700)
         .frame(width: 260, height: 260)
         .padding()
         .background(Palette.background)
