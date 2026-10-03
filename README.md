@@ -1,7 +1,7 @@
 # Sole
 
 An iOS pedometer that counts steps with the iPhone's motion sensor and syncs both ways with
-Apple Health, which is also its backup. SwiftUI, iOS 17+, no third-party code.
+Apple Health, which is also its backup. SwiftUI, iOS 26+ (Liquid Glass), no third-party code.
 
 Product spec: [docs/sole-spec.md](docs/sole-spec.md). Mockups: [docs/mockups.html](docs/mockups.html).
 

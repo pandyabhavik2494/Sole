@@ -8,7 +8,7 @@ import HealthKit
 ///   the user's source priority, exactly as the Health app does.
 /// - Writes Sole's own hourly sensor counts back. Each sample carries a sync identifier for its
 ///   hour, so rewriting an hour replaces the earlier sample instead of adding a second one.
-final class HealthService {
+final class HealthService: Sendable {
     let healthStore = HKHealthStore()
 
     private let stepType = HKQuantityType(.stepCount)
@@ -122,12 +122,20 @@ final class HealthService {
     func observeStepChanges(_ onChange: @escaping @MainActor () async -> Void) {
         let query = HKObserverQuery(sampleType: stepType, predicate: nil) { _, completion, error in
             guard error == nil else { completion(); return }
+            // HealthKit allows the completion handler to be called from any thread.
+            let done = UncheckedSendable(completion)
             Task { @MainActor in
                 await onChange()
-                completion()
+                done.value()
             }
         }
         healthStore.execute(query)
         healthStore.enableBackgroundDelivery(for: stepType, frequency: .hourly) { _, _ in }
     }
+}
+
+/// Carries a value HealthKit documents as thread-safe across an isolation boundary.
+struct UncheckedSendable<Value>: @unchecked Sendable {
+    let value: Value
+    init(_ value: Value) { self.value = value }
 }
