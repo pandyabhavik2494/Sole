@@ -226,68 +226,170 @@ td.dim2 { color: var(--muted); }
 .callout.warn { background: var(--watch-soft); border-color: transparent; }
 @media (prefers-reduced-motion: no-preference) { .strip { scroll-behavior: smooth; } }
 @media (prefers-reduced-transparency: reduce) { .glass { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--card); } }
+
+/* ---- v3 additions ---- */
+.tabbar { right: 66px; }
+.fab { position: absolute; right: 14px; bottom: 14px; width: 52px; height: 52px; border-radius: 50%; z-index: 4; display: grid; place-content: center; font-size: 26px; font-weight: 300; color: var(--ink); line-height: 1; }
+.headline { display: grid; gap: 3px; padding: 2px 4px 0; }
+.headline .h1 { font-size: 17px; font-weight: 700; line-height: 1.2; letter-spacing: -.01em; }
+.headline .h2 { font-size: 11.5px; color: var(--muted); line-height: 1.35; }
+.tally { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 3px; }
+.vlist { background: var(--card); border-radius: 20px; overflow: hidden; }
+.vrow { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; padding: 7px 11px 8px; border-bottom: 1px solid var(--line); align-items: center; }
+.vrow:last-child { border-bottom: 0; }
+.vrow .nm { font-size: 11px; font-weight: 650; display: flex; align-items: center; gap: 5px; }
+.vrow .nm i { width: 7px; height: 7px; border-radius: 50%; display: block; flex: 0 0 auto; }
+.vrow .val { font-family: var(--rounded); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.vrow .val em { font-style: normal; font-size: 9.5px; color: var(--muted); font-weight: 500; margin-left: 1px; }
+.vrow .sub { font-size: 9.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.vrow .rb { margin: 0; height: 5px; }
+.vrow .rb .dot { width: 9px; height: 9px; }
+.newfor { background: var(--card); border-radius: 20px; padding: 9px 12px; display: grid; gap: 3px; }
+.newfor .k { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--heart); }
+.newfor p { font-size: 11.5px; font-weight: 600; line-height: 1.35; }
+.why { background: var(--card); border-radius: 20px; padding: 9px 12px; display: grid; gap: 4px; font-size: 10.5px; color: var(--muted); line-height: 1.4; }
+.why .t { display: flex; justify-content: space-between; font-size: 11px; font-weight: 650; color: var(--ink); }
+.ctx { display: flex; gap: 6px; flex-wrap: wrap; }
+.ctx span { font-size: 10px; padding: 3px 8px; border-radius: 999px; background: var(--card); color: var(--muted); font-weight: 600; }
+.sect { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 2px 4px 0; display: flex; gap: 6px; align-items: center; }
+.sect.good { color: var(--good); }
+.story { position: absolute; inset: 0; z-index: 3; padding: 50px 16px 22px; display: flex; flex-direction: column; gap: 12px;
+  background: radial-gradient(90% 60% at 20% 15%, var(--ph-blob1), transparent 70%), radial-gradient(90% 60% at 90% 70%, var(--ph-blob2), transparent 70%), var(--ph-base); }
+.bars-prog { display: flex; gap: 4px; }
+.bars-prog i { flex: 1; height: 3px; border-radius: 2px; background: var(--track); display: block; }
+.bars-prog i.on { background: var(--ink); }
+.story .k { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.story .big { font-family: var(--display); font-size: 30px; font-weight: 700; line-height: 1.05; letter-spacing: -.02em; }
+.story .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.story .grid div { background: var(--card); border-radius: 18px; padding: 10px; display: grid; gap: 2px; }
+.story .grid b { font-family: var(--rounded); font-size: 20px; font-variant-numeric: tabular-nums; }
+.story .grid span { font-size: 10px; color: var(--muted); }
+.story .grid em { font-style: normal; font-size: 10px; font-weight: 700; color: var(--good); }
+.weekbars { display: flex; align-items: flex-end; gap: 6px; height: 74px; }
+.weekbars div { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 3px; height: 100%; }
+.screen > *, .reveal > *, .story > * { flex-shrink: 0; }
+.weekbars i { width: 100%; border-radius: 6px; background: var(--accent); display: block; }
+.weekbars i.lo { opacity: .35; }
+.weekbars small { font-size: 9px; color: var(--muted); }
+.storybtns { display: flex; gap: 8px; }
+.storybtns span { flex: 1; text-align: center; padding: 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+.tagchips { display: flex; flex-wrap: wrap; gap: 6px; }
+.tagchips span { font-size: 11px; font-weight: 600; padding: 6px 11px; border-radius: 999px; background: var(--card); color: var(--ink); }
+.tagchips span.on { background: var(--ink); color: var(--ph-base); }
+.reveal { padding: 4px 16px 18px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.reveal h4 { margin: 0; font-family: var(--display); font-size: 26px; line-height: 1.05; letter-spacing: -.02em; }
+.reveal p { font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+.ctl { width: 150px; height: 150px; border-radius: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 14px; }
+.ctl span { border-radius: 50%; aspect-ratio: 1; display: grid; place-content: center; font-size: 22px; color: var(--ink); max-width: 100%; }
+.ctl span.on { background: var(--weight); color: #fff; }
+.siri { border-radius: 26px; padding: 14px 16px; max-width: 320px; display: grid; gap: 6px; font-size: 13px; }
+.siri .q { color: var(--muted); font-size: 12px; }
+
+/* page sections */
+.review { display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.finding { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.2fr); gap: 20px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+.finding:last-child { border-bottom: 0; }
+.finding .was { font-size: 14.5px; color: var(--muted); }
+.finding .was b { color: var(--ink); display: block; font-size: 15px; }
+.finding .now { font-size: 14.5px; }
+.finding .now::before { content: "Change"; display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--good); margin-bottom: 2px; }
+@media (max-width: 640px) { .finding { grid-template-columns: 1fr; gap: 8px; } }
+.extras { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.extra { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: grid; gap: 7px; align-content: start; min-width: 0; }
+.extra p { font-size: 14.5px; color: var(--muted); }
+.extra .fw { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.tier { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
 </style>
 
 <div class="wrap">
 <header>
-  <span class="eyebrow">Product, design &amp; engineering proposal · v2 · 3 Oct 2026</span>
+  <span class="eyebrow">Product, design &amp; engineering proposal · v2, revised after CX review · 3 Oct 2026</span>
   <h1>Sole</h1>
-  <p class="lede">From step counter to a health companion that <b>explains</b>. Sole reads your steps, heart, energy, weight and blood oxygen from Apple Health and tells you, in plain words, how each one compares with <b>your own normal</b> and which way it is heading.</p>
+  <p class="lede">A health companion that <b>explains</b>. Sole reads your steps, heart, energy, weight and blood oxygen from Apple Health, compares each one with <b>your own normal</b>, and answers the question you actually open the app with: <b>how am I doing?</b></p>
   <div class="chips"><span class="chip">iOS 26 · Liquid Glass</span><span class="chip">SwiftUI + Swift Charts</span><span class="chip">HealthKit</span><span class="chip">CoreMotion</span><span class="chip">Free developer account</span><span class="chip">Everything stays on your iPhone</span></div>
 </header>
 
 <section>
-  <div class="sec-head"><span class="eyebrow">Three hats</span><h2>How the plan was made</h2></div>
-  <div class="roles">
-    <div class="role"><span class="tag">Product</span><h3>Every number gets a meaning</h3><p>Each metric shows <strong>your usual range</strong>, <strong>its direction</strong> and <strong>one sentence</strong> on what that means. A Daily Brief leads the app; a Highlights feed replaces Apple's, which other apps can't read.</p></div>
-    <div class="role"><span class="tag">Design</span><h3>Glass for controls, calm for content</h3><p>Liquid Glass sits on the <strong>navigation layer only</strong>: floating tab bar, toolbar buttons, sheets. Cards stay solid so numbers are easy to read. One signature visual, the <strong>range band</strong>, appears everywhere.</p></div>
-    <div class="role"><span class="tag">Engineering</span><h3>Only what a free account can ship</h3><p>Every feature below uses HealthKit, Swift Charts, WidgetKit and <strong>local</strong> notifications, all available with a free personal team. Anything that needs a paid account or a hidden Apple API is left out and listed.</p></div>
+  <div class="sec-head"><span class="eyebrow">CX bar raiser review</span><h2>What the first draft got wrong</h2><p class="note">The review asked one question of every screen: does it answer "how am I doing?" in under three seconds, and can you trust the answer? Nine changes came out of it.</p></div>
+  <div class="review">
+    <div class="finding"><div class="was"><b>No single answer on Today</b>Four equal cards meant you still had to read and judge each one yourself.</div><div class="now">Today opens with one <b>headline</b>, such as "Resting heart rate is better than usual", plus a tally: 6 usual, 1 better, 0 worth a look.</div></div>
+    <div class="finding"><div class="was"><b>A 2×2 grid doesn't scale</b>The grid broke at large text sizes and hid walking heart rate.</div><div class="now">Vitals become a <b>list of rows</b>, grouped Heart, Energy, Body. Each row shows the value, a status word and its usual range in numbers.</div></div>
+    <div class="finding"><div class="was"><b>The range bar had no numbers</b>A dot on a band looks nice but tells you nothing exact.</div><div class="now">Every band is labeled ("usual 58–63"). Each detail page has a <b>How we know</b> panel with the data behind every sentence.</div></div>
+    <div class="finding"><div class="was"><b>Outliers poisoned "your normal"</b>A week with flu raised your usual resting heart rate, so the next week looked fine when it wasn't.</div><div class="now"><b>Tag a day</b> (sick, travel, late night, alcohol, hard workout). Tags show on charts as context, and sick or travel days are left out of your usual range.</div></div>
+    <div class="finding"><div class="was"><b>Highlights tab was a dead end</b>A feed you have to remember to visit, overlapping with Trends.</div><div class="now">New highlights appear <b>on Today</b> and on the metric they're about. The third tab becomes <b>Recap</b>: a swipeable weekly story, plus past weeks.</div></div>
+    <div class="finding"><div class="was"><b>Steps lost their "am I on track?"</b>A percentage alone ignores that you walk more on weekdays.</div><div class="now">The step ring gets a <b>ghost tick for your usual pace by this time</b> on this weekday, so you can tell at a glance whether you're ahead or behind.</div></div>
+    <div class="finding"><div class="was"><b>No fast way to add things</b>Logging weight was buried inside a card.</div><div class="now">A floating <b>+ glass button</b> next to the tab bar opens one sheet: log weight or tag today. The same actions are in Control Center and Siri.</div></div>
+    <div class="finding"><div class="was"><b>First run was all permissions, no payoff</b>The first win came days later, once baselines filled in.</div><div class="now">Right after Health access, Sole reads your history and shows <b>"Here's your normal"</b>: your ranges, learned from years of data, on the first launch.</div></div>
+    <div class="finding"><div class="was"><b>Health data on show</b>Weight on the Lock Screen and alarming wording are real harms.</div><div class="now"><b>Privacy by default</b>: Lock Screen widgets show steps only, weight can be hidden everywhere, optional Face ID lock. Wording is always neutral, with amber instead of red.</div></div>
   </div>
 </section>
 
 <section>
-  <div class="sec-head"><span class="eyebrow">Screens</span><h2>What it looks like</h2><p class="note">Three tabs in a floating glass bar: Today, Trends, Highlights. Settings moves behind the gear. Sample data; mockups follow your light or dark setting, as the app will. Scroll sideways for more.</p></div>
+  <div class="sec-head"><span class="eyebrow">Screens</span><h2>What it looks like now</h2><p class="note">Tabs: Today, Trends, Recap, with a + button beside them. Settings sits behind the gear. Sample data; mockups follow your light or dark setting. Scroll sideways for more.</p></div>
   <div class="strip">
+
+    <!-- FIRST RUN -->
+    <figure class="shot">
+      <div class="phone"><div class="island"></div>
+        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="reveal">
+          <span class="eyebrow" style="font-size:9.5px">Learned from 2 years, 4 months of Health data</span>
+          <h4>Here's your normal.</h4>
+          <p>From now on Sole compares each day with these ranges and tells you when something moves.</p>
+          <div class="vlist">
+            <div class="vrow"><span class="nm"><i style="background:var(--accent)"></i>Steps</span><span class="val">7,900–10,800</span><span class="sub">a day · higher on weekdays</span></div>
+            <div class="vrow"><span class="nm"><i style="background:var(--heart)"></i>Resting heart rate</span><span class="val">58–63<em>bpm</em></span></div>
+            <div class="vrow"><span class="nm"><i style="background:var(--heart)"></i>Walking heart rate</span><span class="val">97–104<em>bpm</em></span></div>
+            <div class="vrow"><span class="nm"><i style="background:var(--energy)"></i>Active energy</span><span class="val">520–780<em>kcal</em></span></div>
+            <div class="vrow"><span class="nm"><i style="background:var(--oxy)"></i>Blood oxygen</span><span class="val">95–99<em>%</em></span></div>
+            <div class="vrow"><span class="nm"><i style="background:var(--weight)"></i>Weight trend</span><span class="val">74.2<em>kg</em></span><span class="sub">down 1.6 kg in 3 months</span></div>
+          </div>
+          <div style="flex:1"></div>
+          <div class="cta" style="background:var(--ink);color:var(--ph-base)">Start using Sole</div>
+        </div>
+      </div>
+      <figcaption><b>First run: your normal</b>The payoff right after permissions. Sole reads your history and shows what it learned before asking anything else.</figcaption>
+    </figure>
 
     <!-- TODAY -->
     <figure class="shot">
       <div class="phone"><div class="island"></div>
         <div class="status"><span>9:41</span><span>●●● ▮</span></div>
         <div class="screen">
-          <div class="topbar"><div><div class="nav-title">Today</div><div class="nav-sub">Saturday, 3 October</div></div><span class="gbtn glass" aria-label="Settings">⚙︎</span></div>
-          <div class="card brief">
-            <span class="k">Your day so far</span>
-            <span>You're <b>ahead of a usual Saturday</b>. Resting heart rate of <b>56</b> is below your normal, a sign of good recovery. Weight is <b>down 0.4 kg</b> this week.</span>
+          <div class="topbar"><div class="nav-sub" style="font-weight:600">Saturday, 3 October</div><span class="gbtn glass" aria-label="Settings">⚙︎</span></div>
+          <div class="headline">
+            <span class="h1">Resting heart rate is better than usual.</span>
+            <span class="h2">Everything else is in your usual range. You're ahead of a usual Saturday.</span>
+            <div class="tally"><span class="st usual">6 usual</span><span class="st good">1 better</span><span class="st usual">0 worth a look</span></div>
           </div>
           <div class="card hero">
-            <div class="ring" role="img" aria-label="7,842 of 10,000 steps">
-              <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="41" fill="none" stroke="var(--track)" stroke-width="10"/><circle cx="50" cy="50" r="41" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" stroke-dasharray="202 257.6" transform="rotate(-90 50 50)"/></svg>
+            <div class="ring" role="img" aria-label="7,842 of 10,000 steps; usual by now 6,700">
+              <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="41" fill="none" stroke="var(--track)" stroke-width="10"/><circle cx="50" cy="50" r="41" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" stroke-dasharray="202 257.6" transform="rotate(-90 50 50)"/><line x1="50" y1="2" x2="50" y2="17" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" transform="rotate(241 50 50)"/></svg>
               <div class="c">78%</div>
             </div>
-            <div><div class="big">7,842</div><small>of 10,000 steps</small><div class="pace">▲ 1,100 ahead of usual</div></div>
+            <div><div class="big">7,842</div><small>of 10,000 steps</small><div class="pace">▲ 1,100 ahead of usual</div><small style="font-size:9.5px">Tick = your usual by 9:41</small></div>
           </div>
-          <div class="vitals">
-            <div class="vit"><span class="h"><i style="background:var(--heart)"></i>Resting HR</span><span class="n">56<em>bpm</em></span>
-              <div class="rb"><span class="band" style="left:40%;width:25%;background:var(--heart)"></span><span class="dot" style="left:30%;background:var(--heart)"></span></div>
-              <span class="st good">Below usual</span></div>
-            <div class="vit"><span class="h"><i style="background:var(--energy)"></i>Energy</span><span class="n">2,310<em>kcal</em></span>
-              <div class="stack"><span style="flex:1640;background:var(--energy);opacity:.35"></span><span style="flex:670;background:var(--energy)"></span></div>
-              <span class="s">670 moving · 1,640 resting</span></div>
-            <div class="vit"><span class="h"><i style="background:var(--weight)"></i>Weight</span><span class="n">74.2<em>kg</em></span>
-              <svg viewBox="0 0 100 18" style="width:100%;height:12px" aria-hidden="true"><polyline points="0,3 16,4 33,6 50,8 66,10 83,12 100,15" fill="none" stroke="var(--weight)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="s">−0.4 kg this week</span></div>
-            <div class="vit"><span class="h"><i style="background:var(--oxy)"></i>Blood oxygen</span><span class="n">97<em>%</em></span>
-              <div class="rb"><span class="band" style="left:50%;width:40%;background:var(--oxy)"></span><span class="dot" style="left:70%;background:var(--oxy)"></span></div>
-              <span class="st usual">Usual</span></div>
+          <div class="sect">Heart</div>
+          <div class="vlist">
+            <div class="vrow"><span class="nm"><i style="background:var(--heart)"></i>Resting</span><span class="val">56<em>bpm</em> <span class="st good">Better</span></span>
+              <div class="rb" style="grid-column:1/-1"><span class="band" style="left:40%;width:25%;background:var(--heart)"></span><span class="dot" style="left:30%;background:var(--heart)"></span></div>
+              <span class="sub" style="grid-column:1/-1">usual 58–63</span></div>
+            <div class="vrow"><span class="nm"><i style="background:var(--heart)"></i>Walking avg</span><span class="val">98<em>bpm</em> <span class="st usual">Usual</span></span></div>
+          </div>
+          <div class="sect">Energy &amp; body</div>
+          <div class="vlist">
+            <div class="vrow"><span class="nm"><i style="background:var(--energy)"></i>Burned</span><span class="val">2,310<em>kcal</em> <span class="st usual">Usual</span></span><span class="sub" style="grid-column:1/-1">670 moving + 1,640 resting</span></div>
+            <div class="vrow"><span class="nm"><i style="background:var(--oxy)"></i>Blood oxygen</span><span class="val">97<em>%</em> <span class="st usual">Usual</span></span></div>
           </div>
         </div>
         <div class="tabbar glass">
           <span class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="3"/></svg>Today</span>
           <span><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3,17 9,11 13,14 21,6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Trends</span>
-          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 6 6.5.5-5 4.2 1.6 6.3L12 16.6 6.4 20l1.6-6.3-5-4.2 6.5-.5z" fill="currentColor"/></svg>Highlights</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><line x1="9" y1="9" x2="15" y2="9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Recap</span>
         </div>
+        <span class="fab glass" aria-label="Add">+</span>
       </div>
-      <figcaption><b>Today</b>A Daily Brief in plain words first, then steps, then a card per vital. The band on each card is your usual range; the dot is today.</figcaption>
+      <figcaption><b>Today</b>One headline answers "how am I doing?", then the tally. The tick on the ring is where you usually are by now. Rows show value, status and usual range. Weight, highlights and more sit below as you scroll.</figcaption>
     </figure>
 
     <!-- HEART DETAIL -->
@@ -295,28 +397,28 @@ td.dim2 { color: var(--muted); }
       <div class="phone"><div class="island"></div>
         <div class="status"><span>9:41</span><span>●●● ▮</span></div>
         <div class="screen">
-          <div class="back"><span class="gbtn glass">‹</span>Heart</div>
+          <div class="back"><span class="gbtn glass">‹</span>Today</div>
           <div class="nav-title" style="font-size:22px">Resting heart rate</div>
           <div class="seg glass"><span>W</span><span class="on">M</span><span>6M</span><span>Y</span><span>All</span></div>
           <div class="card chart">
             <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:var(--rounded);font-size:24px;font-weight:700">56 <span style="font-size:11px;color:var(--muted);font-weight:500">bpm today</span></span><span class="st good">▼ 4 bpm</span></div>
-            <svg id="rhrChart" viewBox="0 0 240 132" role="img" aria-label="Resting heart rate over the past month, falling from about 61 to 56 bpm; usual range 58 to 63"></svg>
+            <svg id="rhrChart" viewBox="0 0 240 132" role="img" aria-label="Resting heart rate over the past month, falling from about 61 to 56 bpm, with a spike to 66 on a day tagged Sick; usual range 58 to 63"></svg>
           </div>
-          <div class="card say">
-            <span><b>Down 4 bpm over the past month.</b> A lower resting heart rate usually means your heart does less work at rest. Regular walking, good sleep and less stress all push it down.</span>
+          <div class="card say"><span><b>Lower than usual, and falling.</b> A lower resting heart rate usually means your heart does less work at rest. The spike on 27 Sep matches the day you tagged as sick.</span></div>
+          <div class="why">
+            <span class="t"><span>How we know</span><span>⌄</span></span>
+            <span>Usual 58–63 = middle half of your last 28 days, leaving out 1 sick day. Last 4 weeks average 57.6 vs. 61.7 in the 12 weeks before.</span>
           </div>
-          <div class="card mini">
-            <span><b>Walking heart rate · 98 bpm avg</b>Down 5 bpm since July while your steps held steady, so walks are getting easier.</span>
-          </div>
-          <div class="mini" style="padding:0 4px">Source: Apple Watch · Not medical advice</div>
+          <div class="ctx"><span>Last night: 7 h 20 m sleep</span><span>Source: Apple Watch</span></div>
         </div>
         <div class="tabbar glass">
           <span class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="3"/></svg>Today</span>
           <span><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3,17 9,11 13,14 21,6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Trends</span>
-          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 6 6.5.5-5 4.2 1.6 6.3L12 16.6 6.4 20l1.6-6.3-5-4.2 6.5-.5z" fill="currentColor"/></svg>Highlights</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><line x1="9" y1="9" x2="15" y2="9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Recap</span>
         </div>
+        <span class="fab glass" aria-label="Add">+</span>
       </div>
-      <figcaption><b>Metric detail</b>Tap any card. The shaded band is your usual range (last 4 weeks). One sentence says what changed and why it matters.</figcaption>
+      <figcaption><b>Metric detail</b>Your tags appear on the chart, so a spike explains itself. "How we know" shows the numbers behind every sentence. Sleep appears as context only.</figcaption>
     </figure>
 
     <!-- TRENDS -->
@@ -326,98 +428,115 @@ td.dim2 { color: var(--muted); }
         <div class="screen">
           <div class="nav-title">Trends</div>
           <div class="nav-sub" style="margin-top:-4px">Last 4 weeks vs. the 12 before</div>
-          <div class="tlist" id="trendList"></div>
-          <div class="mini" style="padding:0 4px">Green means a change in a healthy direction. Weight stays neutral unless you set a weight goal.</div>
+          <div class="sect good">Getting better</div>
+          <div class="tlist" id="trendBetter"></div>
+          <div class="sect">Steady</div>
+          <div class="tlist" id="trendSteady"></div>
+          <div class="sect">Changing</div>
+          <div class="tlist" id="trendChanging"></div>
         </div>
         <div class="tabbar glass">
           <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="3"/></svg>Today</span>
           <span class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3,17 9,11 13,14 21,6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Trends</span>
-          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 6 6.5.5-5 4.2 1.6 6.3L12 16.6 6.4 20l1.6-6.3-5-4.2 6.5-.5z" fill="currentColor"/></svg>Highlights</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><line x1="9" y1="9" x2="15" y2="9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Recap</span>
         </div>
+        <span class="fab glass" aria-label="Add">+</span>
       </div>
-      <figcaption><b>Trends</b>Every metric on one list with a sparkline and how much it moved. Arrows are colored by meaning, so falling resting heart rate is green.</figcaption>
+      <figcaption><b>Trends</b>Grouped by answer, not by metric: what's getting better, what's steady, what's changing. "Worth a look" appears first when there is one.</figcaption>
     </figure>
 
-    <!-- HIGHLIGHTS -->
+    <!-- RECAP STORY -->
     <figure class="shot">
       <div class="phone"><div class="island"></div>
-        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
-        <div class="screen">
-          <div class="nav-title">Highlights</div>
-          <div class="chips-row"><span class="fchip glass on">All</span><span class="fchip">Heart</span><span class="fchip">Activity</span><span class="fchip">Body</span></div>
-          <div class="hl">
-            <div class="meta"><span style="color:var(--heart)">Fitness</span><span>Today</span></div>
-            <p>Walking is getting easier.</p>
-            <small>Your walking heart rate fell 5 bpm since July while you kept walking about 9,000 steps a day.</small>
-            <svg viewBox="0 0 220 34" aria-hidden="true"><polyline id="hlLine" fill="none" stroke="var(--heart)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="story">
+          <div class="bars-prog"><i class="on"></i><i class="on"></i><i></i><i></i></div>
+          <span class="k">Week of 27 Sep · 2 of 4</span>
+          <span class="big">Your most active week since July.</span>
+          <div class="weekbars" aria-hidden="true">
+            <div><i style="height:62%"></i><small>S</small></div><div><i style="height:48%" class="lo"></i><small>M</small></div><div><i style="height:80%"></i><small>T</small></div><div><i style="height:100%"></i><small>W</small></div><div><i style="height:72%"></i><small>T</small></div><div><i style="height:66%"></i><small>F</small></div><div><i style="height:58%"></i><small>S</small></div>
           </div>
-          <div class="hl">
-            <div class="meta"><span style="color:var(--accent)">Record</span><span>Wed</span></div>
-            <p>18,204 steps: your best day since March.</p>
+          <div class="grid">
+            <div><b>65,212</b><span>steps</span><em>▲ 12% vs. last week</em></div>
+            <div><b>4,480</b><span>active kcal</span><em>▲ 9%</em></div>
+            <div><b>18,204</b><span>best day · Wed</span><em>Best since March</em></div>
+            <div><b>6 of 7</b><span>goal days</span><em>Streak: 5</em></div>
           </div>
-          <div class="hl">
-            <div class="meta"><span style="color:var(--watch)">Worth a look</span><span>Sun</span></div>
-            <p>Resting heart rate was 9 bpm above your usual.</p>
-            <small>Short sleep, illness, alcohol or a hard workout often cause this. It was back to normal by Tuesday.</small>
-          </div>
-          <div class="hl">
-            <div class="meta"><span style="color:var(--energy)">Weekly recap</span><span>Mon</span></div>
-            <p>4,480 active kcal, 9% more than last week.</p>
-          </div>
-        </div>
-        <div class="tabbar glass">
-          <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="3"/></svg>Today</span>
-          <span><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3,17 9,11 13,14 21,6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Trends</span>
-          <span class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 6 6.5.5-5 4.2 1.6 6.3L12 16.6 6.4 20l1.6-6.3-5-4.2 6.5-.5z" fill="currentColor"/></svg>Highlights</span>
+          <div style="flex:1"></div>
+          <div class="storybtns"><span class="glass">Share image</span><span class="glass">Next ›</span></div>
         </div>
       </div>
-      <figcaption><b>Highlights</b>Sole's own feed, computed on your iPhone: trends, records, days off your usual and a weekly recap. Calm wording, amber instead of red.</figcaption>
+      <figcaption><b>Recap</b>Every Monday, a four‑card story: activity, heart, body, and one thing to try. Tap through like a story; share any card as an image.</figcaption>
     </figure>
 
-    <!-- LOG WEIGHT SHEET -->
+    <!-- ADD SHEET -->
     <figure class="shot">
       <div class="phone"><div class="island"></div>
         <div class="status"><span>9:41</span><span>●●● ▮</span></div>
         <div class="screen dim">
-          <div class="topbar"><div><div class="nav-title">Today</div><div class="nav-sub">Saturday, 3 October</div></div><span class="gbtn glass">⚙︎</span></div>
-          <div class="card brief"><span class="k">Your day so far</span><span>You're <b>ahead of a usual Saturday</b>. Resting heart rate is <b>56</b>…</span></div>
-          <div class="card hero" style="height:110px"></div>
+          <div class="topbar"><div class="nav-sub" style="font-weight:600">Saturday, 3 October</div><span class="gbtn glass">⚙︎</span></div>
+          <div class="headline"><span class="h1">Resting heart rate is better than usual.</span></div>
+          <div class="card hero" style="height:100px"></div>
         </div>
         <div class="scrim"></div>
-        <div class="sheet glass">
+        <div class="sheet glass" style="height:400px">
           <span class="grab"></span>
-          <div class="sheet-top"><span class="gbtn glass" style="width:30px;height:30px;font-size:13px">✕</span><span>Log weight</span><span style="width:30px"></span></div>
+          <div class="sheet-top"><span class="gbtn glass" style="width:30px;height:30px;font-size:13px">✕</span><span>Add</span><span style="width:30px"></span></div>
+          <div class="seg glass" style="grid-template-columns:1fr 1fr"><span class="on">Weight</span><span>Tag today</span></div>
           <div class="wnum">74.6 <em>kg</em></div>
           <div class="wheel"><span>74.4</span><span>74.5</span><span class="on">74.6</span><span>74.7</span><span>74.8</span></div>
-          <div class="fineprint">Today, 9:41 · trend weight will update to 74.2 kg</div>
+          <span class="k" style="font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Anything going on today?</span>
+          <div class="tagchips"><span>Sick</span><span>Travel</span><span class="on">Late night</span><span>Alcohol</span><span>Hard workout</span><span>Stressed</span></div>
           <div style="flex:1"></div>
-          <div class="cta">Save to Apple Health</div>
+          <div class="cta">Save</div>
         </div>
       </div>
-      <figcaption><b>Log weight</b>A glass sheet from the Weight card. Sole saves the reading to Apple Health, so it stays two‑way like steps.</figcaption>
+      <figcaption><b>Add (the + button)</b>Log weight and tag the day in one sheet. Weight goes to Apple Health; tags stay in Sole and explain spikes later.</figcaption>
     </figure>
 
   </div>
 
-  <div class="sec-head" style="margin-top:6px"><h3>Widgets</h3><p class="note">Home Screen widgets pick up the glass look automatically on iOS 26. They read a small snapshot Sole saves, because Health data is locked while the phone is locked.</p></div>
+  <div class="sec-head" style="margin-top:6px"><h3>Beyond the app</h3><p class="note">Glass widgets on iOS 26, a Control Center button, and Siri. Lock Screen widgets show steps only by default, because anyone can see them.</p></div>
   <div class="widgets">
     <div class="w w-s glass" aria-label="Small widget">
       <span class="lbl">Steps</span>
       <span class="n">7,842</span>
-      <div style="display:grid;gap:5px"><div class="rb" style="margin:0"><span class="band" style="left:0;width:78%;background:var(--accent);opacity:1"></span></div><span style="font-size:11px;color:var(--muted)">Ahead of your usual</span></div>
+      <div style="display:grid;gap:5px"><div class="rb" style="margin:0"><span class="band" style="left:0;width:78%;background:var(--accent);opacity:1"></span></div><span style="font-size:11px;color:var(--muted)">1,100 ahead of usual</span></div>
     </div>
     <div class="w w-m glass" aria-label="Medium widget">
       <div style="display:grid;gap:4px"><span class="lbl">Today</span><span class="n">7,842</span><span style="font-size:11px;color:var(--muted)">of 10,000 steps</span></div>
       <div class="wl">
-        <div><span>Resting HR</span><span><b>56</b> <span class="st good">Below usual</span></span></div>
-        <div><span>Active</span><span><b>670</b> <span class="st usual">Usual</span></span></div>
-        <div><span>Weight</span><span><b>74.2</b> <span style="font-size:10px;color:var(--muted)">−0.4/wk</span></span></div>
+        <div style="font-weight:650;font-size:12px">Resting HR better than usual</div>
+        <div><span>Resting HR</span><span><b>56</b> <span class="st good">Better</span></span></div>
+        <div><span>Burned</span><span><b>2,310</b> <span class="st usual">Usual</span></span></div>
       </div>
     </div>
+    <div class="ctl glass" aria-label="Control Center controls"><span class="on">+</span><span class="glass">⚑</span></div>
+    <div class="siri glass"><span class="q">"Hey Siri, how am I doing in Sole?"</span><span><b>Resting heart rate is better than usual.</b> Everything else is in your usual range, and you're 1,100 steps ahead.</span></div>
     <div class="lock" aria-label="Lock Screen widgets">
       <svg width="58" height="58" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="25" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="6"/><circle cx="30" cy="30" r="25" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-dasharray="122.5 157.1" transform="rotate(-90 30 30)"/><text x="30" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">7.8k</text></svg>
-      <div><div class="inline">7,842 steps · RHR 56</div><div class="time">9:41</div></div>
+      <div><div class="inline">7,842 steps · ahead of usual</div><div class="time">9:41</div></div>
     </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Product</span><h2>Features you didn't ask for</h2><p class="note">Each one passed the same test: it makes the data easier to understand or act on, and it runs on a free developer account. The first group is recommended for v2; the second waits.</p></div>
+  <div class="tier"><span class="pill in">Recommended for v2</span></div>
+  <div class="extras">
+    <div class="extra"><h3>Day tags</h3><p>Mark a day as sick, travel, late night, alcohol, hard workout or stressed. Spikes explain themselves on charts, and sick and travel days don't skew your normal.</p><span class="fw">Stored on device · SwiftData</span></div>
+    <div class="extra"><h3>Sleep as context</h3><p>Last night's sleep length appears beside resting heart rate, because short sleep is the most common reason it rises. Read only; no sleep tracking screens.</p><span class="fw">HealthKit sleepAnalysis · read</span></div>
+    <div class="extra"><h3>"Here's your normal" on first run</h3><p>Sole shows its value in the first minute by learning your ranges from your Health history straight away.</p><span class="fw">HealthKit history import</span></div>
+    <div class="extra"><h3>Weekly Recap story</h3><p>A four‑card story every Monday, with a share-as-image button. It replaces a Highlights feed nobody would remember to open.</p><span class="fw">SwiftUI · ImageRenderer · ShareLink</span></div>
+    <div class="extra"><h3>Doctor report (PDF)</h3><p>A clean one‑page summary of the last 3 months (ranges, trends, tagged days) to bring to an appointment.</p><span class="fw">ImageRenderer → PDF · ShareLink</span></div>
+    <div class="extra"><h3>Privacy controls</h3><p>Optional Face ID lock, hide weight everywhere, and Lock Screen widgets that show steps only unless you turn more on.</p><span class="fw">LocalAuthentication · WidgetKit privacy</span></div>
+    <div class="extra"><h3>Siri and Control Center</h3><p>"How am I doing?" reads the headline aloud. A Control Center button jumps straight to logging weight.</p><span class="fw">App Intents · Control widget</span></div>
+  </div>
+  <div class="tier" style="margin-top:6px"><span class="pill out">Later</span></div>
+  <div class="extras">
+    <div class="extra"><h3>Pattern insights from tags</h3><p>"After late nights your resting heart rate runs 5 bpm higher." Needs a few months of tags to be honest.</p></div>
+    <div class="extra"><h3>HRV and cardio fitness (VO2 max)</h3><p>Two strong recovery and fitness signals Apple Watch records. Same range-and-trend treatment.</p></div>
+    <div class="extra"><h3>Weight goal with projected date</h3><p>Lets weight arrows turn green or amber and estimates when you'd reach a goal from your trend.</p></div>
+    <div class="extra"><h3>Apple Watch app</h3><p>Headline and steps on your wrist, plus a complication.</p></div>
   </div>
 </section>
 
@@ -426,52 +545,28 @@ td.dim2 { color: var(--muted); }
   <div class="tbl-wrap"><table>
     <thead><tr><th>Metric</th><th>Comes from</th><th>What Sole tells you</th><th>Health type</th></tr></thead>
     <tbody>
-      <tr><td class="m"><i style="background:var(--accent)"></i>Steps</td><td class="dim2">iPhone sensor, Watch</td><td>Goal progress and pace vs. your usual day of the week</td><td><code>stepCount</code></td></tr>
-      <tr><td class="m"><i style="background:var(--heart)"></i>Resting heart rate</td><td class="dim2">Apple Watch</td><td>Recovery signal: today vs. your 4‑week normal, and the monthly trend</td><td><code>restingHeartRate</code></td></tr>
+      <tr><td class="m"><i style="background:var(--accent)"></i>Steps</td><td class="dim2">iPhone sensor, Watch</td><td>Goal progress and pace vs. your usual for this weekday and time</td><td><code>stepCount</code></td></tr>
+      <tr><td class="m"><i style="background:var(--heart)"></i>Resting heart rate</td><td class="dim2">Apple Watch</td><td>Recovery signal: today vs. your 4‑week normal, the monthly trend, with sleep and tags as context</td><td><code>restingHeartRate</code></td></tr>
       <tr><td class="m"><i style="background:var(--heart)"></i>Walking heart rate</td><td class="dim2">Apple Watch</td><td>Fitness signal: lower over time means walks feel easier</td><td><code>walkingHeartRateAverage</code></td></tr>
       <tr><td class="m"><i style="background:var(--heart)"></i>Heart rate</td><td class="dim2">Apple Watch</td><td>Today's low and high, and when it peaked</td><td><code>heartRate</code></td></tr>
       <tr><td class="m"><i style="background:var(--energy)"></i>Active energy</td><td class="dim2">Watch, iPhone</td><td>Calories from moving, vs. your usual</td><td><code>activeEnergyBurned</code></td></tr>
-      <tr><td class="m"><i style="background:var(--energy)"></i>Resting energy</td><td class="dim2">Apple Watch</td><td>Calories just from being alive; added to active for your total burn</td><td><code>basalEnergyBurned</code></td></tr>
-      <tr><td class="m"><i style="background:var(--weight)"></i>Weight</td><td class="dim2">Smart scale or logged in Sole</td><td>Smoothed trend weight and weekly rate, so daily swings don't mislead</td><td><code>bodyMass</code></td></tr>
-      <tr><td class="m"><i style="background:var(--oxy)"></i>Blood oxygen</td><td class="dim2">Apple Watch</td><td>"Steady" or not vs. your range, and the lowest overnight reading. Never alarms on one reading</td><td><code>oxygenSaturation</code></td></tr>
-      <tr><td class="m"><i style="background:var(--muted)"></i>Highlights</td><td class="dim2">Computed by Sole</td><td>Trends, records, off‑usual days, weekly recap, fitness signals</td><td class="dim2">n/a</td></tr>
+      <tr><td class="m"><i style="background:var(--energy)"></i>Resting energy</td><td class="dim2">Apple Watch</td><td>Calories just from being alive; added to active as "Burned"</td><td><code>basalEnergyBurned</code></td></tr>
+      <tr><td class="m"><i style="background:var(--weight)"></i>Weight</td><td class="dim2">Smart scale or logged in Sole</td><td>Smoothed trend weight and weekly rate, so daily swings don't mislead. Can be hidden</td><td><code>bodyMass</code></td></tr>
+      <tr><td class="m"><i style="background:var(--oxy)"></i>Blood oxygen</td><td class="dim2">Apple Watch</td><td>Steady or not vs. your range, and the lowest overnight reading. Never alarms on one reading</td><td><code>oxygenSaturation</code></td></tr>
+      <tr><td class="m"><i style="background:var(--muted)"></i>Sleep (context)</td><td class="dim2">Watch, iPhone</td><td>Last night's length, shown beside heart metrics</td><td><code>sleepAnalysis</code></td></tr>
+      <tr><td class="m"><i style="background:var(--muted)"></i>Highlights</td><td class="dim2">Computed by Sole</td><td>Shown on Today, on each metric, and in the weekly Recap</td><td class="dim2">n/a</td></tr>
     </tbody>
   </table></div>
   <div class="callout warn"><p><b>Apple's own Highlights can't be read by any app.</b> There is no public API for the Health app's Highlights or Trends, on any developer account. Sole rebuilds the same idea itself from your raw data, which also lets it explain things Apple's version doesn't.</p></div>
 </section>
 
 <section>
-  <div class="sec-head"><span class="eyebrow">Scope</span><h2>Features</h2></div>
-  <div class="cols">
-    <ul class="flist">
-      <li><span class="pill in">v2</span><b>Daily Brief</b><span>Two or three plain sentences at the top of Today, picked by what is most unusual today.</span></li>
-      <li><span class="pill in">v2</span><b>Vitals at a glance</b><span>Heart, Energy, Weight, Oxygen cards with range band and a status word.</span></li>
-      <li><span class="pill in">v2</span><b>Metric detail</b><span>Charts from a week to all time with your usual band, a trend sentence and a short explainer.</span></li>
-      <li><span class="pill in">v2</span><b>Trends</b><span>All metrics on one list, 4 weeks vs. the 12 before, colored by meaning.</span></li>
-      <li><span class="pill in">v2</span><b>Highlights</b><span>Sole's own on‑device feed: trends, records, off‑usual days, weekly recap.</span></li>
-      <li><span class="pill in">v2</span><b>Energy made relatable</b><span>Resting plus active as one total burn.</span></li>
-      <li><span class="pill in">v2</span><b>Log weight</b><span>Saved to Apple Health.</span></li>
-      <li><span class="pill in">v2</span><b>Steps, kept from v1</b><span>Live count, goal, hourly bars, history, streak, Watch dedupe.</span></li>
-      <li><span class="pill in">v2</span><b>Widgets and weekly summary</b><span>Updated widgets; an opt‑in Monday notification, sent locally.</span></li>
-    </ul>
-    <ul class="flist">
-      <li><span class="pill out">Later</span><b>Sleep, HRV, VO2 max, workouts</b><span>Readable the same way; good next additions.</span></li>
-      <li><span class="pill out">Later</span><b>On‑device AI wording</b><span>Apple's Foundation Models could rephrase the brief on Apple Intelligence iPhones. Works on a free account; v2 uses fixed sentence templates so wording stays predictable.</span></li>
-      <li><span class="pill out">Later</span><b>Weight goal</b><span>Would let weight arrows turn green or amber.</span></li>
-      <li><span class="pill no">Not doable</span><b>Reading Apple's Highlights and Trends</b><span>No API exists.</span></li>
-      <li><span class="pill no">Not doable</span><b>iCloud sync, push notifications, TestFlight</b><span>Need a paid developer account. Apple Health stays the backup.</span></li>
-      <li><span class="pill out">Not planned</span><b>Diagnosis or medical advice</b><span>Sole describes changes, never diagnoses.</span></li>
-    </ul>
-  </div>
-</section>
-
-<section>
   <div class="sec-head"><span class="eyebrow">Design</span><h2>Liquid Glass, used with restraint</h2></div>
   <div class="math">
-    <div><h3>Glass on the navigation layer</h3><p>Floating tab bar that shrinks when you scroll, round toolbar buttons, segmented pickers and sheets. Content cards stay solid so numbers read clearly over any background.</p></div>
-    <div><h3>A colored world behind the glass</h3><p>A soft gradient sits behind every screen so the glass has something to bend. Health's own category colors (orange, red, purple, blue) keep each metric familiar.</p></div>
-    <div><h3>Words before numbers</h3><p>Each screen opens with a sentence, then the figure, then the chart. Status is always a word plus an arrow, never color alone.</p></div>
-    <div><h3>Accessible by default</h3><p>Reduce Transparency swaps glass for solid fills, Reduce Motion stops ring animation, VoiceOver reads each card as one sentence, Dynamic Type reflows cards.</p></div>
+    <div><h3>Answer, then evidence</h3><p>Every screen goes headline, number, chart, then "How we know". You can stop reading at any level and still have the answer.</p></div>
+    <div><h3>Glass only for controls</h3><p>Glass is used for the floating tab bar, the + button, toolbar buttons, pickers, sheets and Recap controls. Content cards stay solid so numbers read clearly over the colored background.</p></div>
+    <div><h3>Calm by design</h3><p>Status words are Usual, Better and Worth a look. Amber, never red. Rows sort by importance, and a maximum of one notification a day.</p></div>
+    <div><h3>Accessible by default</h3><p>Rows reflow at any text size, VoiceOver reads each row as one sentence, charts have audio graphs, and Reduce Transparency and Reduce Motion are respected.</p></div>
   </div>
 </section>
 
@@ -480,31 +575,36 @@ td.dim2 { color: var(--muted); }
   <div class="tbl-wrap"><table>
     <thead><tr><th>Need</th><th>Apple framework</th><th>Free account</th><th>Notes</th></tr></thead>
     <tbody>
-      <tr><td class="m">Read the 8 metrics</td><td>HealthKit</td><td class="yes">Works</td><td class="dim2">Already used in v1</td></tr>
+      <tr><td class="m">Read 8 metrics + sleep</td><td>HealthKit</td><td class="yes">Works</td><td class="dim2">Already used in v1</td></tr>
       <tr><td class="m">Write weight and steps</td><td>HealthKit</td><td class="yes">Works</td><td class="dim2">Share permission per type</td></tr>
-      <tr><td class="m">Update in the background</td><td>HealthKit background delivery</td><td class="yes">Works</td><td class="dim2">Heart types arrive at most hourly; Sole also refreshes when opened</td></tr>
+      <tr><td class="m">Background updates</td><td>HealthKit background delivery</td><td class="yes">Works</td><td class="dim2">Heart types arrive at most hourly; also refreshes on open</td></tr>
       <tr><td class="m">Liquid Glass</td><td>SwiftUI, iOS 26 SDK</td><td class="yes">Works</td><td class="dim2">No entitlement. Raise minimum to iOS 26</td></tr>
-      <tr><td class="m">Charts with range bands</td><td>Swift Charts</td><td class="yes">Works</td><td class="dim2">Area, line and rule marks</td></tr>
-      <tr><td class="m">Widgets</td><td>WidgetKit + App Group</td><td class="yes">Works</td><td class="dim2">Already in v1</td></tr>
-      <tr><td class="m">Weekly summary alert</td><td>UserNotifications (local)</td><td class="yes">Works</td><td class="dim2">Local only; no server</td></tr>
-      <tr><td class="m">iCloud sync</td><td>CloudKit</td><td class="no">Paid only</td><td class="dim2">Dropped; Health is the backup</td></tr>
+      <tr><td class="m">Charts with bands and tags</td><td>Swift Charts</td><td class="yes">Works</td><td class="dim2">Area, line, rule and point marks</td></tr>
+      <tr><td class="m">Widgets, Control Center button</td><td>WidgetKit + App Group</td><td class="yes">Works</td><td class="dim2">Widgets already in v1</td></tr>
+      <tr><td class="m">Siri "how am I doing?"</td><td>App Intents (App Shortcuts)</td><td class="yes">Works</td><td class="dim2">Doesn't need the Siri capability; confirm on first build</td></tr>
+      <tr><td class="m">Face ID lock</td><td>LocalAuthentication</td><td class="yes">Works</td><td class="dim2">Usage string only</td></tr>
+      <tr><td class="m">Recap image, doctor PDF</td><td>ImageRenderer, ShareLink</td><td class="yes">Works</td><td class="dim2">Rendered on device</td></tr>
+      <tr><td class="m">Weekly summary alert</td><td>UserNotifications (local)</td><td class="yes">Works</td><td class="dim2">No server</td></tr>
+      <tr><td class="m">iCloud sync</td><td>CloudKit</td><td class="no">Paid only</td><td class="dim2">Dropped; Health is the backup. Day tags stay on this iPhone</td></tr>
       <tr><td class="m">Remote push</td><td>APNs</td><td class="no">Paid only</td><td class="dim2">Not needed</td></tr>
       <tr><td class="m">Apple's Highlights</td><td>none</td><td class="no">No API</td><td class="dim2">Sole computes its own</td></tr>
     </tbody>
   </table></div>
-  <div class="callout"><p><b>Living with a free account:</b> the app has to be reinstalled from Xcode every 7 days when its signing expires. Your data stays on the phone between installs. A free team can keep up to 3 of its own apps on a device.</p></div>
+  <div class="callout"><p><b>Living with a free account:</b> the app has to be reinstalled from Xcode every 7 days when its signing expires. Your data stays on the phone between installs. Day tags are the one thing Health can't back up, so they're included in the CSV export.</p></div>
 
   <div class="flow-wrap">
-    <svg viewBox="0 0 980 200" role="img" aria-label="Data flow: Apple Health and the motion sensor feed daily statistics into an on-device cache, which feeds baselines and highlights, which feed screens, widgets and notifications">
+    <svg viewBox="0 0 980 200" role="img" aria-label="Data flow: Apple Health, the motion sensor and your day tags feed daily statistics into an on-device cache, which feeds your normal and highlights, which feed screens, widgets, Siri and notifications">
       <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="ah" d="M0 0 L10 5 L0 10z"/></marker></defs>
-      <rect class="box" x="10" y="20" width="180" height="70" rx="12"/><text x="24" y="50" font-weight="700" font-size="15">Apple Health</text><text class="sub" x="24" y="72">8 types, all sources</text>
-      <rect class="box" x="10" y="110" width="180" height="70" rx="12"/><text x="24" y="140" font-weight="700" font-size="15">Motion sensor</text><text class="sub" x="24" y="162">Live steps</text>
+      <rect class="box" x="10" y="10" width="180" height="54" rx="12"/><text x="24" y="34" font-weight="700" font-size="15">Apple Health</text><text class="sub" x="24" y="53">8 types + sleep</text>
+      <rect class="box" x="10" y="73" width="180" height="54" rx="12"/><text x="24" y="97" font-weight="700" font-size="15">Motion sensor</text><text class="sub" x="24" y="116">Live steps</text>
+      <rect class="box" x="10" y="136" width="180" height="54" rx="12"/><text x="24" y="160" font-weight="700" font-size="15">Your day tags</text><text class="sub" x="24" y="179">Sick, travel, late night…</text>
       <rect class="box" x="250" y="65" width="200" height="70" rx="12"/><text x="264" y="95" font-weight="700" font-size="15">Daily statistics</text><text class="sub" x="264" y="117">Sum, avg, min, max per day</text>
       <rect class="box" x="510" y="65" width="190" height="70" rx="12"/><text x="524" y="95" font-weight="700" font-size="15">On‑device cache</text><text class="sub" x="524" y="117">Rebuildable from Health</text>
       <rect class="core" x="760" y="20" width="210" height="70" rx="12"/><text x="774" y="50" font-weight="700" font-size="15">Your normal</text><text class="sub" x="774" y="72">Ranges, trends, highlights</text>
-      <rect class="box" x="760" y="110" width="210" height="70" rx="12"/><text x="774" y="140" font-weight="700" font-size="15">Screens &amp; widgets</text><text class="sub" x="774" y="162">Brief, cards, weekly alert</text>
-      <path class="arrow" d="M190 55 C 220 55, 220 90, 248 90" marker-end="url(#ah)"/>
-      <path class="arrow" d="M190 145 C 220 145, 220 110, 248 110" marker-end="url(#ah)"/>
+      <rect class="box" x="760" y="110" width="210" height="70" rx="12"/><text x="774" y="140" font-weight="700" font-size="15">Everywhere you look</text><text class="sub" x="774" y="162">App, widgets, Siri, Recap</text>
+      <path class="arrow" d="M190 37 C 222 37, 222 88, 248 88" marker-end="url(#ah)"/>
+      <path class="arrow" d="M190 100 L 248 100" marker-end="url(#ah)"/>
+      <path class="arrow" d="M190 163 C 222 163, 222 112, 248 112" marker-end="url(#ah)"/>
       <path class="arrow" d="M450 100 L 508 100" marker-end="url(#ah)"/>
       <path class="arrow" d="M700 90 C 730 90, 730 55, 758 55" marker-end="url(#ah)"/>
       <path class="arrow" d="M865 90 L 865 108" marker-end="url(#ah)"/>
@@ -512,25 +612,27 @@ td.dim2 { color: var(--muted); }
   </div>
 
   <div class="math">
-    <div><h3>Usual range</h3><p>The middle half (25th to 75th percentile) of your daily values over the previous 28 days. Needs 7 days of data; until then cards say "Learning your normal".</p></div>
+    <div><h3>Usual range</h3><p>The middle half (25th to 75th percentile) of your daily values over the previous 28 days, leaving out days tagged sick or travel. Needs 7 days of data; until then rows say "Learning".</p></div>
+    <div><h3>Usual pace</h3><p>For steps, your median count by this time of day on the same weekday over the last 8 weeks. That's the tick on the ring.</p></div>
     <div><h3>Trend</h3><p>Average of the last 4 weeks vs. the 12 weeks before, reported only when the change beats a minimum (for example 2 bpm for resting heart rate, 0.5 kg for weight, 10% for steps).</p></div>
-    <div><h3>Trend weight</h3><p>A smoothed average of daily weigh‑ins, so one salty dinner doesn't look like a kilo gained.</p></div>
-    <div><h3>No Apple Watch?</h3><p>Heart, oxygen and resting energy are usually empty without one. Those cards collapse to "Needs Apple Watch data" and the brief only talks about what exists.</p></div>
+    <div><h3>Headline</h3><p>Picks one sentence by priority: anything worth a look first, then anything better than usual, otherwise "Everything is in your usual range". Same data, same sentence, every time.</p></div>
   </div>
 </section>
 
 <section>
   <div class="sec-head"><span class="eyebrow">Plan</span><h2>Build order</h2><p class="note">Each step runs on your iPhone before the next starts. No v2 code has been written yet.</p></div>
   <ol class="steps">
-    <li><div><b>iOS 26 and the Liquid Glass shell.</b> <span>New tabs (Today, Trends, Highlights), gear for Settings, glass toolbar. Steps keep working.</span></div></li>
-    <li><div><b>Read the new Health types.</b> <span>Daily statistics, on‑device cache and history import; per‑metric status in Settings.</span></div></li>
-    <li><div><b>Your normal.</b> <span>Usual ranges, statuses and trends as tested Swift code.</span></div></li>
-    <li><div><b>Today redesign.</b> <span>Daily Brief, steps hero, vitals cards with range bands.</span></div></li>
-    <li><div><b>Metric detail pages.</b> <span>Banded charts and explainers.</span></div></li>
+    <li><div><b>iOS 26 and the Liquid Glass shell.</b> <span>Tabs (Today, Trends, Recap), the + button, gear for Settings. Steps keep working.</span></div></li>
+    <li><div><b>Read the new Health types and sleep.</b> <span>Daily statistics, on‑device cache and history import.</span></div></li>
+    <li><div><b>Your normal.</b> <span>Usual ranges, usual pace, statuses, trends and headline as tested Swift code.</span></div></li>
+    <li><div><b>First run: "Here's your normal".</b></div></li>
+    <li><div><b>Today redesign.</b> <span>Headline, tally, ring with pace tick, grouped vitals rows.</span></div></li>
+    <li><div><b>Add sheet.</b> <span>Log weight to Health and tag the day.</span></div></li>
+    <li><div><b>Metric detail pages.</b> <span>Banded charts with tag markers, How we know, sleep context.</span></div></li>
     <li><div><b>Trends tab.</b></div></li>
-    <li><div><b>Highlights.</b> <span>Rules engine with tests, then the feed.</span></div></li>
-    <li><div><b>Log weight.</b> <span>Writes to Apple Health.</span></div></li>
-    <li><div><b>Widgets and the weekly summary.</b></div></li>
+    <li><div><b>Highlights rules and weekly Recap.</b> <span>Story cards, share image, Monday notification.</span></div></li>
+    <li><div><b>Widgets, Control Center and Siri.</b> <span>Lock Screen privacy defaults.</span></div></li>
+    <li><div><b>Privacy and the doctor report.</b> <span>Face ID lock, hide weight, PDF export.</span></div></li>
   </ol>
 </section>
 </div>
@@ -540,7 +642,7 @@ td.dim2 { color: var(--muted); }
   var NS='http://www.w3.org/2000/svg';
   function el(tag, attrs, parent){ var e=document.createElementNS(NS,tag); for(var k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
 
-  // Resting HR, 30 days, drifting from ~61 to 56 (sample data)
+  // Resting HR, 30 days (sample data). Index 23 is a day tagged Sick.
   var rhr=[61,62,60,61,63,61,60,61,60,59,61,60,59,60,58,59,60,58,57,59,58,57,58,66,60,57,57,56,57,56];
   var svg=document.getElementById('rhrChart');
   if(svg){
@@ -552,25 +654,20 @@ td.dim2 { color: var(--muted); }
       var t=el('text',{x:x0-5,y:Y(v)+3,'text-anchor':'end'},svg); t.textContent=v;
     });
     el('rect',{x:x0,y:Y(63),width:x1-x0,height:Y(58)-Y(63),fill:'var(--heart)',opacity:.13,rx:3},svg);
-    var lb=el('text',{x:x1-2,y:Y(63)-3,'text-anchor':'end'},svg); lb.textContent='Your usual 58–63';
+    var lb=el('text',{x:x0+4,y:Y(58)+10,'text-anchor':'start'},svg); lb.textContent='usual 58–63';
+    // tag marker
+    el('line',{x1:X(23),x2:X(23),y1:y0,y2:y1,stroke:'var(--watch)','stroke-width':1,'stroke-dasharray':'2 2'},svg);
+    el('rect',{x:X(23)-34,y:y0-2,width:30,height:13,rx:6.5,fill:'var(--watch-soft)'},svg);
+    var tg=el('text',{x:X(23)-19,y:y0+8,'text-anchor':'middle',style:'fill:var(--watch);font-weight:700'},svg); tg.textContent='Sick';
     el('polyline',{points:rhr.map(function(v,i){return X(i)+','+Y(v);}).join(' '),fill:'none',stroke:'var(--heart)','stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
     rhr.forEach(function(v,i){ el('circle',{cx:X(i),cy:Y(v),r:i===rhr.length-1?3.6:1.6,fill:'var(--heart)'},svg); });
     [['4 Sep',0],['18 Sep',14],['Today',29]].forEach(function(p){ var t=el('text',{x:X(p[1]),y:126,'text-anchor':p[1]===0?'start':(p[1]===29?'end':'middle')},svg); t.textContent=p[0]; });
   }
 
-  // Trends list
-  var trends=[
-    ['Resting heart rate','56 bpm','▼ 4 bpm','good',[61,61,60,60,59,59,58,57,57,56],'var(--heart)'],
-    ['Walking heart rate','98 bpm avg','▼ 5 bpm','good',[104,103,103,101,101,100,99,99,98,98],'var(--heart)'],
-    ['Steps','9,316 a day','▲ 12%','good',[8.1,8.4,8.2,8.8,8.9,9.1,8.7,9.4,9.2,9.3],'var(--accent)'],
-    ['Active energy','640 kcal a day','Steady','flat',[620,650,610,640,660,630,650,640,620,640],'var(--energy)'],
-    ['Resting energy','1,640 kcal a day','Steady','flat',[1650,1640,1645,1638,1642,1640,1636,1641,1639,1640],'var(--energy)'],
-    ['Weight','74.2 kg trend','▼ 1.6 kg','neutral',[75.8,75.6,75.4,75.2,75.0,74.9,74.7,74.5,74.4,74.2],'var(--weight)'],
-    ['Blood oxygen','97% avg','Steady','flat',[97,96,97,97,98,97,96,97,97,97],'var(--oxy)']
-  ];
-  var list=document.getElementById('trendList');
-  if(list){
-    trends.forEach(function(t){
+  // Trends, grouped by answer
+  function fill(id, rows){
+    var list=document.getElementById(id); if(!list) return;
+    rows.forEach(function(t){
       var row=document.createElement('div'); row.className='trow';
       var nm=document.createElement('div'); nm.className='nm'; nm.textContent=t[0];
       var sm=document.createElement('small'); sm.textContent=t[1]; nm.appendChild(sm); row.appendChild(nm);
@@ -583,10 +680,18 @@ td.dim2 { color: var(--muted); }
       list.appendChild(row);
     });
   }
-
-  // Highlight sparkline: walking HR falling
-  var hl=document.getElementById('hlLine');
-  if(hl){ var w=[104,105,103,103,102,101,101,100,99,99,98,98]; var a=Math.min.apply(null,w), b=Math.max.apply(null,w);
-    hl.setAttribute('points', w.map(function(v,i){ return (4+212*i/(w.length-1))+','+(4+26*(b-v)/(b-a)); }).join(' ')); }
+  fill('trendBetter',[
+    ['Resting heart rate','56 bpm','▼ 4 bpm','good',[61,61,60,60,59,59,58,57,57,56],'var(--heart)'],
+    ['Walking heart rate','98 bpm avg','▼ 5 bpm','good',[104,103,103,101,101,100,99,99,98,98],'var(--heart)'],
+    ['Steps','9,316 a day','▲ 12%','good',[8.1,8.4,8.2,8.8,8.9,9.1,8.7,9.4,9.2,9.3],'var(--accent)']
+  ]);
+  fill('trendSteady',[
+    ['Active energy','640 kcal a day','Steady','flat',[620,650,610,640,660,630,650,640,620,640],'var(--energy)'],
+    ['Resting energy','1,640 kcal a day','Steady','flat',[1650,1640,1645,1638,1642,1640,1636,1641,1639,1640],'var(--energy)'],
+    ['Blood oxygen','97% avg','Steady','flat',[97,96,97,97,98,97,96,97,97,97],'var(--oxy)']
+  ]);
+  fill('trendChanging',[
+    ['Weight','74.2 kg trend','▼ 1.6 kg','neutral',[75.8,75.6,75.4,75.2,75.0,74.9,74.7,74.5,74.4,74.2],'var(--weight)']
+  ]);
 })();
 </script>

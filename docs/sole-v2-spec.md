@@ -1,10 +1,24 @@
 # Sole v2: product, design and engineering spec
 
-Status: proposal for Bhavik's review (2026-10-03). No app code written for v2 yet.
-Mockups: docs/mockups-v2.html (open in a browser), also the "Sole Product Plan" artifact (https://claude.ai/artifact/7zMM1tyrMynSsWtHPb5x5x), version 2.
+Status: proposal for Bhavik's review (2026-10-03), revised after a CX bar-raiser review (section 0). No app code written for v2 yet.
+Mockups: docs/mockups-v2.html (open in a browser), also the "Sole Product Plan" artifact (https://claude.ai/artifact/7zMM1tyrMynSsWtHPb5x5x), version 3.
 Builds on v1 (on main): CMPedometer steps, per-hour dedupe with Health, two-way step sync, Today/History/Settings, widgets, App Group `group.com.pandyabhavik.Sole`.
 
 ---
+
+## 0. CX bar-raiser review (changes from the first draft)
+Test applied to every screen: does it answer "how am I doing?" in under three seconds, and can the user trust the answer?
+1. **No single answer on Today** → Today opens with one **headline** sentence and a tally ("6 usual · 1 better · 0 worth a look").
+2. **2×2 vitals grid didn't scale** (large text, hid walking HR) → vitals are **rows** grouped Heart / Energy & body, each with value, status word and usual range in numbers.
+3. **Range bar had no numbers** → every band labeled ("usual 58–63"); each detail page has a **How we know** panel.
+4. **Outliers poisoned the baseline** → **day tags** (sick, travel, late night, alcohol, hard workout, stressed); tags show on charts; sick/travel days are excluded from usual ranges.
+5. **Highlights tab was a dead end** → highlights appear on Today and on the related metric; third tab becomes **Recap** (weekly story + past weeks).
+6. **Steps lost "am I on track?"** → step ring gets a **usual-pace tick** (median steps by this time on this weekday, last 8 weeks).
+7. **No fast way to add** → floating **+ glass button** beside the tab bar opens one sheet: log weight or tag today. Also in Control Center and Siri.
+8. **First run had no payoff** → after Health access, **"Here's your normal"** screen shows ranges learned from history.
+9. **Health data exposed** → privacy defaults: Lock Screen widgets show steps only, weight can be hidden everywhere, optional Face ID lock, neutral wording (Usual / Better / Worth a look; amber, never red), max one notification a day.
+
+Status words used everywhere: **Usual**, **Better** (outside range in the healthy direction), **Worth a look** (outside range the other way), **Learning** (< 7 days of data). Weight has no Better/Worth a look until a weight goal exists (later).
 
 ## 1. Product (principal PM)
 
@@ -60,8 +74,22 @@ Rules pick the 2–3 most notable facts (biggest deviation from your normal firs
 
 **F10. Weekly summary notification (opt-in).** A local notification on Monday morning with the weekly recap highlight. Local only, no server.
 
+> F1–F5 above are superseded where section 0 differs: the brief becomes the headline + tally, vitals are rows not a grid, Highlights live on Today/metric pages/Recap instead of a tab.
+
+### Added after review (recommended for v2; free-account safe)
+- **F11. Day tags** (SwiftData, on device; included in CSV export since Health can't back them up).
+- **F12. Sleep as context**: read `sleepAnalysis` for last night's length, shown beside heart metrics. No sleep screens.
+- **F13. First run "Here's your normal"**.
+- **F14. Weekly Recap story**: four swipeable cards each Monday (activity, heart, body, one thing to try); share any card as an image (ImageRenderer + ShareLink). Replaces the Highlights tab.
+- **F15. Doctor report**: one-page PDF of the last 3 months (ranges, trends, tagged days) via ImageRenderer → PDF + ShareLink.
+- **F16. Privacy controls**: Face ID lock (LocalAuthentication), hide weight, Lock Screen widgets steps-only by default.
+- **F17. Siri and Control Center**: App Intents shortcut "How am I doing?" speaks the headline; Control Center control opens the Add sheet.
+
+### Later
+Pattern insights from tags ("after late nights your RHR runs 5 bpm higher"), HRV, VO2 max, weight goal with projected date, Apple Watch app, on-device AI wording.
+
 ### Out of scope for v2
-Sleep, HRV, VO2 max, workouts (good candidates for v3; all readable with the same approach). Watch app. Medications, cycle, nutrition. Accounts, cloud, social, ads. Any diagnosis or medical advice.
+Workouts. Full sleep tracking. Medications, cycle, nutrition. Accounts, cloud, social, ads. Any diagnosis or medical advice.
 
 ### Edge cases the design must handle
 - **No Apple Watch**: heart, oxygen and resting energy are usually empty. Cards show "Needs Apple Watch data" in a compact state, and the brief only talks about what exists. Steps, weight and (often) active energy still work.
@@ -79,13 +107,14 @@ Sleep, HRV, VO2 max, workouts (good candidates for v3; all readable with the sam
 3. **Your normal is the reference.** The range band is the signature visual element, used on cards, detail charts and widgets.
 4. **Color has meaning.** Each metric keeps Apple Health's category color so it feels familiar: steps/activity orange, energy red-orange, heart pink-red, oxygen cyan-blue, body purple. Status colors (good green, watch amber) are separate from metric colors. Never red for "bad" on health data; amber "worth a look" instead.
 
-### Structure
-- **Tabs (floating glass tab bar, minimizes on scroll):** Today · Trends · Highlights. Settings moves to a glass gear button in the Today toolbar.
-- **Today:** large title + date, glass toolbar (gear, profile-free). Daily Brief card. Steps hero ring. Vitals grid (Heart, Energy, Body, Oxygen). Latest highlight preview.
-- **Trends:** segmented range picker (glass), list of metrics with sparkline, arrow and change.
-- **Highlights:** card feed, filter chips (All, Heart, Activity, Body).
-- **Metric detail:** pushed screen. Chart with range band, scrubbing, trend sentence, explainer, sources.
-- **Sheets (glass, medium detent):** Log weight, Edit goal.
+### Structure (revised after review)
+- **Tabs (floating glass tab bar, minimizes on scroll):** Today · Trends · Recap, plus a separate floating **+** glass button beside the tab bar. Settings is a glass gear button in the Today toolbar.
+- **First run:** existing onboarding, then "Here's your normal" (ranges learned from history) before landing on Today.
+- **Today:** date + gear; headline sentence + tally chips; steps ring with usual-pace tick; vitals rows grouped Heart (resting, walking avg) and Energy & body (burned = active + resting, blood oxygen, weight); new highlights inline below.
+- **Trends:** sections **Worth a look** (only when non-empty) → **Getting better** → **Steady** → **Changing**; each row has sparkline and change.
+- **Recap:** this week's story (full-screen cards with glass progress bar, Share image, Next), past weeks below.
+- **Metric detail:** pushed screen. Chart with range band and tag markers, trend sentence, How we know (expandable), context chips (last night's sleep, source).
+- **Sheets (glass):** Add (Weight | Tag today segmented, weight wheel, tag chips, Save), Edit goal.
 - **Background:** a soft gradient tinted by today's step progress so the glass tab bar has something to refract; flat system background in Reduce Transparency mode.
 
 ### Type and layout
@@ -109,6 +138,11 @@ VoiceOver reads each card as one sentence ("Resting heart rate 56, below your us
 | Widgets | WidgetKit + App Group | Yes | Already in v1 |
 | Weekly notification | UserNotifications, local only | Yes | Remote push is not available on free accounts, and not needed |
 | On-device storage | SwiftData | Yes | |
+| Sleep (context) | HealthKit `sleepAnalysis` read | Yes | |
+| Siri "how am I doing?" | App Intents / App Shortcuts | Yes | Doesn't need the Siri capability; confirm on first build |
+| Control Center button | WidgetKit control widget (iOS 18+) | Yes | |
+| Face ID lock | LocalAuthentication | Yes | `NSFaceIDUsageDescription` only |
+| Recap image, doctor PDF | ImageRenderer, ShareLink | Yes | |
 
 ### What a free account rules out (not in this plan)
 - iCloud / CloudKit sync (already dropped; Health is the backup).
@@ -143,16 +177,23 @@ VoiceOver reads each card as one sentence ("Resting heart rate 56, below your us
 
 ---
 
+### Added math (after review)
+- **Usual range** excludes days tagged sick or travel.
+- **Usual pace** (steps): median cumulative steps by the current time on the same weekday over the last 8 weeks.
+- **Headline priority**: any *Worth a look* first (largest deviation), else any *Better*, else "Everything is in your usual range"; second line adds steps pace.
+
 ## 4. Build order (each step runs on the iPhone before the next)
-1. **iOS 26 + Liquid Glass shell**: raise deployment target, new tab structure (Today, Trends, Highlights), gear → Settings, glass toolbar and tab bar minimize. Existing steps screens keep working.
-2. **HealthKit read for the 7 new types** + `HealthMetricsService` + `DailyMetric` cache + history import. Settings shows per-metric status.
-3. **Baselines and statuses** (pure Swift, unit tests).
-4. **Today redesign**: Daily Brief, steps hero, vitals grid with range bars.
-5. **Metric detail pages** with banded charts and explainers.
-6. **Trends tab**.
-7. **Highlights engine + tab** (unit-tested rules).
-8. **Log weight** (write `bodyMass`).
-9. **Widgets update + weekly local notification**.
+1. **iOS 26 + Liquid Glass shell**: raise deployment target, tabs (Today, Trends, Recap), + button, gear → Settings, tab bar minimize. Existing steps screens keep working.
+2. **HealthKit read for the 7 new types + sleep** + `HealthMetricsService` + `DailyMetric` cache + history import.
+3. **Your normal**: usual ranges, usual pace, statuses, trends, headline (pure Swift, unit tests).
+4. **First run "Here's your normal"**.
+5. **Today redesign**: headline, tally, ring with pace tick, grouped vitals rows.
+6. **Add sheet**: log weight (write `bodyMass`) and day tags.
+7. **Metric detail pages**: banded charts with tag markers, How we know, sleep context.
+8. **Trends tab**.
+9. **Highlights rules + weekly Recap** (story cards, share image, Monday local notification).
+10. **Widgets, Control Center, Siri** (Lock Screen privacy defaults).
+11. **Privacy + doctor report**: Face ID lock, hide weight, PDF export; tags in CSV export.
 
 ## 5. Open choices (defaults picked)
 - Minimum iOS 26: **yes** (default).
