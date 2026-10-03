@@ -26,5 +26,8 @@ struct SoleApp: App {
                 break
             }
         }
+        .backgroundTask(.appRefresh(StepEngine.backgroundRefreshID)) {
+            await model.engine.backgroundRefresh()
+        }
     }
 }

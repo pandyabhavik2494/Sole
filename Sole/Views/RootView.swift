@@ -31,6 +31,7 @@ struct RootView: View {
         }
         .tint(Palette.accent)
         .onChange(of: preferences.dailyGoal) { engine.goalDidChange() }
+        .onChange(of: preferences.distanceUnit) { engine.preferencesDidChange() }
     }
 
     /// Debug builds accept `-tab history` (or `settings`) at launch, for screenshots.

@@ -14,13 +14,41 @@
 			remoteGlobalIDString = A10000000000000000000006;
 			remoteInfo = Sole;
 		};
+		A1000000000000000000002C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A10000000000000000000009 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A10000000000000000000021;
+			remoteInfo = SoleWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000029 /* SoleWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A10000000000000000000028 /* SoleWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A1000000000000000000002A /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A10000000000000000000029 /* SoleWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A10000000000000000000001 /* Sole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sole.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10000000000000000000019 /* SoleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000000000000000000001D /* Sole.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sole.entitlements; sourceTree = "<group>"; };
 		A1000000000000000000001E /* Sole-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sole-Info.plist"; sourceTree = "<group>"; };
+		A10000000000000000000028 /* SoleWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SoleWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1000000000000000000002D /* SoleWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SoleWidget.entitlements; sourceTree = "<group>"; };
+		A1000000000000000000002E /* SoleWidget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SoleWidget-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +60,11 @@
 		A10000000000000000000010 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000020 /* SoleWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SoleWidget;
 			sourceTree = "<group>";
 		};
 		A10000000000000000000011 /* SoleTests */ = {
@@ -56,6 +89,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A10000000000000000000023 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -64,6 +104,7 @@
 			children = (
 				A10000000000000000000002 /* Sole */,
 				A10000000000000000000010 /* Shared */,
+				A10000000000000000000020 /* SoleWidget */,
 				A10000000000000000000011 /* SoleTests */,
 				A1000000000000000000001C /* Config */,
 				A10000000000000000000005 /* Products */,
@@ -75,6 +116,7 @@
 			children = (
 				A10000000000000000000001 /* Sole.app */,
 				A10000000000000000000019 /* SoleTests.xctest */,
+				A10000000000000000000028 /* SoleWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -84,6 +126,8 @@
 			children = (
 				A1000000000000000000001D /* Sole.entitlements */,
 				A1000000000000000000001E /* Sole-Info.plist */,
+				A1000000000000000000002D /* SoleWidget.entitlements */,
+				A1000000000000000000002E /* SoleWidget-Info.plist */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -98,10 +142,12 @@
 				A10000000000000000000007 /* Sources */,
 				A10000000000000000000003 /* Frameworks */,
 				A10000000000000000000008 /* Resources */,
+				A1000000000000000000002A /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A1000000000000000000002B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				A10000000000000000000002 /* Sole */,
@@ -137,6 +183,29 @@
 			productReference = A10000000000000000000019 /* SoleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		A10000000000000000000021 /* SoleWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000000000000000000025 /* Build configuration list for PBXNativeTarget "SoleWidgetExtension" */;
+			buildPhases = (
+				A10000000000000000000022 /* Sources */,
+				A10000000000000000000023 /* Frameworks */,
+				A10000000000000000000024 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A10000000000000000000020 /* SoleWidget */,
+				A10000000000000000000010 /* Shared */,
+			);
+			name = SoleWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = SoleWidgetExtension;
+			productReference = A10000000000000000000028 /* SoleWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -148,6 +217,9 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					A10000000000000000000006 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					A10000000000000000000021 = {
 						CreatedOnToolsVersion = 16.0;
 					};
 					A10000000000000000000012 = {
@@ -171,6 +243,7 @@
 			projectRoot = "";
 			targets = (
 				A10000000000000000000006 /* Sole */,
+				A10000000000000000000021 /* SoleWidgetExtension */,
 				A10000000000000000000012 /* SoleTests */,
 			);
 		};
@@ -185,6 +258,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A10000000000000000000015 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10000000000000000000024 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -208,6 +288,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A10000000000000000000022 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -215,6 +302,11 @@
 			isa = PBXTargetDependency;
 			target = A10000000000000000000006 /* Sole */;
 			targetProxy = A1000000000000000000001B /* PBXContainerItemProxy */;
+		};
+		A1000000000000000000002B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A10000000000000000000021 /* SoleWidgetExtension */;
+			targetProxy = A1000000000000000000002C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -372,6 +464,58 @@
 			};
 			name = Release;
 		};
+		A10000000000000000000026 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/SoleWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BPPU7JV4Q4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/SoleWidget-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Sole;
+				INFOPLIST_KEY_NSMotionUsageDescription = "Sole uses your iPhone's motion sensor to count your steps, distance and flights climbed.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pandyabhavik.Sole.SoleWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		A10000000000000000000027 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/SoleWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BPPU7JV4Q4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/SoleWidget-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Sole;
+				INFOPLIST_KEY_NSMotionUsageDescription = "Sole uses your iPhone's motion sensor to count your steps, distance and flights climbed.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pandyabhavik.Sole.SoleWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -398,6 +542,15 @@
 			buildConfigurations = (
 				A10000000000000000000017 /* Debug */,
 				A10000000000000000000018 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000000000000000000025 /* Build configuration list for PBXNativeTarget "SoleWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000000000000000000026 /* Debug */,
+				A10000000000000000000027 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

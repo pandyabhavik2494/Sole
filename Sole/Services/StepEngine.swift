@@ -1,6 +1,8 @@
+import BackgroundTasks
 import CoreMotion
 import Foundation
 import Observation
+import WidgetKit
 
 /// Keeps Sole's store in step with the iPhone's motion sensor and publishes today's numbers.
 ///
@@ -29,6 +31,7 @@ final class StepEngine {
     @ObservationIgnored private var liveHour: Date?
     @ObservationIgnored private var isCatchingUp = false
     @ObservationIgnored private var pendingSave: Task<Void, Never>?
+    @ObservationIgnored private var lastWidgetReload: Date = .distantPast
 
     private static let lastBackfillKey = "lastPedometerBackfill"
     private static let lastHealthSyncKey = "lastHealthSync"
@@ -62,6 +65,26 @@ final class StepEngine {
     func enteredBackground() {
         stopLive()
         store.save()
+        publishWidgetSnapshot(force: true)
+        scheduleBackgroundRefresh()
+    }
+
+    // MARK: Background refresh
+
+    static let backgroundRefreshID = "com.pandyabhavik.Sole.refresh"
+
+    /// Asks iOS to wake Sole now and then, to backfill, sync Health and refresh the widgets.
+    func scheduleBackgroundRefresh() {
+        let request = BGAppRefreshTaskRequest(identifier: Self.backgroundRefreshID)
+        request.earliestBeginDate = Date.now.addingTimeInterval(30 * 60)
+        try? BGTaskScheduler.shared.submit(request)
+    }
+
+    func backgroundRefresh() async {
+        scheduleBackgroundRefresh()
+        guard preferences.hasOnboarded else { return }
+        await sync()
+        publishWidgetSnapshot(force: true)
     }
 
     /// Fills any missed hours from the sensor, syncs with Health, and saves.
@@ -255,6 +278,32 @@ final class StepEngine {
     func refreshToday() {
         today = store.dayDetail(for: .now)
         streak = store.currentStreak()
+        publishWidgetSnapshot()
+    }
+
+    /// Call after the goal or distance unit changes so widgets pick them up right away.
+    func preferencesDidChange() {
+        publishWidgetSnapshot(force: true)
+    }
+
+    /// Saves today's numbers for the widgets, and asks them to redraw at most once a minute while walking.
+    private func publishWidgetSnapshot(force: Bool = false) {
+        let snapshot = WidgetSnapshot(
+            day: today.day,
+            steps: today.steps,
+            distanceMeters: today.distanceMeters,
+            floors: today.floors,
+            goal: preferences.dailyGoal,
+            unit: preferences.distanceUnit,
+            updatedAt: .now
+        )
+        let previous = WidgetSnapshot.load()
+        guard force || previous.map({ $0.day != snapshot.day || $0.steps != snapshot.steps || $0.goal != snapshot.goal || $0.unit != snapshot.unit }) ?? true else { return }
+        snapshot.save()
+        if force || Date.now.timeIntervalSince(lastWidgetReload) > 60 {
+            lastWidgetReload = .now
+            WidgetCenter.shared.reloadAllTimelines()
+        }
     }
 
     /// Saves at most every 30 seconds while walking, so iCloud isn't sent a change per step.
