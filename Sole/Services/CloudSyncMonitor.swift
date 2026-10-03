@@ -15,7 +15,10 @@ final class CloudSyncMonitor {
 
     private static let lastSyncKey = "lastICloudSync"
 
-    var isSignedIn: Bool { FileManager.default.ubiquityIdentityToken != nil }
+    /// False when this build has no iCloud capability (see `Persistence.iCloudEnabled`).
+    var isAvailable: Bool { Persistence.iCloudEnabled }
+
+    var isSignedIn: Bool { isAvailable && FileManager.default.ubiquityIdentityToken != nil }
 
     init() {
         lastSync = UserDefaults.standard.object(forKey: Self.lastSyncKey) as? Date

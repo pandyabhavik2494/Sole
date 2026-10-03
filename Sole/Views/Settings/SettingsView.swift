@@ -125,6 +125,7 @@ struct SettingsView: View {
     }
 
     private var cloudDetail: String {
+        guard cloud.isAvailable else { return "Not in this build. History is kept on this iPhone" }
         guard cloud.isSignedIn else { return "Sign in to iCloud in the Settings app to keep your history" }
         let days = Set(summaries.map { Calendar.current.startOfDay(for: $0.day) }).count
         let stored = "\(days) \(days == 1 ? "day" : "days") stored"

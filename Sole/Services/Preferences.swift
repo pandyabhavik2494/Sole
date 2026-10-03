@@ -38,7 +38,7 @@ final class Preferences {
     @ObservationIgnored private let cloud: NSUbiquitousKeyValueStore?
     @ObservationIgnored private var observer: NSObjectProtocol?
 
-    init(local: UserDefaults = .standard, cloud: NSUbiquitousKeyValueStore? = .default) {
+    init(local: UserDefaults = .standard, cloud: NSUbiquitousKeyValueStore? = Persistence.iCloudEnabled ? .default : nil) {
         self.local = local
         self.cloud = cloud
         cloud?.synchronize()
