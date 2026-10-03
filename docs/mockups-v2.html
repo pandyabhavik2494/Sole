@@ -1,0 +1,592 @@
+<title>Sole Product Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a plan document column; a scrolling strip of Liquid Glass phone mockups is the centrepiece, then evidence (metrics, feasibility, build order) */
+:root {
+  --bg: #eef0f5;
+  --surface: #ffffff;
+  --ink: #161b2e;
+  --muted: #5c6578;
+  --line: #d8dce6;
+  --accent: #e8a317;      /* saffron: steps, carried from v1 */
+  --accent-soft: #fbedc9;
+  --good: #23935f; --good-soft: #d8f0e3;
+  --watch: #c97a00; --watch-soft: #fbe9c8;
+  --heart: #f2295b; --energy: #f7562c; --oxy: #1f9bd6; --weight: #8a5cf0;
+  /* phone world */
+  --ph-base: #f2f1f7;
+  --ph-blob1: rgba(255,170,70,.55); --ph-blob2: rgba(255,90,140,.32); --ph-blob3: rgba(80,170,255,.30);
+  --card: rgba(255,255,255,.86);
+  --glass: rgba(255,255,255,.42);
+  --glass-edge: rgba(255,255,255,.75);
+  --glass-hi: rgba(255,255,255,.9);
+  --glass-shadow: rgba(30,35,60,.16);
+  --track: #e3e5ec;
+  --scrim: rgba(20,22,35,.28);
+  --phone-edge: #1b2030;
+  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body: "Figtree", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --rounded: ui-rounded, "SF Pro Rounded", "Figtree", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e121c; --surface: #161c29; --ink: #e8ebf3; --muted: #9aa3b6; --line: #283043;
+  --accent: #f2b53a; --accent-soft: #3a3020; --good: #47c88c; --good-soft: #17352a; --watch: #f0a83a; --watch-soft: #3a2e17;
+  --heart: #ff4d78; --energy: #ff7449; --oxy: #4cb8ee; --weight: #a885ff;
+  --ph-base: #07090f; --ph-blob1: rgba(240,140,40,.30); --ph-blob2: rgba(230,60,120,.22); --ph-blob3: rgba(50,120,230,.25);
+  --card: rgba(28,32,44,.82); --glass: rgba(60,66,84,.38); --glass-edge: rgba(255,255,255,.16); --glass-hi: rgba(255,255,255,.22);
+  --glass-shadow: rgba(0,0,0,.5); --track: #2b3142; --scrim: rgba(0,0,0,.45); --phone-edge: #394259; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0e121c; --surface: #161c29; --ink: #e8ebf3; --muted: #9aa3b6; --line: #283043;
+  --accent: #f2b53a; --accent-soft: #3a3020; --good: #47c88c; --good-soft: #17352a; --watch: #f0a83a; --watch-soft: #3a2e17;
+  --heart: #ff4d78; --energy: #ff7449; --oxy: #4cb8ee; --weight: #a885ff;
+  --ph-base: #07090f; --ph-blob1: rgba(240,140,40,.30); --ph-blob2: rgba(230,60,120,.22); --ph-blob3: rgba(50,120,230,.25);
+  --card: rgba(28,32,44,.82); --glass: rgba(60,66,84,.38); --glass-edge: rgba(255,255,255,.16); --glass-hi: rgba(255,255,255,.22);
+  --glass-shadow: rgba(0,0,0,.5); --track: #2b3142; --scrim: rgba(0,0,0,.45); --phone-edge: #394259; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 1100px; margin: 0 auto; padding-inline: 20px; padding-block: 48px 72px; display: grid; gap: 64px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.1; }
+h1 { font-size: clamp(40px, 7vw, 64px); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 18px; font-weight: 700; }
+p { margin: 0; max-width: 68ch; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lede { font-size: 19px; color: var(--muted); }
+.lede b { color: var(--ink); font-weight: 600; }
+header { display: grid; gap: 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.chip { font-size: 13px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); background: var(--surface); }
+section { display: grid; gap: 22px; }
+.sec-head { display: grid; gap: 8px; }
+.note { font-size: 15px; color: var(--muted); }
+
+/* Roles */
+.roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.role { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.role .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.role p { font-size: 15px; color: var(--muted); }
+.role strong { color: var(--ink); font-weight: 600; }
+
+/* ---------- Phones ---------- */
+.strip { display: flex; gap: 30px; overflow-x: auto; padding: 8px 4px 22px; scroll-snap-type: x mandatory; }
+.shot { display: grid; gap: 12px; justify-items: center; align-content: start; scroll-snap-align: start; flex: 0 0 auto; }
+.shot figcaption { font-size: 13.5px; color: var(--muted); max-width: 262px; text-align: center; }
+.shot figcaption b { color: var(--ink); display: block; font-size: 15px; }
+figure { margin: 0; }
+.phone { width: 272px; height: 620px; border-radius: 46px; border: 9px solid var(--phone-edge); position: relative; overflow: hidden; display: flex; flex-direction: column;
+  font-family: -apple-system, "SF Pro Text", var(--body); color: var(--ink);
+  background: radial-gradient(120% 60% at 15% 0%, var(--ph-blob1), transparent 60%), radial-gradient(90% 50% at 100% 30%, var(--ph-blob2), transparent 65%), radial-gradient(100% 50% at 20% 100%, var(--ph-blob3), transparent 60%), var(--ph-base); }
+.island { position: absolute; top: 9px; left: 50%; transform: translateX(-50%); width: 80px; height: 23px; border-radius: 12px; background: #000; z-index: 5; }
+.status { height: 40px; flex: 0 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 6px 24px 0; font-size: 12px; font-weight: 600; }
+.screen { flex: 1; padding: 2px 12px 74px; display: flex; flex-direction: column; gap: 8px; min-height: 0; overflow: hidden; }
+.glass { background: var(--glass); -webkit-backdrop-filter: blur(14px) saturate(180%); backdrop-filter: blur(14px) saturate(180%); border: 1px solid var(--glass-edge); box-shadow: inset 0 1px 0 var(--glass-hi), 0 8px 22px var(--glass-shadow); }
+.topbar { display: flex; justify-content: space-between; align-items: center; }
+.gbtn { width: 32px; height: 32px; border-radius: 50%; display: grid; place-content: center; font-size: 15px; color: var(--ink); }
+.nav-title { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; }
+.nav-sub { font-size: 11.5px; color: var(--muted); }
+.tabbar { position: absolute; left: 14px; right: 14px; bottom: 14px; height: 52px; border-radius: 28px; display: flex; align-items: center; justify-content: space-around; padding: 4px; z-index: 4; }
+.tabbar span { flex: 1; height: 100%; border-radius: 26px; display: grid; place-content: center; justify-items: center; font-size: 9.5px; font-weight: 600; color: var(--ink); gap: 2px; }
+.tabbar span.on { color: var(--accent); background: var(--glass-hi); box-shadow: inset 0 0 0 1px var(--glass-edge); }
+.tabbar svg { width: 18px; height: 18px; display: block; }
+
+.card { background: var(--card); border-radius: 20px; padding: 10px 12px; display: grid; gap: 6px; }
+.brief { font-size: 11.6px; line-height: 1.4; }
+.brief .k { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.brief b { font-weight: 650; }
+.hero { display: flex; align-items: center; gap: 12px; }
+.ring { width: 76px; height: 76px; flex: 0 0 auto; position: relative; }
+.ring svg { width: 100%; height: 100%; display: block; }
+.ring .c { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; font-size: 9px; color: var(--muted); }
+.hero .big { font-family: var(--rounded); font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -.02em; line-height: 1; }
+.hero small { display: block; font-size: 11px; color: var(--muted); margin-top: 3px; }
+.hero .pace { font-size: 10.5px; font-weight: 650; color: var(--good); margin-top: 5px; }
+
+.vitals { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.vit { background: var(--card); border-radius: 18px; padding: 9px 10px 10px; display: grid; gap: 4px; min-width: 0; }
+.vit .h { font-size: 10px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+.vit .h i { width: 7px; height: 7px; border-radius: 50%; display: block; }
+.vit .n { font-family: var(--rounded); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.05; }
+.vit .n em { font-style: normal; font-size: 10px; font-weight: 500; color: var(--muted); margin-left: 2px; }
+.vit .s { font-size: 9.5px; color: var(--muted); }
+.st { font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 999px; justify-self: start; }
+.st.good { color: var(--good); background: var(--good-soft); }
+.st.usual { color: var(--muted); background: var(--track); }
+.st.watch { color: var(--watch); background: var(--watch-soft); }
+.rb { position: relative; height: 6px; border-radius: 3px; background: var(--track); margin: 3px 0 1px; }
+.rb .band { position: absolute; top: 0; bottom: 0; border-radius: 3px; opacity: .35; }
+.rb .dot { position: absolute; top: 50%; width: 10px; height: 10px; border-radius: 50%; transform: translate(-50%, -50%); border: 2px solid var(--surface); }
+.stack { display: flex; height: 6px; border-radius: 3px; overflow: hidden; gap: 2px; margin: 3px 0 1px; }
+
+.seg { display: grid; grid-template-columns: repeat(5, 1fr); border-radius: 999px; padding: 3px; font-size: 10px; text-align: center; font-weight: 600; }
+.seg span { padding: 4px 0; border-radius: 999px; color: var(--muted); }
+.seg span.on { background: var(--glass-hi); color: var(--ink); box-shadow: 0 1px 3px var(--glass-shadow); }
+.back { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.back .gbtn { width: 30px; height: 30px; font-size: 16px; }
+.chart svg { width: 100%; height: auto; display: block; }
+.chart text { font-family: -apple-system, var(--body); fill: var(--muted); font-size: 9px; }
+.say { font-size: 12px; line-height: 1.42; }
+.say b { font-weight: 650; }
+.mini { font-size: 10.5px; color: var(--muted); line-height: 1.4; }
+.mini b { color: var(--ink); font-weight: 650; display: block; font-size: 11px; margin-bottom: 1px; }
+
+.tlist { background: var(--card); border-radius: 20px; overflow: hidden; }
+.trow { display: grid; grid-template-columns: 1fr 58px 52px; align-items: center; gap: 6px; padding: 8px 11px; border-bottom: 1px solid var(--line); }
+.trow:last-child { border-bottom: 0; }
+.trow .nm { font-size: 11.5px; font-weight: 600; min-width: 0; }
+.trow .nm small { display: block; font-size: 10px; color: var(--muted); font-weight: 500; font-variant-numeric: tabular-nums; }
+.trow svg { width: 58px; height: 22px; display: block; }
+.trow .chg { font-size: 10px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.chg.good { color: var(--good); } .chg.flat { color: var(--muted); } .chg.neutral { color: var(--weight); }
+
+.chips-row { display: flex; gap: 6px; }
+.fchip { font-size: 10px; font-weight: 600; padding: 5px 10px; border-radius: 999px; }
+.fchip.on { color: var(--ink); background: var(--glass-hi); }
+.hl { background: var(--card); border-radius: 20px; padding: 10px 12px; display: grid; gap: 5px; }
+.hl .meta { display: flex; justify-content: space-between; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.hl .meta span:last-child { color: var(--muted); font-weight: 500; text-transform: none; letter-spacing: 0; }
+.hl p { font-size: 12px; line-height: 1.38; font-weight: 600; }
+.hl small { font-size: 10.5px; color: var(--muted); line-height: 1.38; }
+.hl svg { width: 100%; height: 34px; display: block; }
+
+.scrim { position: absolute; inset: 0; background: var(--scrim); z-index: 6; }
+.sheet { position: absolute; left: 6px; right: 6px; bottom: 6px; height: 330px; border-radius: 34px; z-index: 7; padding: 10px 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+.grab { width: 36px; height: 5px; border-radius: 3px; background: var(--muted); opacity: .4; align-self: center; }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 700; }
+.wnum { text-align: center; font-family: var(--rounded); font-size: 46px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -.02em; line-height: 1; }
+.wnum em { font-style: normal; font-size: 18px; color: var(--muted); font-weight: 600; }
+.wheel { display: flex; justify-content: center; gap: 4px; font-family: var(--rounded); font-variant-numeric: tabular-nums; color: var(--muted); font-size: 13px; }
+.wheel span { padding: 2px 8px; }
+.wheel span.on { color: var(--ink); background: var(--card); border-radius: 8px; font-weight: 700; }
+.cta { border-radius: 999px; text-align: center; padding: 11px; font-weight: 700; font-size: 13.5px; color: #fff; background: var(--weight); }
+.fineprint { font-size: 10.5px; color: var(--muted); text-align: center; }
+.dim { filter: saturate(.8); }
+
+/* Widgets */
+.widgets { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; padding: 22px; border-radius: 24px;
+  background: radial-gradient(80% 90% at 10% 10%, var(--ph-blob1), transparent 60%), radial-gradient(70% 90% at 90% 80%, var(--ph-blob3), transparent 60%), var(--ph-base); }
+.w { border-radius: 26px; padding: 14px; color: var(--ink); }
+.w-s { width: 150px; height: 150px; display: grid; align-content: space-between; }
+.w-m { width: 320px; max-width: 100%; height: 150px; display: grid; grid-template-columns: 96px 1fr; gap: 14px; align-items: center; }
+.w .lbl { font-size: 10.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.w .n { font-family: var(--rounded); font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; }
+.wl { display: grid; gap: 7px; font-size: 11.5px; }
+.wl div { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+.wl b { font-family: var(--rounded); font-size: 15px; font-variant-numeric: tabular-nums; }
+.lock { display: flex; gap: 16px; align-items: center; background: var(--phone-edge); color: #fff; border-radius: 22px; padding: 18px 22px; }
+.lock .inline { font-size: 13.5px; opacity: .9; }
+.lock .time { font-family: var(--rounded); font-size: 44px; font-weight: 700; line-height: 1; }
+
+/* Tables */
+.tbl-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14.5px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+td.m { font-weight: 600; white-space: nowrap; }
+td.m i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
+td code, li code { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+td.dim2 { color: var(--muted); }
+.yes { color: var(--good); font-weight: 700; white-space: nowrap; }
+.no { color: var(--watch); font-weight: 700; white-space: nowrap; }
+
+/* Lists */
+.cols { align-items: start; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.flist { list-style: none; margin: 0; padding: 0; display: grid; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+.flist li { padding: 12px 16px; border-bottom: 1px solid var(--line); display: grid; gap: 2px; min-width: 0; }
+.flist li:last-child { border-bottom: 0; }
+.flist b { font-weight: 600; }
+.flist span { color: var(--muted); font-size: 14.5px; }
+.pill { justify-self: start; font-family: var(--mono); font-size: 10.5px; padding: 2px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: .05em; }
+.pill.in { background: var(--accent-soft); color: var(--ink); }
+.pill.out { background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+.pill.no { background: var(--watch-soft); color: var(--watch); }
+
+.flow-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+.flow-wrap svg { display: block; min-width: 820px; width: 100%; height: auto; }
+.flow-wrap text { font-family: var(--body); fill: var(--ink); }
+.flow-wrap .sub { fill: var(--muted); font-size: 12px; }
+.flow-wrap .box { fill: var(--bg); stroke: var(--line); }
+.flow-wrap .core { fill: var(--accent-soft); stroke: var(--accent); }
+.flow-wrap .arrow { stroke: var(--muted); stroke-width: 1.6; fill: none; }
+.flow-wrap .ah { fill: var(--muted); }
+
+.math { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.math div { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.math p { font-size: 14.5px; color: var(--muted); }
+
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: baseline; }
+.steps li::before { content: counter(s); font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.steps li span { color: var(--muted); }
+.callout { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font-size: 15px; display: grid; gap: 6px; }
+.callout p { max-width: none; }
+.callout.warn { background: var(--watch-soft); border-color: transparent; }
+@media (prefers-reduced-motion: no-preference) { .strip { scroll-behavior: smooth; } }
+@media (prefers-reduced-transparency: reduce) { .glass { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--card); } }
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Product, design &amp; engineering proposal · v2 · 3 Oct 2026</span>
+  <h1>Sole</h1>
+  <p class="lede">From step counter to a health companion that <b>explains</b>. Sole reads your steps, heart, energy, weight and blood oxygen from Apple Health and tells you, in plain words, how each one compares with <b>your own normal</b> and which way it is heading.</p>
+  <div class="chips"><span class="chip">iOS 26 · Liquid Glass</span><span class="chip">SwiftUI + Swift Charts</span><span class="chip">HealthKit</span><span class="chip">CoreMotion</span><span class="chip">Free developer account</span><span class="chip">Everything stays on your iPhone</span></div>
+</header>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Three hats</span><h2>How the plan was made</h2></div>
+  <div class="roles">
+    <div class="role"><span class="tag">Product</span><h3>Every number gets a meaning</h3><p>Each metric shows <strong>your usual range</strong>, <strong>its direction</strong> and <strong>one sentence</strong> on what that means. A Daily Brief leads the app; a Highlights feed replaces Apple's, which other apps can't read.</p></div>
+    <div class="role"><span class="tag">Design</span><h3>Glass for controls, calm for content</h3><p>Liquid Glass sits on the <strong>navigation layer only</strong>: floating tab bar, toolbar buttons, sheets. Cards stay solid so numbers are easy to read. One signature visual, the <strong>range band</strong>, appears everywhere.</p></div>
+    <div class="role"><span class="tag">Engineering</span><h3>Only what a free account can ship</h3><p>Every feature below uses HealthKit, Swift Charts, WidgetKit and <strong>local</strong> notifications, all available with a free personal team. Anything that needs a paid account or a hidden Apple API is left out and listed.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Screens</span><h2>What it looks like</h2><p class="note">Three tabs in a floating glass bar: Today, Trends, Highlights. Settings moves behind the gear. Sample data; mockups follow your light or dark setting, as the app will. Scroll sideways for more.</p></div>
+  <div class="strip">
+
+    <!-- TODAY -->
+    <figure class="shot">
+      <div class="phone"><div class="island"></div>
+        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen">
+          <div class="topbar"><div><div class="nav-title">Today</div><div class="nav-sub">Saturday, 3 October</div></div><span class="gbtn glass" aria-label="Settings">⚙︎</span></div>
+          <div class="card brief">
+            <span class="k">Your day so far</span>
+            <span>You're <b>ahead of a usual Saturday</b>. Resting heart rate of <b>56</b> is below your normal, a sign of good recovery. Weight is <b>down 0.4 kg</b> this week.</span>
+          </div>
+          <div class="card hero">
+            <div class="ring" role="img" aria-label="7,842 of 10,000 steps">
+              <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="41" fill="none" stroke="var(--track)" stroke-width="10"/><circle cx="50" cy="50" r="41" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" stroke-dasharray="202 257.6" transform="rotate(-90 50 50)"/></svg>
+              <div class="c">78%</div>
+            </div>
+            <div><div class="big">7,842</div><small>of 10,000 steps</small><div class="pace">▲ 1,100 ahead of usual</div></div>
+          </div>
+          <div class="vitals">
+            <div class="vit"><span class="h"><i style="background:var(--heart)"></i>Resting HR</span><span class="n">56<em>bpm</em></span>
+              <div class="rb"><span class="band" style="left:40%;width:25%;background:var(--heart)"></span><span class="dot" style="left:30%;background:var(--heart)"></span></div>
+              <span class="st good">Below usual</span></div>
+            <div class="vit"><span class="h"><i style="background:var(--energy)"></i>Energy</span><span class="n">2,310<em>kcal</em></span>
+              <div class="stack"><span style="flex:1640;background:var(--energy);opacity:.35"></span><span style="flex:670;background:var(--energy)"></span></div>
+              <span class="s">670 moving · 1,640 resting</span></div>
+            <div class="vit"><span class="h"><i style="background:var(--weight)"></i>Weight</span><span class="n">74.2<em>kg</em></span>
+              <svg viewBox="0 0 100 18" style="width:100%;height:12px" aria-hidden="true"><polyline points="0,3 16,4 33,6 50,8 66,10 83,12 100,15" fill="none" stroke="var(--weight)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="s">−0.4 kg this week</span></div>
+            <div class="vit"><span class="h"><i style="background:var(--oxy)"></i>Blood oxygen</span><span class="n">97<em>%</em></span>
+              <div class="rb"><span class="band" style="left:50%;width:40%;background:var(--oxy)"></span><span class="dot" style="left:70%;background:var(--oxy)"></span></div>
+              <span class="st usual">Usual</span></div>
+          </div>
+        </div>
+        <div class="tabbar glass">
+          <span class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="3"/></svg>Today</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3,17 9,11 13,14 21,6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Trends</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 6 6.5.5-5 4.2 1.6 6.3L12 16.6 6.4 20l1.6-6.3-5-4.2 6.5-.5z" fill="currentColor"/></svg>Highlights</span>
+        </div>
+      </div>
+      <figcaption><b>Today</b>A Daily Brief in plain words first, then steps, then a card per vital. The band on each card is your usual range; the dot is today.</figcaption>
+    </figure>
+
+    <!-- HEART DETAIL -->
+    <figure class="shot">
+      <div class="phone"><div class="island"></div>
+        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen">
+          <div class="back"><span class="gbtn glass">‹</span>Heart</div>
+          <div class="nav-title" style="font-size:22px">Resting heart rate</div>
+          <div class="seg glass"><span>W</span><span class="on">M</span><span>6M</span><span>Y</span><span>All</span></div>
+          <div class="card chart">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:var(--rounded);font-size:24px;font-weight:700">56 <span style="font-size:11px;color:var(--muted);font-weight:500">bpm today</span></span><span class="st good">▼ 4 bpm</span></div>
+            <svg id="rhrChart" viewBox="0 0 240 132" role="img" aria-label="Resting heart rate over the past month, falling from about 61 to 56 bpm; usual range 58 to 63"></svg>
+          </div>
+          <div class="card say">
+            <span><b>Down 4 bpm over the past month.</b> A lower resting heart rate usually means your heart does less work at rest. Regular walking, good sleep and less stress all push it down.</span>
+          </div>
+          <div class="card mini">
+            <span><b>Walking heart rate · 98 bpm avg</b>Down 5 bpm since July while your steps held steady, so walks are getting easier.</span>
+          </div>
+          <div class="mini" style="padding:0 4px">Source: Apple Watch · Not medical advice</div>
+        </div>
+        <div class="tabbar glass">
+          <span class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="3"/></svg>Today</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3,17 9,11 13,14 21,6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Trends</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 6 6.5.5-5 4.2 1.6 6.3L12 16.6 6.4 20l1.6-6.3-5-4.2 6.5-.5z" fill="currentColor"/></svg>Highlights</span>
+        </div>
+      </div>
+      <figcaption><b>Metric detail</b>Tap any card. The shaded band is your usual range (last 4 weeks). One sentence says what changed and why it matters.</figcaption>
+    </figure>
+
+    <!-- TRENDS -->
+    <figure class="shot">
+      <div class="phone"><div class="island"></div>
+        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen">
+          <div class="nav-title">Trends</div>
+          <div class="nav-sub" style="margin-top:-4px">Last 4 weeks vs. the 12 before</div>
+          <div class="tlist" id="trendList"></div>
+          <div class="mini" style="padding:0 4px">Green means a change in a healthy direction. Weight stays neutral unless you set a weight goal.</div>
+        </div>
+        <div class="tabbar glass">
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="3"/></svg>Today</span>
+          <span class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3,17 9,11 13,14 21,6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Trends</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 6 6.5.5-5 4.2 1.6 6.3L12 16.6 6.4 20l1.6-6.3-5-4.2 6.5-.5z" fill="currentColor"/></svg>Highlights</span>
+        </div>
+      </div>
+      <figcaption><b>Trends</b>Every metric on one list with a sparkline and how much it moved. Arrows are colored by meaning, so falling resting heart rate is green.</figcaption>
+    </figure>
+
+    <!-- HIGHLIGHTS -->
+    <figure class="shot">
+      <div class="phone"><div class="island"></div>
+        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen">
+          <div class="nav-title">Highlights</div>
+          <div class="chips-row"><span class="fchip glass on">All</span><span class="fchip">Heart</span><span class="fchip">Activity</span><span class="fchip">Body</span></div>
+          <div class="hl">
+            <div class="meta"><span style="color:var(--heart)">Fitness</span><span>Today</span></div>
+            <p>Walking is getting easier.</p>
+            <small>Your walking heart rate fell 5 bpm since July while you kept walking about 9,000 steps a day.</small>
+            <svg viewBox="0 0 220 34" aria-hidden="true"><polyline id="hlLine" fill="none" stroke="var(--heart)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="hl">
+            <div class="meta"><span style="color:var(--accent)">Record</span><span>Wed</span></div>
+            <p>18,204 steps: your best day since March.</p>
+          </div>
+          <div class="hl">
+            <div class="meta"><span style="color:var(--watch)">Worth a look</span><span>Sun</span></div>
+            <p>Resting heart rate was 9 bpm above your usual.</p>
+            <small>Short sleep, illness, alcohol or a hard workout often cause this. It was back to normal by Tuesday.</small>
+          </div>
+          <div class="hl">
+            <div class="meta"><span style="color:var(--energy)">Weekly recap</span><span>Mon</span></div>
+            <p>4,480 active kcal, 9% more than last week.</p>
+          </div>
+        </div>
+        <div class="tabbar glass">
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="3"/></svg>Today</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3,17 9,11 13,14 21,6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Trends</span>
+          <span class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 6 6.5.5-5 4.2 1.6 6.3L12 16.6 6.4 20l1.6-6.3-5-4.2 6.5-.5z" fill="currentColor"/></svg>Highlights</span>
+        </div>
+      </div>
+      <figcaption><b>Highlights</b>Sole's own feed, computed on your iPhone: trends, records, days off your usual and a weekly recap. Calm wording, amber instead of red.</figcaption>
+    </figure>
+
+    <!-- LOG WEIGHT SHEET -->
+    <figure class="shot">
+      <div class="phone"><div class="island"></div>
+        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen dim">
+          <div class="topbar"><div><div class="nav-title">Today</div><div class="nav-sub">Saturday, 3 October</div></div><span class="gbtn glass">⚙︎</span></div>
+          <div class="card brief"><span class="k">Your day so far</span><span>You're <b>ahead of a usual Saturday</b>. Resting heart rate is <b>56</b>…</span></div>
+          <div class="card hero" style="height:110px"></div>
+        </div>
+        <div class="scrim"></div>
+        <div class="sheet glass">
+          <span class="grab"></span>
+          <div class="sheet-top"><span class="gbtn glass" style="width:30px;height:30px;font-size:13px">✕</span><span>Log weight</span><span style="width:30px"></span></div>
+          <div class="wnum">74.6 <em>kg</em></div>
+          <div class="wheel"><span>74.4</span><span>74.5</span><span class="on">74.6</span><span>74.7</span><span>74.8</span></div>
+          <div class="fineprint">Today, 9:41 · trend weight will update to 74.2 kg</div>
+          <div style="flex:1"></div>
+          <div class="cta">Save to Apple Health</div>
+        </div>
+      </div>
+      <figcaption><b>Log weight</b>A glass sheet from the Weight card. Sole saves the reading to Apple Health, so it stays two‑way like steps.</figcaption>
+    </figure>
+
+  </div>
+
+  <div class="sec-head" style="margin-top:6px"><h3>Widgets</h3><p class="note">Home Screen widgets pick up the glass look automatically on iOS 26. They read a small snapshot Sole saves, because Health data is locked while the phone is locked.</p></div>
+  <div class="widgets">
+    <div class="w w-s glass" aria-label="Small widget">
+      <span class="lbl">Steps</span>
+      <span class="n">7,842</span>
+      <div style="display:grid;gap:5px"><div class="rb" style="margin:0"><span class="band" style="left:0;width:78%;background:var(--accent);opacity:1"></span></div><span style="font-size:11px;color:var(--muted)">Ahead of your usual</span></div>
+    </div>
+    <div class="w w-m glass" aria-label="Medium widget">
+      <div style="display:grid;gap:4px"><span class="lbl">Today</span><span class="n">7,842</span><span style="font-size:11px;color:var(--muted)">of 10,000 steps</span></div>
+      <div class="wl">
+        <div><span>Resting HR</span><span><b>56</b> <span class="st good">Below usual</span></span></div>
+        <div><span>Active</span><span><b>670</b> <span class="st usual">Usual</span></span></div>
+        <div><span>Weight</span><span><b>74.2</b> <span style="font-size:10px;color:var(--muted)">−0.4/wk</span></span></div>
+      </div>
+    </div>
+    <div class="lock" aria-label="Lock Screen widgets">
+      <svg width="58" height="58" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="25" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="6"/><circle cx="30" cy="30" r="25" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-dasharray="122.5 157.1" transform="rotate(-90 30 30)"/><text x="30" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">7.8k</text></svg>
+      <div><div class="inline">7,842 steps · RHR 56</div><div class="time">9:41</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Your metrics</span><h2>How Sole explains each one</h2><p class="note">All read from Apple Health. Weight and steps are also written back.</p></div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Metric</th><th>Comes from</th><th>What Sole tells you</th><th>Health type</th></tr></thead>
+    <tbody>
+      <tr><td class="m"><i style="background:var(--accent)"></i>Steps</td><td class="dim2">iPhone sensor, Watch</td><td>Goal progress and pace vs. your usual day of the week</td><td><code>stepCount</code></td></tr>
+      <tr><td class="m"><i style="background:var(--heart)"></i>Resting heart rate</td><td class="dim2">Apple Watch</td><td>Recovery signal: today vs. your 4‑week normal, and the monthly trend</td><td><code>restingHeartRate</code></td></tr>
+      <tr><td class="m"><i style="background:var(--heart)"></i>Walking heart rate</td><td class="dim2">Apple Watch</td><td>Fitness signal: lower over time means walks feel easier</td><td><code>walkingHeartRateAverage</code></td></tr>
+      <tr><td class="m"><i style="background:var(--heart)"></i>Heart rate</td><td class="dim2">Apple Watch</td><td>Today's low and high, and when it peaked</td><td><code>heartRate</code></td></tr>
+      <tr><td class="m"><i style="background:var(--energy)"></i>Active energy</td><td class="dim2">Watch, iPhone</td><td>Calories from moving, vs. your usual</td><td><code>activeEnergyBurned</code></td></tr>
+      <tr><td class="m"><i style="background:var(--energy)"></i>Resting energy</td><td class="dim2">Apple Watch</td><td>Calories just from being alive; added to active for your total burn</td><td><code>basalEnergyBurned</code></td></tr>
+      <tr><td class="m"><i style="background:var(--weight)"></i>Weight</td><td class="dim2">Smart scale or logged in Sole</td><td>Smoothed trend weight and weekly rate, so daily swings don't mislead</td><td><code>bodyMass</code></td></tr>
+      <tr><td class="m"><i style="background:var(--oxy)"></i>Blood oxygen</td><td class="dim2">Apple Watch</td><td>"Steady" or not vs. your range, and the lowest overnight reading. Never alarms on one reading</td><td><code>oxygenSaturation</code></td></tr>
+      <tr><td class="m"><i style="background:var(--muted)"></i>Highlights</td><td class="dim2">Computed by Sole</td><td>Trends, records, off‑usual days, weekly recap, fitness signals</td><td class="dim2">n/a</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout warn"><p><b>Apple's own Highlights can't be read by any app.</b> There is no public API for the Health app's Highlights or Trends, on any developer account. Sole rebuilds the same idea itself from your raw data, which also lets it explain things Apple's version doesn't.</p></div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Scope</span><h2>Features</h2></div>
+  <div class="cols">
+    <ul class="flist">
+      <li><span class="pill in">v2</span><b>Daily Brief</b><span>Two or three plain sentences at the top of Today, picked by what is most unusual today.</span></li>
+      <li><span class="pill in">v2</span><b>Vitals at a glance</b><span>Heart, Energy, Weight, Oxygen cards with range band and a status word.</span></li>
+      <li><span class="pill in">v2</span><b>Metric detail</b><span>Charts from a week to all time with your usual band, a trend sentence and a short explainer.</span></li>
+      <li><span class="pill in">v2</span><b>Trends</b><span>All metrics on one list, 4 weeks vs. the 12 before, colored by meaning.</span></li>
+      <li><span class="pill in">v2</span><b>Highlights</b><span>Sole's own on‑device feed: trends, records, off‑usual days, weekly recap.</span></li>
+      <li><span class="pill in">v2</span><b>Energy made relatable</b><span>Resting plus active as one total burn.</span></li>
+      <li><span class="pill in">v2</span><b>Log weight</b><span>Saved to Apple Health.</span></li>
+      <li><span class="pill in">v2</span><b>Steps, kept from v1</b><span>Live count, goal, hourly bars, history, streak, Watch dedupe.</span></li>
+      <li><span class="pill in">v2</span><b>Widgets and weekly summary</b><span>Updated widgets; an opt‑in Monday notification, sent locally.</span></li>
+    </ul>
+    <ul class="flist">
+      <li><span class="pill out">Later</span><b>Sleep, HRV, VO2 max, workouts</b><span>Readable the same way; good next additions.</span></li>
+      <li><span class="pill out">Later</span><b>On‑device AI wording</b><span>Apple's Foundation Models could rephrase the brief on Apple Intelligence iPhones. Works on a free account; v2 uses fixed sentence templates so wording stays predictable.</span></li>
+      <li><span class="pill out">Later</span><b>Weight goal</b><span>Would let weight arrows turn green or amber.</span></li>
+      <li><span class="pill no">Not doable</span><b>Reading Apple's Highlights and Trends</b><span>No API exists.</span></li>
+      <li><span class="pill no">Not doable</span><b>iCloud sync, push notifications, TestFlight</b><span>Need a paid developer account. Apple Health stays the backup.</span></li>
+      <li><span class="pill out">Not planned</span><b>Diagnosis or medical advice</b><span>Sole describes changes, never diagnoses.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Design</span><h2>Liquid Glass, used with restraint</h2></div>
+  <div class="math">
+    <div><h3>Glass on the navigation layer</h3><p>Floating tab bar that shrinks when you scroll, round toolbar buttons, segmented pickers and sheets. Content cards stay solid so numbers read clearly over any background.</p></div>
+    <div><h3>A colored world behind the glass</h3><p>A soft gradient sits behind every screen so the glass has something to bend. Health's own category colors (orange, red, purple, blue) keep each metric familiar.</p></div>
+    <div><h3>Words before numbers</h3><p>Each screen opens with a sentence, then the figure, then the chart. Status is always a word plus an arrow, never color alone.</p></div>
+    <div><h3>Accessible by default</h3><p>Reduce Transparency swaps glass for solid fills, Reduce Motion stops ring animation, VoiceOver reads each card as one sentence, Dynamic Type reflows cards.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Engineering check</span><h2>Built with a free developer account</h2></div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Need</th><th>Apple framework</th><th>Free account</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="m">Read the 8 metrics</td><td>HealthKit</td><td class="yes">Works</td><td class="dim2">Already used in v1</td></tr>
+      <tr><td class="m">Write weight and steps</td><td>HealthKit</td><td class="yes">Works</td><td class="dim2">Share permission per type</td></tr>
+      <tr><td class="m">Update in the background</td><td>HealthKit background delivery</td><td class="yes">Works</td><td class="dim2">Heart types arrive at most hourly; Sole also refreshes when opened</td></tr>
+      <tr><td class="m">Liquid Glass</td><td>SwiftUI, iOS 26 SDK</td><td class="yes">Works</td><td class="dim2">No entitlement. Raise minimum to iOS 26</td></tr>
+      <tr><td class="m">Charts with range bands</td><td>Swift Charts</td><td class="yes">Works</td><td class="dim2">Area, line and rule marks</td></tr>
+      <tr><td class="m">Widgets</td><td>WidgetKit + App Group</td><td class="yes">Works</td><td class="dim2">Already in v1</td></tr>
+      <tr><td class="m">Weekly summary alert</td><td>UserNotifications (local)</td><td class="yes">Works</td><td class="dim2">Local only; no server</td></tr>
+      <tr><td class="m">iCloud sync</td><td>CloudKit</td><td class="no">Paid only</td><td class="dim2">Dropped; Health is the backup</td></tr>
+      <tr><td class="m">Remote push</td><td>APNs</td><td class="no">Paid only</td><td class="dim2">Not needed</td></tr>
+      <tr><td class="m">Apple's Highlights</td><td>none</td><td class="no">No API</td><td class="dim2">Sole computes its own</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><p><b>Living with a free account:</b> the app has to be reinstalled from Xcode every 7 days when its signing expires. Your data stays on the phone between installs. A free team can keep up to 3 of its own apps on a device.</p></div>
+
+  <div class="flow-wrap">
+    <svg viewBox="0 0 980 200" role="img" aria-label="Data flow: Apple Health and the motion sensor feed daily statistics into an on-device cache, which feeds baselines and highlights, which feed screens, widgets and notifications">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="ah" d="M0 0 L10 5 L0 10z"/></marker></defs>
+      <rect class="box" x="10" y="20" width="180" height="70" rx="12"/><text x="24" y="50" font-weight="700" font-size="15">Apple Health</text><text class="sub" x="24" y="72">8 types, all sources</text>
+      <rect class="box" x="10" y="110" width="180" height="70" rx="12"/><text x="24" y="140" font-weight="700" font-size="15">Motion sensor</text><text class="sub" x="24" y="162">Live steps</text>
+      <rect class="box" x="250" y="65" width="200" height="70" rx="12"/><text x="264" y="95" font-weight="700" font-size="15">Daily statistics</text><text class="sub" x="264" y="117">Sum, avg, min, max per day</text>
+      <rect class="box" x="510" y="65" width="190" height="70" rx="12"/><text x="524" y="95" font-weight="700" font-size="15">On‑device cache</text><text class="sub" x="524" y="117">Rebuildable from Health</text>
+      <rect class="core" x="760" y="20" width="210" height="70" rx="12"/><text x="774" y="50" font-weight="700" font-size="15">Your normal</text><text class="sub" x="774" y="72">Ranges, trends, highlights</text>
+      <rect class="box" x="760" y="110" width="210" height="70" rx="12"/><text x="774" y="140" font-weight="700" font-size="15">Screens &amp; widgets</text><text class="sub" x="774" y="162">Brief, cards, weekly alert</text>
+      <path class="arrow" d="M190 55 C 220 55, 220 90, 248 90" marker-end="url(#ah)"/>
+      <path class="arrow" d="M190 145 C 220 145, 220 110, 248 110" marker-end="url(#ah)"/>
+      <path class="arrow" d="M450 100 L 508 100" marker-end="url(#ah)"/>
+      <path class="arrow" d="M700 90 C 730 90, 730 55, 758 55" marker-end="url(#ah)"/>
+      <path class="arrow" d="M865 90 L 865 108" marker-end="url(#ah)"/>
+    </svg>
+  </div>
+
+  <div class="math">
+    <div><h3>Usual range</h3><p>The middle half (25th to 75th percentile) of your daily values over the previous 28 days. Needs 7 days of data; until then cards say "Learning your normal".</p></div>
+    <div><h3>Trend</h3><p>Average of the last 4 weeks vs. the 12 weeks before, reported only when the change beats a minimum (for example 2 bpm for resting heart rate, 0.5 kg for weight, 10% for steps).</p></div>
+    <div><h3>Trend weight</h3><p>A smoothed average of daily weigh‑ins, so one salty dinner doesn't look like a kilo gained.</p></div>
+    <div><h3>No Apple Watch?</h3><p>Heart, oxygen and resting energy are usually empty without one. Those cards collapse to "Needs Apple Watch data" and the brief only talks about what exists.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Plan</span><h2>Build order</h2><p class="note">Each step runs on your iPhone before the next starts. No v2 code has been written yet.</p></div>
+  <ol class="steps">
+    <li><div><b>iOS 26 and the Liquid Glass shell.</b> <span>New tabs (Today, Trends, Highlights), gear for Settings, glass toolbar. Steps keep working.</span></div></li>
+    <li><div><b>Read the new Health types.</b> <span>Daily statistics, on‑device cache and history import; per‑metric status in Settings.</span></div></li>
+    <li><div><b>Your normal.</b> <span>Usual ranges, statuses and trends as tested Swift code.</span></div></li>
+    <li><div><b>Today redesign.</b> <span>Daily Brief, steps hero, vitals cards with range bands.</span></div></li>
+    <li><div><b>Metric detail pages.</b> <span>Banded charts and explainers.</span></div></li>
+    <li><div><b>Trends tab.</b></div></li>
+    <li><div><b>Highlights.</b> <span>Rules engine with tests, then the feed.</span></div></li>
+    <li><div><b>Log weight.</b> <span>Writes to Apple Health.</span></div></li>
+    <li><div><b>Widgets and the weekly summary.</b></div></li>
+  </ol>
+</section>
+</div>
+
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+  function el(tag, attrs, parent){ var e=document.createElementNS(NS,tag); for(var k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+
+  // Resting HR, 30 days, drifting from ~61 to 56 (sample data)
+  var rhr=[61,62,60,61,63,61,60,61,60,59,61,60,59,60,58,59,60,58,57,59,58,57,58,66,60,57,57,56,57,56];
+  var svg=document.getElementById('rhrChart');
+  if(svg){
+    var x0=24,x1=234,y0=8,y1=112,lo=52,hi=68;
+    function X(i){ return x0+(x1-x0)*i/(rhr.length-1); }
+    function Y(v){ return y1-(y1-y0)*(v-lo)/(hi-lo); }
+    [52,56,60,64,68].forEach(function(v){
+      el('line',{x1:x0,x2:x1,y1:Y(v),y2:Y(v),stroke:'var(--line)','stroke-width':1},svg);
+      var t=el('text',{x:x0-5,y:Y(v)+3,'text-anchor':'end'},svg); t.textContent=v;
+    });
+    el('rect',{x:x0,y:Y(63),width:x1-x0,height:Y(58)-Y(63),fill:'var(--heart)',opacity:.13,rx:3},svg);
+    var lb=el('text',{x:x1-2,y:Y(63)-3,'text-anchor':'end'},svg); lb.textContent='Your usual 58–63';
+    el('polyline',{points:rhr.map(function(v,i){return X(i)+','+Y(v);}).join(' '),fill:'none',stroke:'var(--heart)','stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+    rhr.forEach(function(v,i){ el('circle',{cx:X(i),cy:Y(v),r:i===rhr.length-1?3.6:1.6,fill:'var(--heart)'},svg); });
+    [['4 Sep',0],['18 Sep',14],['Today',29]].forEach(function(p){ var t=el('text',{x:X(p[1]),y:126,'text-anchor':p[1]===0?'start':(p[1]===29?'end':'middle')},svg); t.textContent=p[0]; });
+  }
+
+  // Trends list
+  var trends=[
+    ['Resting heart rate','56 bpm','▼ 4 bpm','good',[61,61,60,60,59,59,58,57,57,56],'var(--heart)'],
+    ['Walking heart rate','98 bpm avg','▼ 5 bpm','good',[104,103,103,101,101,100,99,99,98,98],'var(--heart)'],
+    ['Steps','9,316 a day','▲ 12%','good',[8.1,8.4,8.2,8.8,8.9,9.1,8.7,9.4,9.2,9.3],'var(--accent)'],
+    ['Active energy','640 kcal a day','Steady','flat',[620,650,610,640,660,630,650,640,620,640],'var(--energy)'],
+    ['Resting energy','1,640 kcal a day','Steady','flat',[1650,1640,1645,1638,1642,1640,1636,1641,1639,1640],'var(--energy)'],
+    ['Weight','74.2 kg trend','▼ 1.6 kg','neutral',[75.8,75.6,75.4,75.2,75.0,74.9,74.7,74.5,74.4,74.2],'var(--weight)'],
+    ['Blood oxygen','97% avg','Steady','flat',[97,96,97,97,98,97,96,97,97,97],'var(--oxy)']
+  ];
+  var list=document.getElementById('trendList');
+  if(list){
+    trends.forEach(function(t){
+      var row=document.createElement('div'); row.className='trow';
+      var nm=document.createElement('div'); nm.className='nm'; nm.textContent=t[0];
+      var sm=document.createElement('small'); sm.textContent=t[1]; nm.appendChild(sm); row.appendChild(nm);
+      var s=el('svg',{viewBox:'0 0 58 22','aria-hidden':'true'}); var d=t[4], mn=Math.min.apply(null,d), mx=Math.max.apply(null,d), r=(mx-mn)||1;
+      var pts=d.map(function(v,i){ return (2+54*i/(d.length-1))+','+(19-15*(v-mn)/r); });
+      el('polyline',{points:pts.join(' '),fill:'none',stroke:t[5],'stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round'},s);
+      var last=pts[pts.length-1].split(','); el('circle',{cx:last[0],cy:last[1],r:2.4,fill:t[5]},s);
+      row.appendChild(s);
+      var c=document.createElement('div'); c.className='chg '+t[3]; c.textContent=t[2]; row.appendChild(c);
+      list.appendChild(row);
+    });
+  }
+
+  // Highlight sparkline: walking HR falling
+  var hl=document.getElementById('hlLine');
+  if(hl){ var w=[104,105,103,103,102,101,101,100,99,99,98,98]; var a=Math.min.apply(null,w), b=Math.max.apply(null,w);
+    hl.setAttribute('points', w.map(function(v,i){ return (4+212*i/(w.length-1))+','+(4+26*(b-v)/(b-a)); }).join(' ')); }
+})();
+</script>
