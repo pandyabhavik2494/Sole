@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}</style>
+</head>
+<body>
+<title>Sole Product Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a plan document column, with a horizontal strip of phone mockups as the centrepiece */
+:root {
+  --bg: #eef1f4;
+  --surface: #ffffff;
+  --ink: #16213a;
+  --muted: #5d6a80;
+  --line: #d6dce5;
+  --accent: #e8a317;      /* saffron: progress */
+  --accent-soft: #fbedc9;
+  --good: #2f9e6a;
+  --good-soft: #d9f1e4;
+  --phone-bg: #f6f7f9;
+  --phone-edge: #1c2232;
+  --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body: "Figtree", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1420; --surface: #171e2d; --ink: #e7ebf3; --muted: #9aa5b8; --line: #2a3346;
+  --accent: #f2b53a; --accent-soft: #3b3120; --good: #4cc48b; --good-soft: #1a3428;
+  --phone-bg: #0b0f18; --phone-edge: #3a4459; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f1420; --surface: #171e2d; --ink: #e7ebf3; --muted: #9aa5b8; --line: #2a3346;
+  --accent: #f2b53a; --accent-soft: #3b3120; --good: #4cc48b; --good-soft: #1a3428;
+  --phone-bg: #0b0f18; --phone-edge: #3a4459; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; padding-block: 48px 72px; display: grid; gap: 56px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.1; }
+h1 { font-size: clamp(40px, 7vw, 64px); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 18px; font-weight: 700; }
+p { margin: 0; max-width: 65ch; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lede { font-size: 19px; color: var(--muted); }
+header { display: grid; gap: 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.chip { font-size: 13px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); background: var(--surface); }
+section { display: grid; gap: 20px; }
+.sec-head { display: grid; gap: 6px; }
+
+/* Requirements */
+.reqs { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.req { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.req .tag { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; }
+.req p { font-size: 14.5px; color: var(--muted); }
+.req strong { color: var(--ink); font-weight: 600; }
+
+/* Phones */
+.strip { display: flex; gap: 28px; overflow-x: auto; padding: 8px 4px 20px; scroll-snap-type: x mandatory; }
+.shot { display: grid; gap: 12px; justify-items: center; scroll-snap-align: start; flex: 0 0 auto; }
+.shot figcaption { font-size: 13.5px; color: var(--muted); max-width: 250px; text-align: center; }
+.shot figcaption b { color: var(--ink); display: block; font-size: 15px; }
+figure { margin: 0; }
+.phone { width: 262px; height: 548px; border-radius: 42px; border: 9px solid var(--phone-edge); background: var(--phone-bg); position: relative; overflow: hidden; display: flex; flex-direction: column; font-family: -apple-system, "SF Pro Text", var(--body); }
+.island { position: absolute; top: 9px; left: 50%; transform: translateX(-50%); width: 78px; height: 22px; border-radius: 12px; background: #000; z-index: 2; }
+.status { height: 40px; flex: 0 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 6px 22px 0; font-size: 12px; font-weight: 600; }
+.screen { flex: 1; padding: 4px 14px 0; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+.nav-title { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+.nav-sub { font-size: 12px; color: var(--muted); margin-top: -10px; }
+.tabbar { flex: 0 0 auto; display: flex; justify-content: space-around; border-top: 1px solid var(--line); padding: 8px 0 18px; background: var(--surface); font-size: 10px; color: var(--muted); }
+.tabbar span { display: grid; justify-items: center; gap: 2px; }
+.tabbar span.on { color: var(--accent); }
+.tabbar i { width: 20px; height: 20px; border-radius: 6px; background: currentColor; opacity: .85; display: block; }
+.tabbar i.c { border-radius: 50%; }
+.tabbar i.b { clip-path: polygon(0 100%, 0 55%, 30% 55%, 30% 25%, 65% 25%, 65% 0, 100% 0, 100% 100%); border-radius: 2px; }
+.tabbar i.g { border-radius: 50%; clip-path: circle(50%); -webkit-mask: radial-gradient(circle, transparent 4px, #000 5px); mask: radial-gradient(circle, transparent 4px, #000 5px); }
+
+.ring { position: relative; width: 150px; height: 150px; align-self: center; }
+.ring svg { width: 100%; height: 100%; }
+.ring .num { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+.ring .big { font-family: ui-rounded, "SF Pro Rounded", var(--display); font-size: 32px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; line-height: 1; }
+.ring .small { font-size: 11.5px; color: var(--muted); margin-top: 4px; }
+.ring .togo { font-size: 11px; font-weight: 600; color: var(--accent); margin-top: 6px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.stat { background: var(--surface); border-radius: 12px; padding: 8px 10px; }
+.stat b { display: block; font-size: 14px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 10.5px; color: var(--muted); }
+.card { background: var(--surface); border-radius: 14px; padding: 10px 12px; display: grid; gap: 6px; }
+.card-h { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--muted); }
+.card-h b { color: var(--ink); font-weight: 600; }
+.bars { display: flex; align-items: flex-end; gap: 2px; height: 58px; }
+.bars i { flex: 1; background: var(--accent); border-radius: 2px 2px 0 0; min-height: 2px; opacity: .9; }
+.bars i.dim { background: var(--line); }
+.axis { display: flex; justify-content: space-between; font-size: 9px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.seg { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--surface); border-radius: 9px; padding: 2px; font-size: 11.5px; text-align: center; }
+.seg span { padding: 4px 0; border-radius: 7px; color: var(--muted); }
+.seg span.on { background: var(--bg); color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.week { position: relative; display: flex; align-items: flex-end; gap: 8px; height: 120px; padding-top: 6px; }
+.week .goal-line { position: absolute; left: 0; right: 0; border-top: 1.5px dashed var(--muted); opacity: .6; }
+.week .goal-line em { position: absolute; right: 0; top: -14px; font-size: 9px; font-style: normal; color: var(--muted); }
+.week div { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; height: 100%; }
+.week i { height: calc((100% - 20px) * var(--h)); width: 100%; border-radius: 5px 5px 2px 2px; background: var(--line); display: block; }
+.week i.met { background: var(--good); }
+.week i.today { background: var(--accent); }
+.week small { font-size: 9.5px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.streak { display: flex; align-items: center; gap: 10px; background: var(--good-soft); border-radius: 14px; padding: 10px 12px; font-size: 12px; }
+.streak b { font-size: 22px; font-variant-numeric: tabular-nums; color: var(--good); line-height: 1; }
+
+.group-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); padding-left: 4px; margin-bottom: -6px; }
+.list { background: var(--surface); border-radius: 12px; overflow: hidden; }
+.row { display: flex; align-items: center; gap: 10px; padding: 9px 12px; font-size: 13px; border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: 0; }
+.row .ico { width: 26px; height: 26px; border-radius: 7px; flex: 0 0 auto; display: grid; place-content: center; color: #fff; font-size: 13px; font-weight: 700; }
+.row .ico.h { background: #ff3b5c; }
+.row .ico.c { background: #2f8cff; }
+.row .ico.m { background: #ff9f0a; }
+.row .ico.u { background: #7d8799; }
+.row .t { flex: 1; min-width: 0; }
+.row .t small { display: block; color: var(--muted); font-size: 10.5px; }
+.row .v { color: var(--muted); font-size: 12px; }
+.ok { color: var(--good); font-weight: 600; font-size: 11px; }
+.btn { background: var(--accent); color: #1a1406; border-radius: 12px; text-align: center; padding: 11px; font-weight: 700; font-size: 14px; }
+.btn.ghost { background: transparent; color: var(--muted); font-weight: 500; padding: 4px; }
+.onb { flex: 1; display: flex; flex-direction: column; gap: 10px; padding: 8px 18px 20px; min-height: 0; }
+.onb .art { height: 96px; display: grid; place-content: center; }
+.onb h4 { font-size: 22px; margin: 0; line-height: 1.15; font-family: -apple-system, var(--body); }
+.onb p { font-size: 13px; color: var(--muted); }
+.perm { display: flex; gap: 10px; background: var(--surface); border-radius: 12px; padding: 10px; font-size: 12px; align-items: flex-start; }
+.perm .ico { width: 28px; height: 28px; border-radius: 8px; flex: 0 0 auto; display: grid; place-content: center; color: #fff; font-weight: 700; }
+.perm small { display: block; color: var(--muted); font-size: 11px; }
+.dots { display: flex; gap: 5px; justify-content: center; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+.dots i.on { background: var(--ink); width: 16px; border-radius: 3px; }
+
+/* Widgets */
+.widgets { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+.w-small { width: 150px; height: 150px; border-radius: 26px; background: var(--surface); border: 1px solid var(--line); padding: 14px; display: grid; align-content: space-between; }
+.w-small .lbl { font-size: 11px; color: var(--muted); font-weight: 600; }
+.w-small .n { font-family: ui-rounded, var(--display); font-size: 30px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; }
+.meter { height: 7px; border-radius: 4px; background: var(--line); overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--accent); border-radius: 4px; }
+.w-med { width: 320px; max-width: 100%; height: 150px; border-radius: 26px; background: var(--surface); border: 1px solid var(--line); padding: 14px 16px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; }
+.lock { display: flex; gap: 16px; align-items: center; background: var(--phone-edge); color: #fff; border-radius: 22px; padding: 18px 22px; }
+.lock .circ { width: 58px; height: 58px; }
+.lock .inline { font-size: 14px; opacity: .9; }
+.lock .time { font-family: ui-rounded, var(--display); font-size: 44px; font-weight: 700; line-height: 1; }
+
+/* Feature lists */
+.cols { align-items: start; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.flist { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.flist li { padding: 12px 16px; border-bottom: 1px solid var(--line); display: grid; gap: 2px; }
+.flist li:last-child { border-bottom: 0; }
+.flist b { font-weight: 600; }
+.flist span { color: var(--muted); font-size: 14.5px; }
+.pill { justify-self: start; font-family: var(--mono); font-size: 10.5px; padding: 2px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: .05em; }
+.pill.v1 { background: var(--accent-soft); color: var(--ink); }
+.pill.v2 { background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+
+/* Data flow */
+.flow-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+.flow-wrap svg { display: block; min-width: 720px; width: 100%; height: auto; }
+.flow-wrap text { font-family: var(--body); fill: var(--ink); }
+.flow-wrap .sub { fill: var(--muted); font-size: 12px; }
+.flow-wrap .box { fill: var(--bg); stroke: var(--line); }
+.flow-wrap .core { fill: var(--accent-soft); stroke: var(--accent); }
+.flow-wrap .arrow { stroke: var(--muted); stroke-width: 1.6; fill: none; }
+.flow-wrap .ah { fill: var(--muted); }
+.note { font-size: 14.5px; color: var(--muted); }
+
+/* Build order */
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: baseline; }
+.steps li::before { content: counter(s); font-family: var(--mono); font-size: 13px; color: var(--accent); }
+.steps li span { color: var(--muted); }
+.callout { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 10px; padding: 14px 16px; font-size: 15px; display: grid; gap: 6px; }
+.callout p { max-width: none; }
+@media (prefers-reduced-motion: no-preference) { .strip { scroll-behavior: smooth; } }
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Product &amp; design proposal · v1 · 3 Oct 2026</span>
+  <h1>Sole</h1>
+  <p class="lede">A pedometer for iPhone that counts every step with the phone's own motion sensor, keeps your history safe in iCloud, and stays in step with Apple Health in both directions.</p>
+  <div class="chips"><span class="chip">SwiftUI · iOS 17+</span><span class="chip">CoreMotion</span><span class="chip">HealthKit</span><span class="chip">SwiftData + CloudKit</span><span class="chip">No third‑party code</span></div>
+</header>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Your four requirements</span><h2>How Sole meets them</h2></div>
+  <div class="reqs">
+    <div class="req"><span class="tag">iPhone sensors</span><h3>Counted by the motion chip</h3><p>Steps come from <strong>CoreMotion's CMPedometer</strong>, the same low‑power motion coprocessor Apple uses. It counts all day even when Sole is closed.</p></div>
+    <div class="req"><span class="tag">Accuracy</span><h3>No gaps, no double counts</h3><p>Every launch <strong>backfills hour by hour</strong> from the sensor's 7‑day memory. When you also wear a Watch, each hour keeps the <strong>higher source only</strong>, so steps are never counted twice.</p></div>
+    <div class="req"><span class="tag">iCloud</span><h3>Always there</h3><p>History is stored with <strong>SwiftData synced to your private iCloud</strong>. A new iPhone or a reinstall brings every day back. No account to create.</p></div>
+    <div class="req"><span class="tag">Apple Health</span><h3>Two‑way sync</h3><p><strong>Reads</strong> steps, distance and floors from Health (Watch, other apps, history). <strong>Writes</strong> Sole's hourly counts back. Only changes move each sync.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Screens</span><h2>What it looks like</h2><p class="note">Three tabs: Today, History, Settings. Numbers are sample data. Mockups follow your light or dark setting, as the app will.</p></div>
+  <div class="strip">
+
+    <figure class="shot">
+      <div class="phone"><div class="island"></div>
+        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="onb">
+          <div class="art">
+            <svg width="92" height="92" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" fill="var(--accent-soft)"/><ellipse cx="48" cy="70" rx="13" ry="22" fill="var(--accent)" transform="rotate(-12 48 70)"/><ellipse cx="74" cy="46" rx="11" ry="19" fill="var(--ink)" opacity=".85" transform="rotate(14 74 46)"/></svg>
+          </div>
+          <h4>Let Sole count your steps</h4>
+          <p>Sole uses your iPhone's motion sensor and Apple Health. Your data stays in your own iCloud.</p>
+          <div class="perm"><span class="ico" style="background:#ff9f0a">M</span><div><b>Motion &amp; Fitness</b><small>Counts steps, distance and floors</small></div></div>
+          <div class="perm"><span class="ico" style="background:#ff3b5c">♥</span><div><b>Apple Health</b><small>Reads Watch steps, saves Sole's counts</small></div></div>
+          <div style="flex:1"></div>
+          <div class="dots"><i></i><i class="on"></i><i></i></div>
+          <div class="btn">Continue</div>
+        </div>
+      </div>
+      <figcaption><b>Onboarding</b>Three short screens: what Sole does, two permissions, then pick a daily goal. Declining Health still works, sensor only.</figcaption>
+    </figure>
+
+    <figure class="shot">
+      <div class="phone"><div class="island"></div>
+        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen">
+          <div class="nav-title">Today</div>
+          <div class="nav-sub">Friday, 3 October</div>
+          <div class="ring" role="img" aria-label="7,842 of 10,000 steps">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <circle cx="100" cy="100" r="84" fill="none" stroke="var(--line)" stroke-width="16" stroke-linecap="round" stroke-dasharray="395.8 527.8" transform="rotate(135 100 100)"/>
+              <circle cx="100" cy="100" r="84" fill="none" stroke="var(--accent)" stroke-width="16" stroke-linecap="round" stroke-dasharray="310.3 527.8" transform="rotate(135 100 100)"/>
+            </svg>
+            <div class="num"><span class="big">7,842</span><span class="small">of 10,000 steps</span><span class="togo">2,158 to go</span></div>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>5.9 km</b><span>Distance</span></div>
+            <div class="stat"><b>12</b><span>Floors</span></div>
+            <div class="stat"><b>74 min</b><span>Active</span></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><b>By hour</b><span>Peak 1,410 at 8 am</span></div>
+            <div class="bars" id="hourBars" aria-hidden="true"></div>
+            <div class="axis"><span>12a</span><span>6a</span><span>12p</span><span>6p</span><span>12a</span></div>
+          </div>
+        </div>
+        <div class="tabbar"><span class="on"><i class="c"></i>Today</span><span><i class="b"></i>History</span><span><i class="g"></i>Settings</span></div>
+      </div>
+      <figcaption><b>Today</b>One big live number inside a progress arc. Distance, floors and active time below, then steps by hour.</figcaption>
+    </figure>
+
+    <figure class="shot">
+      <div class="phone"><div class="island"></div>
+        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen">
+          <div class="nav-title">History</div>
+          <div class="seg"><span class="on">Week</span><span>Month</span><span>Year</span><span>All</span></div>
+          <div class="card">
+            <div class="card-h"><span>Daily average</span><span>27 Sep – 3 Oct</span></div>
+            <div style="font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1">9,316 <span style="font-size:12px;font-weight:500;color:var(--muted)">steps</span></div>
+            <div class="week" aria-hidden="true">
+              <span class="goal-line" style="bottom:calc(20px + (100% - 26px) * .77)"><em>Goal</em></span>
+              <div><i class="met" style="--h:.80"></i><small>S</small></div>
+              <div><i style="--h:.52"></i><small>S</small></div>
+              <div><i class="met" style="--h:.88"></i><small>M</small></div>
+              <div><i class="met" style="--h:.79"></i><small>T</small></div>
+              <div><i class="met" style="--h:.94"></i><small>W</small></div>
+              <div><i class="met" style="--h:.83"></i><small>T</small></div>
+              <div><i class="today" style="--h:.56"></i><small>F</small></div>
+            </div>
+          </div>
+          <div class="streak"><b>5</b><div><b style="font-size:13px;color:var(--ink)">day goal streak</b><br><span style="color:var(--muted)">Hit 10,000 today to make it 6</span></div></div>
+          <div class="kv">
+            <div class="stat"><b>14,206</b><span>Best day · Wed</span></div>
+            <div class="stat"><b>65,212</b><span>This week</span></div>
+          </div>
+        </div>
+        <div class="tabbar"><span><i class="c"></i>Today</span><span class="on"><i class="b"></i>History</span><span><i class="g"></i>Settings</span></div>
+      </div>
+      <figcaption><b>History</b>Week, month, year and all‑time charts with the goal line. Green bars met the goal. Tap any day for its hourly view.</figcaption>
+    </figure>
+
+    <figure class="shot">
+      <div class="phone"><div class="island"></div>
+        <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen">
+          <div class="nav-title">Settings</div>
+          <div class="group-label">Sync</div>
+          <div class="list">
+            <div class="row"><span class="ico h">♥</span><div class="t">Apple Health<small>Reading and writing · 2 min ago</small></div><span class="ok">On</span></div>
+            <div class="row"><span class="ico c">☁</span><div class="t">iCloud<small>Synced · 412 days stored</small></div><span class="ok">On</span></div>
+            <div class="row"><span class="ico m">M</span><div class="t">Motion sensor<small>Counting on this iPhone</small></div><span class="ok">On</span></div>
+          </div>
+          <div class="btn" style="padding:8px;font-size:13px">Sync now</div>
+          <div class="group-label">Goal &amp; units</div>
+          <div class="list">
+            <div class="row"><div class="t">Daily goal</div><span class="v">10,000 ›</span></div>
+            <div class="row"><div class="t">Distance</div><span class="v">Kilometres ›</span></div>
+          </div>
+          <div class="group-label">Data</div>
+          <div class="list">
+            <div class="row"><span class="ico u">↓</span><div class="t">Export as CSV</div><span class="v">›</span></div>
+          </div>
+        </div>
+        <div class="tabbar"><span><i class="c"></i>Today</span><span><i class="b"></i>History</span><span class="on"><i class="g"></i>Settings</span></div>
+      </div>
+      <figcaption><b>Settings &amp; sync</b>Sync health at a glance: when Health and iCloud last synced, with a manual Sync now. Goal, units and CSV export.</figcaption>
+    </figure>
+
+  </div>
+
+  <div class="sec-head" style="margin-top:8px"><h3>Widgets</h3></div>
+  <div class="widgets">
+    <div class="w-small" aria-label="Small Home Screen widget">
+      <span class="lbl">SOLE · TODAY</span>
+      <span class="n">7,842</span>
+      <div style="display:grid;gap:6px"><div class="meter"><i style="width:78%"></i></div><span class="lbl" style="font-weight:500">2,158 to go</span></div>
+    </div>
+    <div class="w-med" aria-label="Medium Home Screen widget">
+      <div style="display:grid;gap:4px"><span class="lbl" style="font-size:11px;color:var(--muted);font-weight:600">TODAY</span><span style="font-family:ui-rounded,var(--display);font-size:30px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums">7,842</span><span style="font-size:11px;color:var(--muted)">5.9 km · 12 floors</span></div>
+      <div class="bars" style="height:80px" id="medBars" aria-hidden="true"></div>
+    </div>
+    <div class="lock" aria-label="Lock Screen widgets">
+      <svg class="circ" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="25" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="6"/><circle cx="30" cy="30" r="25" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-dasharray="122.5 157.1" transform="rotate(-90 30 30)"/><text x="30" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">7.8k</text></svg>
+      <div><div class="inline">👟 7,842 steps</div><div class="time">9:41</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Under the hood</span><h2>Where steps come from and go</h2></div>
+  <div class="flow-wrap">
+    <svg viewBox="0 0 900 250" role="img" aria-label="Data flow: motion sensor and Apple Health feed Sole's store, which syncs to iCloud and writes back to Apple Health and widgets">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="ah" d="M0 0 L10 5 L0 10z"/></marker></defs>
+      <rect class="box" x="10" y="20" width="220" height="80" rx="12"/>
+      <text x="26" y="52" font-weight="700" font-size="15">iPhone motion sensor</text>
+      <text class="sub" x="26" y="74">Live + 7‑day backfill</text>
+      <rect class="box" x="10" y="150" width="220" height="80" rx="12"/>
+      <text x="26" y="182" font-weight="700" font-size="15">Apple Health</text>
+      <text class="sub" x="26" y="204">Watch, other apps, history</text>
+      <rect class="core" x="330" y="75" width="240" height="100" rx="14"/>
+      <text x="350" y="110" font-weight="700" font-size="16">Sole step store</text>
+      <text class="sub" x="350" y="132">Hourly steps per source</text>
+      <text class="sub" x="350" y="152">Day total = best source each hour</text>
+      <rect class="box" x="670" y="20" width="220" height="80" rx="12"/>
+      <text x="686" y="52" font-weight="700" font-size="15">iCloud (private)</text>
+      <text class="sub" x="686" y="74">Every device you own</text>
+      <rect class="box" x="670" y="150" width="220" height="80" rx="12"/>
+      <text x="686" y="182" font-weight="700" font-size="15">Screens &amp; widgets</text>
+      <text class="sub" x="686" y="204">Today, History, widgets</text>
+      <path class="arrow" d="M230 60 C 285 60, 285 105, 328 105" marker-end="url(#ah)"/>
+      <path class="arrow" d="M230 180 C 285 180, 285 150, 328 150" marker-end="url(#ah)"/>
+      <path class="arrow" d="M570 105 C 620 105, 620 60, 668 60" marker-end="url(#ah)"/>
+      <path class="arrow" d="M668 70 C 630 70, 625 115, 572 115" marker-end="url(#ah)"/>
+      <path class="arrow" d="M570 150 C 620 150, 620 190, 668 190" marker-end="url(#ah)"/>
+      <path class="arrow" d="M330 165 C 290 200, 280 215, 232 215" marker-end="url(#ah)"/>
+      <text class="sub" x="250" y="243">writes Sole's hourly counts back</text>
+    </svg>
+  </div>
+  <div class="callout"><p><b>One thing to know about writing to Health.</b> iPhone already logs its own sensor steps into Health. Sole's samples sit alongside them and Health dedupes overlapping sources by priority, so your Health total will not double. You will simply see Sole listed as a step source too.</p></div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Scope</span><h2>Features</h2></div>
+  <div class="cols">
+    <ul class="flist">
+      <li><span class="pill v1">v1</span><b>Today</b><span>Live count, goal arc, distance, floors, active minutes, hourly bars.</span></li>
+      <li><span class="pill v1">v1</span><b>History</b><span>Week, month, year, all‑time; average, best day, goal streak; tap a day for detail.</span></li>
+      <li><span class="pill v1">v1</span><b>Daily goal</b><span>Default 8,000, adjustable, with a streak for consecutive goal days.</span></li>
+      <li><span class="pill v1">v1</span><b>Apple Health two‑way sync</b><span>Reads all sources, writes Sole's counts, background updates, only changes move.</span></li>
+      <li><span class="pill v1">v1</span><b>iCloud storage</b><span>Full history in your private iCloud, restored on any device.</span></li>
+      <li><span class="pill v1">v1</span><b>Onboarding</b><span>Permissions explained in plain words, goal picker.</span></li>
+      <li><span class="pill v1">v1</span><b>Widgets</b><span>Home Screen small and medium, Lock Screen circular and inline.</span></li>
+      <li><span class="pill v1">v1</span><b>Settings</b><span>Sync status, Sync now, goal, km or miles, CSV export.</span></li>
+    </ul>
+    <ul class="flist">
+      <li><span class="pill v2">Later</span><b>Apple Watch app</b><span>Glanceable count and a watch‑face complication.</span></li>
+      <li><span class="pill v2">Later</span><b>Evening nudge</b><span>"1,800 steps to go" reminder if the goal is close.</span></li>
+      <li><span class="pill v2">Later</span><b>Achievements</b><span>First 10k day, 7‑day streak, lifetime milestones.</span></li>
+      <li><span class="pill v2">Later</span><b>Walk Live Activity</b><span>Track a single walk on the Lock Screen and Dynamic Island.</span></li>
+      <li><span class="pill v2">Later</span><b>Manual entries</b><span>Add or fix steps by hand (data model supports it from v1).</span></li>
+      <li><span class="pill v2">Not planned</span><b>Accounts, social, ads, GPS routes</b><span>Kept out to stay simple and private.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Plan</span><h2>Build order</h2><p class="note">Each step is something you can run on your iPhone before the next starts.</p></div>
+  <ol class="steps">
+    <li><div><b>Data model and iCloud.</b> <span>SwiftData store with CloudKit, plus iCloud, HealthKit and App Group capabilities.</span></div></li>
+    <li><div><b>Step engine.</b> <span>CMPedometer live updates and hourly backfill writing to the store.</span></div></li>
+    <li><div><b>Today screen.</b> <span>The arc, stats and hourly bars on real data.</span></div></li>
+    <li><div><b>Apple Health sync.</b> <span>Read and write with anchored queries and the per‑hour dedupe rule.</span></div></li>
+    <li><div><b>History screen.</b> <span>Charts, streaks and day detail.</span></div></li>
+    <li><div><b>Onboarding and Settings.</b> <span>Permissions flow, goal, units, sync status, export.</span></div></li>
+    <li><div><b>Widgets.</b> <span>WidgetKit extension reading the shared store.</span></div></li>
+  </ol>
+  <div class="callout"><p><b>Before step 1:</b> step counting does not work in the Simulator, so testing needs your iPhone. HealthKit and iCloud also need a paid Apple Developer account to enable those capabilities on com.pandyabhavik.Sole.</p></div>
+</section>
+</div>
+
+<script>
+(function(){
+  var hours=[0,0,0,0,0,0,120,640,1410,520,380,610,880,430,300,520,690,740,410,92,0,0,0,0];
+  var now=19, max=1410;
+  function fill(id,from,to,h){
+    var el=document.getElementById(id); if(!el) return;
+    for(var i=from;i<to;i++){var b=document.createElement('i');var v=i<=now?hours[i]:0;b.style.height=Math.max(2,v/max*100)+'%';if(i>now)b.className='dim';el.appendChild(b);}
+  }
+  fill('hourBars',0,24); fill('medBars',6,22);
+})();
+</script>
+
+</body>
+</html>
