@@ -13,39 +13,41 @@ from the artwork. Preview: `docs/theme/lakeshore-preview.html` (also https://cla
 
 ## Palette (`Shared/Palette.swift`)
 
+Revised 2026-10-03 to be more vibrant at Bhavik's request; text contrast still meets 4.5:1.
+
 Keep every token name so no call site changes. Values are `light / dark`.
 
 | Token | Light | Dark | Source in the art |
 |---|---|---|---|
 | ink | 14262E | F1EADB | night teal / antler cream |
 | muted | 55646A | A9B8BC | |
-| background | EFE7D8 | 132C36 | birch / night sky |
-| surface | FBF7EF | 1B3A46 | cards stay solid |
-| line | D9CFBD | 2F5664 | hairlines |
-| accent | D9761F | EE9A3A | sun (steps, tint, buttons) |
-| accentSoft | F7DFC3 | 4A3420 | |
-| good | 3F7A3A | 7DB86A | pine |
-| goodSoft | DCEBD5 | 21402A | |
-| watch | 8A5A0C | E6BE5A | cattail (amber, never red) |
-| watchSoft | F3E3C0 | 3E3218 | |
-| heart | B8283F | F25A6E | loon eye |
-| energy | C2452A | F2774E | |
-| oxygen | 3E6FA8 | 79A6DE | lake |
-| weight | 4F8C84 | 7FC2B8 | turtle shell |
-| sleep | 3E4F8F | 8C9BE0 | night |
+| background | F6EAD2 | 0E2F3D | birch / night sky |
+| surface | FFFAF0 | 15404F | cards stay solid |
+| line | E3D4B8 | 2B6274 | hairlines |
+| accent | E8700F | FF9A2E | sun (steps, tint, buttons) |
+| accentSoft | FFE0BF | 4F3010 | |
+| good | 27782A | 6FD35A | pine |
+| goodSoft | D6F2CC | 1A4A22 | |
+| watch | 805300 | FFC93D | cattail (amber, never red) |
+| watchSoft | FFE9B0 | 4A3810 | |
+| heart | D11E48 | FF4F72 | loon eye |
+| energy | E0401C | FF7043 | |
+| oxygen | 2370C8 | 5AB0FF | lake |
+| weight | 159A8C | 4FD8C6 | turtle shell |
+| sleep | 3A4FCF | 8796FF | night |
 | onAccent | 1A1206 | 1A1206 | |
 
 New tokens:
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| accentText | A8550F | EE9A3A | accent used as text or a text button (4.9:1 on surface) |
+| accentText | A84F00 | FF9A2E | accent used as text or a text button (5.3:1 on surface) |
 | outline | 14262E | 08141A | the bold Woodland line on cards, chips, the step ring |
-| sky | F4EADA | 132C36 | top of the background gradient |
-| skyLow | E9D9BE | 1E4152 | bottom of the background gradient |
-| pine | 4F7F45 | 2E5233 | scenery pines |
-| ridge | 9DB3A2 | 173540 | scenery hills |
-| lake | 7E9CC4 | 264A75 | scenery lake |
+| sky | F9E6C6 | 0E2F3D | top of the background gradient |
+| skyLow | F3CF9E | 17506A | bottom of the background gradient |
+| pine | 3F9A3A | 2E7A3A | scenery pines |
+| ridge | 8FC4A0 | 175B66 | scenery hills |
+| lake | 4F8FE0 | 1F5AA0 | scenery lake |
 
 Also update `AccentColor.colorset` to the accent values.
 
@@ -60,7 +62,7 @@ Reduce Transparency fallback (flat `Palette.background`):
    static under Reduce Motion).
 3. Pinned to the bottom, about the lower third: a gentle `ridge` hill line, a few `pine` trees with
    wavy tiered edges, and a `lake` band with two faint wave lines. All shapes have a 1.5–2 pt
-   `outline` stroke. Light mode draws the scenery at ~70% opacity, dark at ~95%.
+   `outline` stroke. Light mode draws the scenery at ~80% opacity, dark at ~95%.
    Draw with SwiftUI `Shape`s/`Path`, no image assets, so it scales to every device.
 
 ## Components
@@ -77,7 +79,7 @@ Reduce Transparency fallback (flat `Palette.background`):
 
 ## Accessibility
 
-- Accent as text uses `accentText`, not `accent` (light accent is only 3:1 on surface). Fills, the
+- Accent as text uses `accentText`, not `accent` (light accent is under 3:1 on surface). Fills, the
   ring and the tab tint keep `accent`.
 - Text on a `heart` fill (Connect Apple Health) uses `onAccent` in dark mode (5.7:1), not white.
 

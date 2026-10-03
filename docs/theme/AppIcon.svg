@@ -1,40 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1A3440"/><stop offset="1" stop-color="#2E6172"/>
+      <stop offset="0" stop-color="#123D4E"/><stop offset="1" stop-color="#1E7389"/>
     </linearGradient>
     <radialGradient id="sun" cx="0.5" cy="0.42" r="0.58">
-      <stop offset="0" stop-color="#F4B852"/><stop offset="0.55" stop-color="#E08A32"/><stop offset="1" stop-color="#B9581F"/>
+      <stop offset="0" stop-color="#FFC94F"/><stop offset="0.55" stop-color="#F57E1C"/><stop offset="1" stop-color="#CC4512"/>
     </radialGradient>
     <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#4E72A3"/><stop offset="1" stop-color="#2B4870"/>
+      <stop offset="0" stop-color="#3F86DB"/><stop offset="1" stop-color="#1E4E9C"/>
     </linearGradient>
     <linearGradient id="bark" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#8E532B"/><stop offset="1" stop-color="#6A3B1D"/>
+      <stop offset="0" stop-color="#A65A26"/><stop offset="1" stop-color="#6E3214"/>
     </linearGradient>
   </defs>
   <rect width="1024" height="1024" fill="url(#sky)"/>
-  <path d="M-20 600 C110 540 210 580 300 548 C400 512 470 575 570 548 C690 515 800 570 1044 520 L1044 780 L-20 780 Z" fill="#22495A"/>
+  <path d="M-20 600 C110 540 210 580 300 548 C400 512 470 575 570 548 C690 515 800 570 1044 520 L1044 780 L-20 780 Z" fill="#1A5566"/>
   <circle cx="512" cy="470" r="320" fill="url(#sun)" stroke="#121212" stroke-width="22"/>
-  <circle cx="512" cy="470" r="236" fill="none" stroke="#F7C772" stroke-opacity="0.32" stroke-width="28"/>
+  <circle cx="512" cy="470" r="236" fill="none" stroke="#FFD889" stroke-opacity="0.32" stroke-width="28"/>
   <!-- pines: wavy tiers like the art -->
   <g stroke="#121212" stroke-width="18" stroke-linejoin="round">
-    <path fill="#3D6A38" d="M150 250 C170 300 150 320 190 345 C160 365 210 390 175 410 C215 430 235 455 200 470 C245 495 255 520 215 535 C265 560 270 590 230 600 C280 625 285 660 250 680 L250 780 L-20 780 L-20 680 C10 660 -5 630 35 605 C0 590 15 560 55 540 C20 525 40 495 80 475 C50 460 75 430 105 410 C80 390 110 365 120 345 C105 320 135 300 150 250 Z"/>
-    <path fill="#4A7A3F" d="M880 220 C860 270 880 295 840 318 C872 340 820 365 856 385 C815 405 795 430 830 446 C785 470 775 498 815 512 C765 538 760 568 800 580 C750 605 745 640 780 660 L780 780 L1044 780 L1044 650 C1015 630 1030 600 990 578 C1025 562 1010 532 970 512 C1005 497 985 468 945 448 C975 432 950 402 920 384 C945 364 915 340 905 318 C920 295 895 270 880 220 Z"/>
+    <path fill="#2F8A36" d="M150 250 C170 300 150 320 190 345 C160 365 210 390 175 410 C215 430 235 455 200 470 C245 495 255 520 215 535 C265 560 270 590 230 600 C280 625 285 660 250 680 L250 780 L-20 780 L-20 680 C10 660 -5 630 35 605 C0 590 15 560 55 540 C20 525 40 495 80 475 C50 460 75 430 105 410 C80 390 110 365 120 345 C105 320 135 300 150 250 Z"/>
+    <path fill="#3FA342" d="M880 220 C860 270 880 295 840 318 C872 340 820 365 856 385 C815 405 795 430 830 446 C785 470 775 498 815 512 C765 538 760 568 800 580 C750 605 745 640 780 660 L780 780 L1044 780 L1044 650 C1015 630 1030 600 990 578 C1025 562 1010 532 970 512 C1005 497 985 468 945 448 C975 432 950 402 920 384 C945 364 915 340 905 318 C920 295 895 270 880 220 Z"/>
   </g>
   <path d="M-30 745 C160 712 340 768 512 740 C690 712 860 768 1054 734 L1054 1054 L-30 1054 Z" fill="url(#lake)" stroke="#121212" stroke-width="20"/>
-  <g fill="none" stroke="#22395C" stroke-width="12" stroke-linecap="round">
+  <g fill="none" stroke="#163A75" stroke-width="12" stroke-linecap="round">
     <path d="M40 840 C190 815 320 860 450 836"/><path d="M600 834 C730 812 850 856 990 830"/>
     <path d="M130 930 C270 905 400 950 540 926"/><path d="M660 928 C770 908 880 940 1000 920"/>
   </g>
   <!-- cattails -->
   <g stroke="#121212" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
     <path d="M118 1040 C122 900 128 820 134 760" fill="none"/>
-    <rect x="114" y="640" width="42" height="140" rx="21" fill="#8A5A2E" transform="rotate(3 135 710)"/>
-    <path d="M70 1040 C60 950 66 880 90 800 C96 880 100 960 104 1040 Z" fill="#4A7A3F"/>
+    <rect x="114" y="640" width="42" height="140" rx="21" fill="#A8642A" transform="rotate(3 135 710)"/>
+    <path d="M70 1040 C60 950 66 880 90 800 C96 880 100 960 104 1040 Z" fill="#3FA342"/>
     <path d="M920 1040 C918 920 912 850 904 790" fill="none"/>
-    <rect x="882" y="680" width="40" height="128" rx="20" fill="#8A5A2E" transform="rotate(-4 902 744)"/>
-    <path d="M960 1040 C972 960 966 890 944 820 C936 900 934 970 936 1040 Z" fill="#4A7A3F"/>
+    <rect x="882" y="680" width="40" height="128" rx="20" fill="#A8642A" transform="rotate(-4 902 744)"/>
+    <path d="M960 1040 C972 960 966 890 944 820 C936 900 934 970 936 1040 Z" fill="#3FA342"/>
   </g>
   <!-- footprint -->
   <g transform="translate(0 -8) rotate(8 512 520)">
@@ -47,7 +47,7 @@
       <ellipse cx="362" cy="358" rx="18" ry="21"/>
     </g>
     <!-- woodland curls, like the moose's coat -->
-    <g fill="#D19A5A" stroke="#121212" stroke-width="8" stroke-linejoin="round">
+    <g fill="#F2B266" stroke="#121212" stroke-width="8" stroke-linejoin="round">
       <path d="M430 420 C470 380 560 378 600 420 C560 404 500 404 470 432 C500 430 530 440 548 462 C510 446 460 446 430 470 Z"/>
       <path d="M418 680 C430 740 470 770 520 764 C490 750 466 724 460 690 C478 700 494 716 500 738 C506 700 480 670 448 662 Z"/>
     </g>
