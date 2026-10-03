@@ -18,8 +18,9 @@ final class HealthService: Sendable {
 
     static var isAvailable: Bool { HKHealthStore.isHealthDataAvailable() }
 
+    /// Asks for v1's step types and v2's metrics in one sheet, so the user sees it once.
     func requestAuthorization() async throws {
-        try await healthStore.requestAuthorization(toShare: allTypes, read: allTypes)
+        try await healthStore.requestAuthorization(toShare: HealthMetricsService.shareTypes, read: HealthMetricsService.readTypes)
     }
 
     /// Whether the permission sheet has already been shown. Health never tells an app whether

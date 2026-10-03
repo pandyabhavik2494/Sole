@@ -427,8 +427,8 @@
 				INFOPLIST_FILE = "Config/Sole-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Sole;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Sole reads your steps, distance and flights climbed from Apple Health, including those from Apple Watch, so your history is complete and nothing is counted twice.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Sole saves the steps, distance and flights counted by your iPhone to Apple Health.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Sole reads your steps, heart rate, energy, blood oxygen, weight and sleep from Apple Health to show how each compares with your own normal. Steps from Apple Watch keep your history complete without counting twice.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Sole saves the steps, distance and flights counted by your iPhone, and weights you log, to Apple Health.";
 				INFOPLIST_KEY_NSMotionUsageDescription = "Sole uses your iPhone's motion sensor to count your steps, distance and flights climbed.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -460,8 +460,8 @@
 				INFOPLIST_FILE = "Config/Sole-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Sole;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Sole reads your steps, distance and flights climbed from Apple Health, including those from Apple Watch, so your history is complete and nothing is counted twice.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Sole saves the steps, distance and flights counted by your iPhone to Apple Health.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Sole reads your steps, heart rate, energy, blood oxygen, weight and sleep from Apple Health to show how each compares with your own normal. Steps from Apple Watch keep your history complete without counting twice.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Sole saves the steps, distance and flights counted by your iPhone, and weights you log, to Apple Health.";
 				INFOPLIST_KEY_NSMotionUsageDescription = "Sole uses your iPhone's motion sensor to count your steps, distance and flights climbed.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

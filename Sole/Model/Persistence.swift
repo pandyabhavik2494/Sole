@@ -5,7 +5,7 @@ import SwiftData
 /// and Apple Watch's steps and syncs them through the user's iCloud, so after a reinstall or on a
 /// new iPhone Sole rebuilds its history by importing from Health.
 enum Persistence {
-    static let schema = Schema([HourlySteps.self, DailySummary.self])
+    static let schema = Schema([HourlySteps.self, DailySummary.self, DailyMetric.self, DayTag.self])
 
     static func makeContainer() -> ModelContainer {
         do {

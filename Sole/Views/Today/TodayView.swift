@@ -5,6 +5,7 @@ struct TodayView: View {
     @Environment(StepEngine.self) private var engine
     @Environment(Preferences.self) private var preferences
     @Environment(Router.self) private var router
+    @Environment(MetricsEngine.self) private var metrics
 
     var body: some View {
         let today = engine.today
@@ -18,6 +19,10 @@ struct TodayView: View {
 
                     if engine.motionStatus == .denied || engine.motionStatus == .restricted {
                         MotionAccessBanner()
+                    }
+
+                    if metrics.access == .notRequested {
+                        ConnectHealthCard()
                     }
 
                     NavigationLink {
@@ -86,5 +91,38 @@ private struct MotionAccessBanner: View {
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Palette.accentSoft, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
+}
+
+/// Shown until the v2 Health types have been asked for: on a fresh install that skipped Health,
+/// and once after upgrading from v1 (which only asked for steps).
+struct ConnectHealthCard: View {
+    @Environment(MetricsEngine.self) private var metrics
+    @State private var isConnecting = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Label("See how your body is doing", systemImage: "heart.text.square.fill")
+                .font(.headline)
+                .foregroundStyle(Palette.ink)
+            Text("Let Sole read heart rate, energy, blood oxygen, weight and sleep from Apple Health. It learns your normal from your history and tells you when something moves.")
+                .font(.subheadline)
+                .foregroundStyle(Palette.muted)
+            Button {
+                isConnecting = true
+                Task {
+                    await metrics.connect()
+                    isConnecting = false
+                }
+            } label: {
+                Text(isConnecting ? "Connecting…" : "Connect Apple Health")
+                    .font(.subheadline.weight(.semibold))
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(Palette.heart)
+            .disabled(isConnecting)
+        }
+        .card()
     }
 }

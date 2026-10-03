@@ -32,6 +32,47 @@ enum SampleData {
     }
 }
 
+extension SampleData {
+    /// About 13 months of made-up Health metrics and two tagged days, so every v2 screen has data
+    /// in the simulator. Resting heart rate falls over the last month; a sick day spikes it.
+    static func seedMetrics(into store: MetricsStore, calendar: Calendar = .current) {
+        var generator = SeededGenerator(seed: 7)
+        let today = DayKey(.now, calendar: calendar)
+        let first = today.adding(days: -400)
+        let sick = today.adding(days: -6)
+        let travel = today.adding(days: -20)
+        var values: [Metric: [DailyValue]] = [:]
+
+        func noise(_ amount: Double) -> Double { Double.random(in: -amount...amount, using: &generator) }
+
+        for day in (first...today).days {
+            let age = Double(day.days(to: today))
+            let recentDrop = age < 30 ? (30 - age) / 30 * 4 : 0
+            let spike = day == sick ? 9.0 : day == sick.adding(days: 1) ? 5 : 0
+            let rhr = 61 - recentDrop + spike + noise(1.6)
+            values[.restingHeartRate, default: []].append(DailyValue(day: day, metric: .restingHeartRate, value: rhr, min: nil, max: nil))
+            values[.walkingHeartRate, default: []].append(DailyValue(day: day, metric: .walkingHeartRate, value: 101 - recentDrop / 2 + noise(2.5), min: nil, max: nil))
+            values[.heartRate, default: []].append(DailyValue(day: day, metric: .heartRate, value: 74 + noise(4), min: rhr - 6 + noise(2), max: 135 + noise(20)))
+            let partial = day == today ? 0.45 : 1
+            values[.activeEnergy, default: []].append(DailyValue(day: day, metric: .activeEnergy, value: (640 + noise(170)) * partial, min: nil, max: nil))
+            values[.restingEnergy, default: []].append(DailyValue(day: day, metric: .restingEnergy, value: (1_640 + noise(30)) * partial, min: nil, max: nil))
+            if Int.random(in: 0..<10, using: &generator) < 8 {
+                values[.bloodOxygen, default: []].append(DailyValue(day: day, metric: .bloodOxygen, value: 97 + noise(1), min: 94 + noise(1), max: 99))
+            }
+            if Int.random(in: 0..<10, using: &generator) < 5 || day == today {
+                values[.weight, default: []].append(DailyValue(day: day, metric: .weight, value: 76.2 - (400 - age) / 400 * 1.8 + noise(0.4), min: nil, max: nil))
+            }
+        }
+        for (metric, daily) in values {
+            store.replace(metric, with: daily, from: first, through: today)
+        }
+        store.setTags([.sick], on: sick)
+        store.setTags([.travel], on: travel)
+        store.setTags([.lateNight], on: today.adding(days: -2))
+        store.save()
+    }
+}
+
 private struct SeededGenerator: RandomNumberGenerator {
     var state: UInt64
     init(seed: UInt64) { state = seed }
