@@ -405,3 +405,36 @@ struct InsightBuilderTests {
         #expect(insights.headline.title == "Here's your day so far.")
     }
 }
+
+struct WeekPatternTests {
+    @Test func weekdaysVersusWeekends() {
+        var values: [DayKey: Double] = [:]
+        for offset in 1...56 {
+            let day = today.adding(days: -offset)
+            values[day] = (day.weekday == 1 || day.weekday == 7) ? 6_000 : 10_000
+        }
+        #expect(WeekPattern.weekdayVersusWeekend(values, endingBefore: today) == "higher on weekdays")
+        #expect(WeekPattern.weekdayVersusWeekend(values.mapValues { 16_000 - $0 }, endingBefore: today) == "higher at weekends")
+        #expect(WeekPattern.weekdayVersusWeekend(values.mapValues { _ in 8_000 }, endingBefore: today) == nil)
+        #expect(WeekPattern.weekdayVersusWeekend([:], endingBefore: today) == nil)
+    }
+
+    @Test func mostActiveWeekday() {
+        var values: [DayKey: Double] = [:]
+        for offset in 1...84 {
+            let day = today.adding(days: -offset)
+            values[day] = day.weekday == 7 ? 14_000 : 8_000 + Double(day.weekday) * 100
+        }
+        #expect(WeekPattern.mostActiveWeekday(values, endingBefore: today) == 7)
+        #expect(WeekPattern.mostActiveWeekday(values.mapValues { _ in 8_000 }, endingBefore: today) == nil)
+    }
+
+    @Test func spans() {
+        let start = DayKey(year: 2024, month: 6, day: 10)
+        #expect(Span.describe(from: start, to: DayKey(year: 2026, month: 10, day: 3)) == "2 years, 3 months")
+        #expect(Span.describe(from: start, to: DayKey(year: 2026, month: 10, day: 10)) == "2 years, 4 months")
+        #expect(Span.describe(from: start, to: DayKey(year: 2025, month: 6, day: 10)) == "1 year")
+        #expect(Span.describe(from: start, to: DayKey(year: 2024, month: 7, day: 1)) == "3 weeks")
+        #expect(Span.describe(from: start, to: DayKey(year: 2024, month: 6, day: 11)) == "1 day")
+    }
+}
