@@ -270,6 +270,38 @@ final class MetricsEngine {
         rebuildInsights(now: now)
     }
 
+    // MARK: Logging
+
+    enum LogError: LocalizedError {
+        case healthUnavailable
+        case notAllowed
+
+        var errorDescription: String? {
+            switch self {
+            case .healthUnavailable: "Apple Health isn't available on this device."
+            case .notAllowed: "Sole isn't allowed to save weight. Turn it on in the Health app: Profile › Apps › Sole."
+            }
+        }
+    }
+
+    /// Saves a weight (in kilograms) to Apple Health, then reads it back into the cache. Nothing
+    /// is cached unless Health accepted the sample.
+    func logWeight(kilograms: Double, at date: Date = .now) async throws {
+        guard HealthMetricsService.isAvailable else { throw LogError.healthUnavailable }
+        if access == .notRequested {
+            try await service.requestAuthorization()
+            await updateAccess()
+        }
+        guard service.canWriteWeight else { throw LogError.notAllowed }
+        try await service.saveWeight(kilograms: kilograms, at: date)
+        await refresh()
+    }
+
+    /// The most recent weight in kilograms, for the Add sheet's starting value.
+    var latestWeight: Double? {
+        series[.weight]?.max { $0.key < $1.key }?.value.value
+    }
+
     // MARK: Tags
 
     func setTags(_ kinds: Set<DayTagKind>, on day: DayKey) {
