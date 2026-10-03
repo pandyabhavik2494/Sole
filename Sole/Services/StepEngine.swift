@@ -35,8 +35,8 @@ final class StepEngine {
 
     private static let lastBackfillKey = "lastPedometerBackfill"
     private static let lastHealthSyncKey = "lastHealthSync"
-    /// How far back the first Health import reaches.
-    private static let healthImportDays = 365
+    /// The first Health import reads all history in chunks of this many days.
+    private static let healthImportChunkDays = 90
 
     init(store: StepStore, preferences: Preferences, calendar: Calendar = .current) {
         self.store = store
@@ -99,15 +99,6 @@ final class StepEngine {
         store.save()
     }
 
-    /// Changes from another device arrived through iCloud: rebuild the recent days that could include them.
-    func cloudDataDidImport() {
-        let today = calendar.startOfDay(for: .now)
-        let days = (0..<8).compactMap { calendar.date(byAdding: .day, value: -$0, to: today) }
-        store.recomputeDays(Set(days), goal: preferences.dailyGoal)
-        refreshToday()
-        scheduleSave()
-    }
-
     /// Call after the goal changes so today's summary and the streak use the new goal.
     func goalDidChange() {
         store.recomputeDays([calendar.startOfDay(for: .now)], goal: preferences.dailyGoal)
@@ -151,8 +142,8 @@ final class StepEngine {
         motionStatus = PedometerService.authorizationStatus
         guard !samples.isEmpty else { return }
 
-        // The sensor is the truth for recent hours on this iPhone. For older hours keep the higher
-        // value, so history restored from iCloud (counted by a previous iPhone) is never lowered.
+        // The sensor is the truth for recent hours. For older hours keep the higher value, so an
+        // hour saved earlier is never lowered.
         let recent = calendar.date(byAdding: .hour, value: -3, to: currentHour) ?? currentHour
         let changed = store.upsert(samples, source: .phone) { $0 >= recent ? .replace : .keepHigher }
         store.recomputeDays(changed.union([calendar.startOfDay(for: now)]), goal: preferences.dailyGoal, now: now)
@@ -181,21 +172,31 @@ final class StepEngine {
         guard isHealthConnected else { return }
 
         let today = calendar.startOfDay(for: now)
-        let start: Date
-        if let lastHealthSync {
-            // Re-read the day before the last sync too: Watch data can arrive late.
-            start = calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: lastHealthSync)) ?? today
-        } else {
-            start = calendar.date(byAdding: .day, value: -Self.healthImportDays, to: today) ?? today
-        }
         let end = calendar.date(byAdding: .hour, value: 1, to: calendar.startOfHour(for: now)) ?? now
 
         do {
-            let hours = try await health.hourlyTotals(from: start, to: end)
-            // An empty answer for the whole window usually means read access is off, not that every
-            // walk was deleted, so only clear hours missing from Health when it returned something.
-            let changed = store.upsert(hours, source: .health, clearing: hours.isEmpty ? nil : start..<end) { _ in .replace }
-            store.recomputeDays(changed, goal: preferences.dailyGoal, now: now)
+            let start: Date
+            if let lastHealthSync {
+                // Re-read the day before the last sync too: Watch data can arrive late.
+                start = calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: lastHealthSync)) ?? today
+            } else {
+                // First connect, including after a reinstall or on a new iPhone: bring back everything
+                // Health has. Health keeps the iPhone's and Watch's steps, so this restores Sole's history.
+                let earliest = try await health.earliestStepDate() ?? now
+                start = min(calendar.startOfDay(for: earliest), calendar.date(byAdding: .day, value: -1, to: today) ?? today)
+            }
+
+            var chunkStart = start
+            while chunkStart < end {
+                let chunkEnd = min(calendar.date(byAdding: .day, value: Self.healthImportChunkDays, to: chunkStart) ?? end, end)
+                let hours = try await health.hourlyTotals(from: chunkStart, to: chunkEnd)
+                // An empty answer for a whole window usually means read access is off, not that every
+                // walk was deleted, so only clear hours missing from Health when it returned something.
+                let changed = store.upsert(hours, source: .health, clearing: hours.isEmpty ? nil : chunkStart..<chunkEnd) { _ in .replace }
+                store.recomputeDays(changed, goal: preferences.dailyGoal, now: now)
+                store.save()
+                chunkStart = chunkEnd
+            }
 
             try await writeSensorHoursToHealth(now: now)
 
@@ -306,7 +307,7 @@ final class StepEngine {
         }
     }
 
-    /// Saves at most every 30 seconds while walking, so iCloud isn't sent a change per step.
+    /// Saves at most every 30 seconds while walking, rather than on every step.
     private func scheduleSave() {
         guard pendingSave == nil else { return }
         pendingSave = Task {

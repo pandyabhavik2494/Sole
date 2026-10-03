@@ -5,7 +5,7 @@ Status: proposal, nothing built yet (2026-10-03). Visual mockups: docs/mockups.h
 ## Core requirements (from Bhavik)
 1. Count steps accurately.
 2. Use the iPhone's own sensors to count.
-3. Store steps in iCloud so they are always available.
+3. ~~Store steps in iCloud so they are always available.~~ Dropped 2026-10-03: Apple Health already keeps steps in the user's iCloud (see Storage).
 4. Two-way sync with Apple Health.
 
 ## How each requirement is met
@@ -17,24 +17,23 @@ Status: proposal, nothing built yet (2026-10-03). Visual mockups: docs/mockups.h
 - **Extra metrics from the same sensor**: distance, floors climbed/descended, cadence and pace.
 - **No double counting with Apple Watch**: steps are stored per hour per source. A day's total is the sum over hours of the *highest* source for that hour (phone vs. watch/other apps read from Health). Carrying a phone and wearing a watch counts once, not twice. This mirrors how Apple Health dedupes.
 
-### iCloud storage
-- **SwiftData with CloudKit** (private database, the user's own iCloud account). No server, no account sign-up.
-- Model: `HourlySteps` (hour start, source, steps, distance, floors) and `DailySummary` (date, total, goal, goal met). Settings (goal, units) in `NSUbiquitousKeyValueStore`.
-- CloudKit rules: all properties optional or defaulted, no unique constraints; dedupe in code by (hour, source).
-- Reinstall or new iPhone: full history comes back from iCloud.
+### Storage (iCloud dropped 2026-10-03)
+- **SwiftData on the iPhone.** Model: `HourlySteps` (hour start, source, steps, distance, floors) and `DailySummary` (date, total, goal). Goal and units in UserDefaults.
+- **Apple Health is the long-term copy.** The iPhone records its own steps in Health, the Watch adds its own, and Health syncs them through the user's iCloud. On first connect (new iPhone or reinstall) Sole imports all Health history, so nothing is lost.
+- Why no iCloud of Sole's own: it duplicated what Health already syncs, and needed the paid developer program. What it would have added (history for users who decline Health, exact past goals, settings on a new iPhone) wasn't worth that.
 
 ### Apple Health, both directions
 - **Read**: `stepCount`, `distanceWalkingRunning`, `flightsClimbed` from all sources (Apple Watch, other apps) so Sole's history covers years, not just 7 days, and includes watch-only walks. `HKObserverQuery` + background delivery keeps it current.
 - **Write**: Sole writes its hourly sensor counts to Health as Sole-sourced samples, plus any manual entries. Health's own source priority prevents these from inflating Health's total (iPhone already logs its steps to Health itself; Sole's samples sit alongside, deduped).
 - Anchored queries (`HKAnchoredObjectQuery`) so each sync only moves what changed; deletions in Health are respected.
-- Sync status visible in Settings: last synced time for Health and iCloud, with a "Sync now" button.
+- Sync status visible in Settings: last Health sync time, with a "Sync now" button.
 
 ## v1 feature list
 1. **Today**: live step count, progress arc toward the daily goal, distance, floors, active minutes, hourly bar chart.
 2. **History**: week / month / year charts, daily average, best day, current goal streak. Tap a day for its hourly breakdown.
 3. **Daily goal**: default 8,000, adjustable; streak counts consecutive goal days.
 4. **Apple Health two-way sync** (above).
-5. **iCloud storage and sync** (above).
+5. ~~iCloud storage and sync~~ (dropped, see Storage).
 6. **Onboarding**: three screens: what Sole does, Motion & Fitness permission, Health permission, then pick a goal. Works (sensor only) if Health is declined.
 7. **Widgets**: Home Screen small and medium, Lock Screen circular and inline (WidgetKit extension, shared App Group store).
 8. **Settings**: goal, units (km/mi), sync status, export CSV, permissions shortcuts.
@@ -57,7 +56,7 @@ Accounts, social/leaderboards, ads, GPS route tracking.
 - SF Pro Rounded for numbers, SF Pro for text. Standard iOS navigation and sheets, no custom chrome.
 
 ## Build order
-1. Data model + SwiftData/CloudKit container + entitlements (iCloud, HealthKit, App Group).
+1. Data model + SwiftData container + entitlements (HealthKit, App Group).
 2. Step engine: CMPedometer live + hourly backfill, writing `HourlySteps`.
 3. Today screen.
 4. HealthKit read/write sync with anchored queries + dedupe rule.
@@ -66,4 +65,4 @@ Accounts, social/leaderboards, ads, GPS route tracking.
 7. Widgets.
 
 ## Testing notes
-- CMPedometer does not work in the Simulator; step counting needs a real iPhone. HealthKit and CloudKit need the paid developer account capabilities enabled on the bundle ID com.pandyabhavik.Sole.
+- CMPedometer does not work in the Simulator; step counting needs a real iPhone. HealthKit and App Groups work with a free personal signing team.

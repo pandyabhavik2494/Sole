@@ -3,8 +3,8 @@ import SwiftData
 
 /// How an incoming hourly value is combined with one already stored for the same hour and source.
 enum UpsertPolicy {
-    /// Keep whichever is larger. Used for older sensor hours, so restoring history from iCloud on a
-    /// new iPhone (whose sensor never saw those hours) can't wipe them out.
+    /// Keep whichever is larger. Used for older sensor hours, so a count saved while Sole was open
+    /// is never lowered by a later, partial sensor read.
     case keepHigher
     /// Overwrite. Used where the incoming value is the truth, such as Health after a deletion.
     case replace
@@ -59,7 +59,7 @@ final class StepStore {
         var changedDays = Set<Date>()
         var existing: [Date: HourlySteps] = [:]
 
-        // Rows from two devices can land on the same (hour, source) through iCloud. Fold them into one.
+        // Should a second row ever exist for the same (hour, source), fold it into one.
         for row in rows(from: first, to: end, source: source) {
             if let kept = existing[row.hourStart] {
                 kept.steps = max(kept.steps, row.steps)
@@ -157,7 +157,7 @@ final class StepStore {
         }
     }
 
-    /// Summaries keyed by day, with any iCloud duplicates for a day folded into one.
+    /// Summaries keyed by day, with any duplicates for a day folded into one.
     func summariesByDay(from start: Date, to end: Date) -> [Date: DailySummary] {
         var result: [Date: DailySummary] = [:]
         for summary in summaries(from: start, to: end) {

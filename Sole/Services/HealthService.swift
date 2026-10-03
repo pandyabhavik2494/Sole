@@ -54,8 +54,21 @@ final class HealthService {
         }
     }
 
+    /// When the oldest step sample from any source other than Sole begins, or nil when there is none.
+    func earliestStepDate() async throws -> Date? {
+        let descriptor = HKSampleQueryDescriptor(
+            predicates: [.quantitySample(type: stepType, predicate: notSole)],
+            sortDescriptors: [SortDescriptor(\.startDate, order: .forward)],
+            limit: 1
+        )
+        return try await descriptor.result(for: healthStore).first?.startDate
+    }
+
+    private var notSole: NSPredicate {
+        NSCompoundPredicate(notPredicateWithSubpredicate: HKQuery.predicateForObjects(from: HKSource.default()))
+    }
+
     private func hourlySums(of type: HKQuantityType, unit: HKUnit, from start: Date, to end: Date) async throws -> [Date: Double] {
-        let notSole = NSCompoundPredicate(notPredicateWithSubpredicate: HKQuery.predicateForObjects(from: HKSource.default()))
         let inRange = HKQuery.predicateForSamples(withStart: start, end: end)
         let descriptor = HKStatisticsCollectionQueryDescriptor(
             predicate: .quantitySample(type: type, predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [inRange, notSole])),

@@ -13,8 +13,7 @@ enum StepSource: String, Codable, CaseIterable {
 
 /// One hour of steps from one source. A day's total is built from these with `StepMath`.
 ///
-/// CloudKit-backed SwiftData models can't use unique constraints and every property needs a
-/// default, so `StepStore` dedupes rows by (hourStart, source) in code.
+/// Rows are kept unique by (hourStart, source) in `StepStore`.
 @Model
 final class HourlySteps {
     var hourStart: Date = Date.distantPast

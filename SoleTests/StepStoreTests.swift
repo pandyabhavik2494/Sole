@@ -29,7 +29,7 @@ struct StepStoreTests {
         #expect(store.rows(from: h, to: hour(10), source: .phone).first?.steps == 1_500)
     }
 
-    @Test func duplicateRowsFromICloudAreFolded() {
+    @Test func duplicateRowsAreFolded() {
         let store = store
         let context = container.mainContext
         let h = hour(9)

@@ -5,7 +5,6 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(StepEngine.self) private var engine
     @Environment(Preferences.self) private var preferences
-    @Environment(CloudSyncMonitor.self) private var cloud
     @Environment(\.openURL) private var openURL
     @Query(sort: \DailySummary.day) private var summaries: [DailySummary]
 
@@ -16,8 +15,8 @@ struct SettingsView: View {
                 Section {
                     healthRow
                     statusRow(
-                        icon: "icloud.fill", tint: Color(rgb: 0x2F8CFF), title: "iCloud",
-                        detail: cloudDetail, state: cloud.isSignedIn ? "On" : "Off", isOn: cloud.isSignedIn
+                        icon: "internaldrive.fill", tint: Color(rgb: 0x7D8799), title: "History",
+                        detail: storageDetail, state: "On", isOn: true
                     )
                     statusRow(
                         icon: "figure.walk.motion", tint: Color(rgb: 0xFF9F0A), title: "Motion sensor",
@@ -36,8 +35,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Sync")
                 } footer: {
-                    // Without an iCloud account CloudKit reports an error on every attempt; the iCloud row already says so.
-                    if let error = engine.lastSyncError ?? (cloud.isSignedIn ? cloud.lastError : nil) {
+                    if let error = engine.lastSyncError {
                         Text(error)
                     }
                 }
@@ -65,7 +63,7 @@ struct SettingsView: View {
                 Section {
                     LabeledContent("Version", value: appVersion)
                 } footer: {
-                    Text("Your steps stay in your own iCloud and Apple Health. Sole has no account and no server.")
+                    Text("Your steps stay on your iPhone and in Apple Health. Sole has no account and no server.")
                 }
             }
             .scrollContentBackground(.hidden)
@@ -124,13 +122,10 @@ struct SettingsView: View {
         return "Reading and writing · \(relative(last))"
     }
 
-    private var cloudDetail: String {
-        guard cloud.isAvailable else { return "Not in this build. History is kept on this iPhone" }
-        guard cloud.isSignedIn else { return "Sign in to iCloud in the Settings app to keep your history" }
+    private var storageDetail: String {
         let days = Set(summaries.map { Calendar.current.startOfDay(for: $0.day) }).count
-        let stored = "\(days) \(days == 1 ? "day" : "days") stored"
-        guard let last = cloud.lastSync else { return "Waiting to sync · \(stored)" }
-        return "Synced \(relative(last)) · \(stored)"
+        let stored = "\(days) \(days == 1 ? "day" : "days") on this iPhone"
+        return engine.isHealthConnected ? "\(stored) · backed up in Apple Health" : "\(stored) · connect Health to keep it after a reinstall"
     }
 
     private var motionIsOn: Bool {

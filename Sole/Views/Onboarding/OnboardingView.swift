@@ -44,7 +44,7 @@ struct OnboardingView: View {
         page(
             symbol: "shoeprints.fill",
             title: "Every step, counted",
-            text: "Sole counts your steps with your iPhone's own motion sensor, all day, even when the app is closed. Your history is kept in your own iCloud, so it's there on a new iPhone too."
+            text: "Sole counts your steps with your iPhone's own motion sensor, all day, even when the app is closed. With Apple Health connected, your history comes back on a new iPhone too."
         ) { EmptyView() }
     }
 
@@ -52,7 +52,7 @@ struct OnboardingView: View {
         page(
             symbol: "hand.raised.fill",
             title: "Let Sole count your steps",
-            text: "Sole uses your iPhone's motion sensor and Apple Health. Your data stays in your own iCloud."
+            text: "Sole uses your iPhone's motion sensor and Apple Health. Your data stays on your iPhone and in Health."
         ) {
             VStack(spacing: 10) {
                 PermissionRow(symbol: "figure.walk.motion", tint: Color(uiColor: UIColor(rgb: 0xFF9F0A)), title: "Motion & Fitness", detail: "Counts steps, distance and floors", done: motionAsked)

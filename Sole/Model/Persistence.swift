@@ -1,33 +1,18 @@
 import Foundation
 import SwiftData
 
+/// Sole's store lives on the iPhone. Apple Health is the long-term copy: it keeps the iPhone's
+/// and Apple Watch's steps and syncs them through the user's iCloud, so after a reinstall or on a
+/// new iPhone Sole rebuilds its history by importing from Health.
 enum Persistence {
     static let schema = Schema([HourlySteps.self, DailySummary.self])
-    static let cloudContainerIdentifier = "iCloud.com.pandyabhavik.Sole"
 
-    /// False in builds signed with Config/Sole-PersonalTeam.entitlements, which has no iCloud
-    /// (free personal teams can't use it). Touching iCloud APIs there only logs errors.
-    #if PERSONAL_TEAM
-    static let iCloudEnabled = false
-    #else
-    static let iCloudEnabled = true
-    #endif
-
-    /// The app's store, synced to the user's private iCloud database.
-    ///
-    /// `.automatic` picks the CloudKit container from the entitlements. If iCloud can't be set up
-    /// (no signing team, or a build without the iCloud capability) Sole still works from a local store.
     static func makeContainer() -> ModelContainer {
         do {
-            let configuration = ModelConfiguration("Sole", schema: schema, cloudKitDatabase: iCloudEnabled ? .automatic : .none)
+            let configuration = ModelConfiguration("Sole", schema: schema, cloudKitDatabase: .none)
             return try ModelContainer(for: schema, configurations: configuration)
         } catch {
-            do {
-                let configuration = ModelConfiguration("Sole", schema: schema, cloudKitDatabase: .none)
-                return try ModelContainer(for: schema, configurations: configuration)
-            } catch {
-                fatalError("Couldn't open Sole's store: \(error)")
-            }
+            fatalError("Couldn't open Sole's store: \(error)")
         }
     }
 
