@@ -4,9 +4,9 @@ import SwiftUI
 struct CardModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .padding(14)
+            .padding(16)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Palette.surface, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .background(Palette.surface, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
     }
 }
 

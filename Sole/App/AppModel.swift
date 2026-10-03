@@ -7,6 +7,7 @@ final class AppModel {
     let container: ModelContainer
     let preferences: Preferences
     let engine: StepEngine
+    let router = Router()
 
     init() {
         container = Persistence.makeContainer()

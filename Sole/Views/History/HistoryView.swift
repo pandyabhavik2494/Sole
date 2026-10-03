@@ -43,7 +43,7 @@ struct HistoryView: View {
         let days = daysWithData(in: period, from: byDay)
         let bars = bars(for: period, from: byDay)
 
-        NavigationStack {
+        Group {
             ScrollView {
                 VStack(spacing: 16) {
                     Picker("Range", selection: $range) {
@@ -87,7 +87,7 @@ struct HistoryView: View {
                 .padding(.bottom, 24)
             }
             .background(Palette.background)
-            .navigationTitle("History")
+            .navigationTitle("Steps")
             .navigationDestination(for: Date.self) { day in
                 DayDetailView(day: day)
             }

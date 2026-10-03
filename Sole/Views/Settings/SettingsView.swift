@@ -10,7 +10,7 @@ struct SettingsView: View {
 
     var body: some View {
         @Bindable var preferences = preferences
-        NavigationStack {
+        Group {
             Form {
                 Section {
                     healthRow

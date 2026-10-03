@@ -4,6 +4,7 @@ import SwiftUI
 struct TodayView: View {
     @Environment(StepEngine.self) private var engine
     @Environment(Preferences.self) private var preferences
+    @Environment(Router.self) private var router
 
     var body: some View {
         let today = engine.today
@@ -19,9 +20,15 @@ struct TodayView: View {
                         MotionAccessBanner()
                     }
 
-                    ProgressArc(steps: today.steps, goal: preferences.dailyGoal)
-                        .frame(width: 250, height: 250)
-                        .padding(.vertical, 4)
+                    NavigationLink {
+                        HistoryView()
+                    } label: {
+                        ProgressArc(steps: today.steps, goal: preferences.dailyGoal)
+                            .frame(width: 250, height: 250)
+                            .padding(.vertical, 4)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityHint("Shows your step history")
 
                     HStack(spacing: 10) {
                         StatTile(value: Format.distance(today.distanceMeters, unit: preferences.distanceUnit), label: "Distance")
@@ -48,8 +55,13 @@ struct TodayView: View {
                 .padding(.horizontal)
                 .padding(.bottom, 24)
             }
-            .background(Palette.background)
+            .background { GlowBackground(progress: Double(today.steps) / Double(max(preferences.dailyGoal, 1))) }
             .navigationTitle("Today")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Settings", systemImage: "gearshape") { router.sheet = .settings }
+                }
+            }
             .refreshable { await engine.sync() }
         }
     }

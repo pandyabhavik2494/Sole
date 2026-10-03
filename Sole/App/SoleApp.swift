@@ -11,6 +11,7 @@ struct SoleApp: App {
             RootView()
                 .environment(model.engine)
                 .environment(model.preferences)
+                .environment(model.router)
                 .modelContainer(model.container)
         }
         .onChange(of: scenePhase) { _, phase in
