@@ -8,7 +8,7 @@ struct SoleApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
                 .environment(model.engine)
                 .environment(model.preferences)
                 .environment(model.cloudMonitor)

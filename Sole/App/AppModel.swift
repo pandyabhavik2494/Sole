@@ -16,5 +16,13 @@ final class AppModel {
         cloudMonitor = CloudSyncMonitor()
         cloudMonitor.onImport = { [engine] in engine.cloudDataDidImport() }
         engine.startObservingHealth()
+
+        #if DEBUG
+        if SampleData.isRequested {
+            SampleData.seed(into: engine.store, goal: preferences.dailyGoal)
+            preferences.hasOnboarded = true
+            engine.refreshToday()
+        }
+        #endif
     }
 }
