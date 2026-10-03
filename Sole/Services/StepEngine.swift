@@ -7,6 +7,8 @@ import Observation
 /// - On launch and each return to the foreground it backfills every hour since the last run
 ///   (up to the sensor's 7 days), so days the app wasn't opened are filled in.
 /// - While Sole is open it follows the live count and writes the current hour.
+/// - When Apple Health is connected it reads every other source (Apple Watch, other apps, older
+///   history) and writes Sole's sensor counts back.
 @MainActor
 @Observable
 final class StepEngine {
@@ -14,10 +16,14 @@ final class StepEngine {
     private(set) var streak = 0
     private(set) var isSyncing = false
     private(set) var motionStatus: CMAuthorizationStatus = PedometerService.authorizationStatus
+    private(set) var isHealthConnected = false
+    private(set) var lastHealthSync: Date? = UserDefaults.standard.object(forKey: StepEngine.lastHealthSyncKey) as? Date
+    private(set) var lastSyncError: String?
 
     @ObservationIgnored let store: StepStore
     @ObservationIgnored let preferences: Preferences
     @ObservationIgnored private let pedometer = PedometerService()
+    @ObservationIgnored private let health = HealthService()
     @ObservationIgnored private let calendar: Calendar
     @ObservationIgnored private var liveDay: Date?
     @ObservationIgnored private var liveHour: Date?
@@ -25,6 +31,9 @@ final class StepEngine {
     @ObservationIgnored private var pendingSave: Task<Void, Never>?
 
     private static let lastBackfillKey = "lastPedometerBackfill"
+    private static let lastHealthSyncKey = "lastHealthSync"
+    /// How far back the first Health import reaches.
+    private static let healthImportDays = 365
 
     init(store: StepStore, preferences: Preferences, calendar: Calendar = .current) {
         self.store = store
@@ -32,6 +41,15 @@ final class StepEngine {
         self.calendar = calendar
         self.today = .empty(for: .now, calendar: calendar)
         refreshToday()
+    }
+
+    /// Call once at launch. Health wakes Sole in the background when new steps arrive.
+    func startObservingHealth() {
+        guard HealthService.isAvailable else { return }
+        health.observeStepChanges { [weak self] in
+            await self?.sync()
+        }
+        Task { isHealthConnected = await health.hasRequestedAuthorization() }
     }
 
     // MARK: Lifecycle
@@ -46,15 +64,25 @@ final class StepEngine {
         store.save()
     }
 
-    /// Fills any missed hours from the sensor and saves.
+    /// Fills any missed hours from the sensor, syncs with Health, and saves.
     func sync() async {
         guard !isSyncing else { return }
         isSyncing = true
         defer { isSyncing = false }
 
         await backfillFromSensor()
+        await syncHealth()
         refreshToday()
         store.save()
+    }
+
+    /// Changes from another device arrived through iCloud: rebuild the recent days that could include them.
+    func cloudDataDidImport() {
+        let today = calendar.startOfDay(for: .now)
+        let days = (0..<8).compactMap { calendar.date(byAdding: .day, value: -$0, to: today) }
+        store.recomputeDays(Set(days), goal: preferences.dailyGoal)
+        refreshToday()
+        scheduleSave()
     }
 
     /// Call after the goal changes so today's summary and the streak use the new goal.
@@ -106,6 +134,69 @@ final class StepEngine {
         let changed = store.upsert(samples, source: .phone) { $0 >= recent ? .replace : .keepHigher }
         store.recomputeDays(changed.union([calendar.startOfDay(for: now)]), goal: preferences.dailyGoal, now: now)
         UserDefaults.standard.set(now, forKey: Self.lastBackfillKey)
+    }
+
+    // MARK: Apple Health
+
+    /// Shows the Health permission sheet, then imports history.
+    func connectHealth() async {
+        guard HealthService.isAvailable else { return }
+        do {
+            try await health.requestAuthorization()
+        } catch {
+            lastSyncError = error.localizedDescription
+        }
+        isHealthConnected = await health.hasRequestedAuthorization()
+        if isHealthConnected {
+            await sync()
+        }
+    }
+
+    func syncHealth(now: Date = .now) async {
+        guard HealthService.isAvailable else { return }
+        isHealthConnected = await health.hasRequestedAuthorization()
+        guard isHealthConnected else { return }
+
+        let today = calendar.startOfDay(for: now)
+        let start: Date
+        if let lastHealthSync {
+            // Re-read the day before the last sync too: Watch data can arrive late.
+            start = calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: lastHealthSync)) ?? today
+        } else {
+            start = calendar.date(byAdding: .day, value: -Self.healthImportDays, to: today) ?? today
+        }
+        let end = calendar.date(byAdding: .hour, value: 1, to: calendar.startOfHour(for: now)) ?? now
+
+        do {
+            let hours = try await health.hourlyTotals(from: start, to: end)
+            // An empty answer for the whole window usually means read access is off, not that every
+            // walk was deleted, so only clear hours missing from Health when it returned something.
+            let changed = store.upsert(hours, source: .health, clearing: hours.isEmpty ? nil : start..<end) { _ in .replace }
+            store.recomputeDays(changed, goal: preferences.dailyGoal, now: now)
+
+            try await writeSensorHoursToHealth(now: now)
+
+            lastHealthSync = now
+            lastSyncError = nil
+            UserDefaults.standard.set(now, forKey: Self.lastHealthSyncKey)
+        } catch {
+            lastSyncError = error.localizedDescription
+        }
+    }
+
+    /// Writes this iPhone's completed hours from the last 8 days whose count changed since they were last written.
+    private func writeSensorHoursToHealth(now: Date) async throws {
+        guard health.canWriteSteps else { return }
+        let currentHour = calendar.startOfHour(for: now)
+        let start = calendar.date(byAdding: .day, value: -8, to: currentHour) ?? currentHour
+        let pending = store.rows(from: start, to: currentHour, source: .phone)
+            .filter { $0.steps > 0 && $0.steps != $0.healthWrittenSteps }
+        guard !pending.isEmpty else { return }
+
+        try await health.save(pending.map(\.sample), calendar: calendar)
+        for row in pending {
+            row.healthWrittenSteps = row.steps
+        }
     }
 
     // MARK: Live count

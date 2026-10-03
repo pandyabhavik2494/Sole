@@ -6,13 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXFileReference section */
-		A10000000000000000000001 /* Sole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sole.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A1000000000000000000001D /* Sole.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sole.entitlements; sourceTree = "<group>"; };
-		A1000000000000000000001E /* Sole-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sole-Info.plist"; sourceTree = "<group>"; };
-		A10000000000000000000019 /* SoleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-/* End PBXFileReference section */
-
 /* Begin PBXContainerItemProxy section */
 		A1000000000000000000001B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -23,13 +16,12 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXTargetDependency section */
-		A1000000000000000000001A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A10000000000000000000006 /* Sole */;
-			targetProxy = A1000000000000000000001B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
+/* Begin PBXFileReference section */
+		A10000000000000000000001 /* Sole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sole.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000019 /* SoleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1000000000000000000001D /* Sole.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sole.entitlements; sourceTree = "<group>"; };
+		A1000000000000000000001E /* Sole-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sole-Info.plist"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A10000000000000000000002 /* Sole */ = {
@@ -217,6 +209,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A1000000000000000000001A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A10000000000000000000006 /* Sole */;
+			targetProxy = A1000000000000000000001B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A1000000000000000000000C /* Debug */ = {

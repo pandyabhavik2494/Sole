@@ -7,10 +7,14 @@ final class AppModel {
     let container: ModelContainer
     let preferences: Preferences
     let engine: StepEngine
+    let cloudMonitor: CloudSyncMonitor
 
     init() {
         container = Persistence.makeContainer()
         preferences = Preferences()
         engine = StepEngine(store: StepStore(context: container.mainContext), preferences: preferences)
+        cloudMonitor = CloudSyncMonitor()
+        cloudMonitor.onImport = { [engine] in engine.cloudDataDidImport() }
+        engine.startObservingHealth()
     }
 }

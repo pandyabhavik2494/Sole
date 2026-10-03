@@ -11,6 +11,7 @@ struct SoleApp: App {
             ContentView()
                 .environment(model.engine)
                 .environment(model.preferences)
+                .environment(model.cloudMonitor)
                 .modelContainer(model.container)
         }
         .onChange(of: scenePhase) { _, phase in
