@@ -1,7 +1,7 @@
 # Lakeshore theme
 
 Sole's look, inspired by the colours and bold black outlines of a Woodland-style painting Bhavik shared
-(dusk sky, setting sun, pines, lake). The icon and scenery are original drawings; nothing is copied
+(lake-blue sky, setting sun, pines, lake). The icon and scenery are original drawings; nothing is copied
 from the artwork. Preview: `docs/theme/lakeshore-preview.html` (also https://claude.ai/artifact/JTDzHYiurjYWhUnCJpSNtB).
 
 ## App icon
@@ -13,41 +13,41 @@ from the artwork. Preview: `docs/theme/lakeshore-preview.html` (also https://cla
 
 ## Palette (`Shared/Palette.swift`)
 
-Revised 2026-10-03 to be more vibrant at Bhavik's request; text contrast still meets 4.5:1.
+Revised 2026-10-03 at Bhavik's request: more vibrant, and lake blue replaces teal as the main colour (teal read too dark). Text contrast still meets 4.5:1.
 
 Keep every token name so no call site changes. Values are `light / dark`.
 
 | Token | Light | Dark | Source in the art |
 |---|---|---|---|
-| ink | 14262E | F1EADB | night teal / antler cream |
-| muted | 55646A | A9B8BC | |
-| background | F6EAD2 | 0E2F3D | birch / night sky |
-| surface | FFFAF0 | 15404F | cards stay solid |
-| line | E3D4B8 | 2B6274 | hairlines |
+| ink | 132743 | F2F6FC | deep lake navy / pale sky |
+| muted | 52627A | B5C7DE | |
+| background | E3EEFB | 163866 | lake sky |
+| surface | FFFDF8 | 1B4274 | cards stay solid |
+| line | D3DFEE | 2E5C96 | hairlines |
 | accent | E8700F | FF9A2E | sun (steps, tint, buttons) |
 | accentSoft | FFE0BF | 4F3010 | |
-| good | 27782A | 6FD35A | pine |
+| good | 27782A | 74D85F | pine |
 | goodSoft | D6F2CC | 1A4A22 | |
 | watch | 805300 | FFC93D | cattail (amber, never red) |
 | watchSoft | FFE9B0 | 4A3810 | |
-| heart | D11E48 | FF4F72 | loon eye |
+| heart | D11E48 | FF6B88 | loon eye |
 | energy | E0401C | FF7043 | |
-| oxygen | 2370C8 | 5AB0FF | lake |
+| oxygen | 2370C8 | 7CC0FF | lake |
 | weight | 159A8C | 4FD8C6 | turtle shell |
-| sleep | 3A4FCF | 8796FF | night |
+| sleep | 3A4FCF | 9AA6FF | night |
 | onAccent | 1A1206 | 1A1206 | |
 
 New tokens:
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| accentText | A84F00 | FF9A2E | accent used as text or a text button (5.3:1 on surface) |
-| outline | 14262E | 08141A | the bold Woodland line on cards, chips, the step ring |
-| sky | F9E6C6 | 0E2F3D | top of the background gradient |
-| skyLow | F3CF9E | 17506A | bottom of the background gradient |
+| accentText | A84F00 | FFA445 | accent used as text or a text button (5.3:1 on surface) |
+| outline | 132743 | 0A1630 | the bold Woodland line on cards, chips, the step ring |
+| sky | DCEBFC | 163866 | top of the background gradient |
+| skyLow | B9D5F5 | 2459A0 | bottom of the background gradient |
 | pine | 3F9A3A | 2E7A3A | scenery pines |
-| ridge | 8FC4A0 | 175B66 | scenery hills |
-| lake | 4F8FE0 | 1F5AA0 | scenery lake |
+| ridge | 9CC3A8 | 1E4A85 | scenery hills |
+| lake | 3F86DB | 2F6FC8 | scenery lake |
 
 Also update `AccentColor.colorset` to the accent values.
 

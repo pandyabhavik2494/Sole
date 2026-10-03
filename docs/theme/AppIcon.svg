@@ -1,20 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#123D4E"/><stop offset="1" stop-color="#1E7389"/>
+      <stop offset="0" stop-color="#2A68BE"/><stop offset="1" stop-color="#64A6EE"/>
     </linearGradient>
     <radialGradient id="sun" cx="0.5" cy="0.42" r="0.58">
       <stop offset="0" stop-color="#FFC94F"/><stop offset="0.55" stop-color="#F57E1C"/><stop offset="1" stop-color="#CC4512"/>
     </radialGradient>
     <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#3F86DB"/><stop offset="1" stop-color="#1E4E9C"/>
+      <stop offset="0" stop-color="#2366CC"/><stop offset="1" stop-color="#173F8C"/>
     </linearGradient>
     <linearGradient id="bark" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#A65A26"/><stop offset="1" stop-color="#6E3214"/>
     </linearGradient>
   </defs>
   <rect width="1024" height="1024" fill="url(#sky)"/>
-  <path d="M-20 600 C110 540 210 580 300 548 C400 512 470 575 570 548 C690 515 800 570 1044 520 L1044 780 L-20 780 Z" fill="#1A5566"/>
+  <path d="M-20 600 C110 540 210 580 300 548 C400 512 470 575 570 548 C690 515 800 570 1044 520 L1044 780 L-20 780 Z" fill="#3A78C8"/>
   <circle cx="512" cy="470" r="320" fill="url(#sun)" stroke="#121212" stroke-width="22"/>
   <circle cx="512" cy="470" r="236" fill="none" stroke="#FFD889" stroke-opacity="0.32" stroke-width="28"/>
   <!-- pines: wavy tiers like the art -->
@@ -23,7 +23,7 @@
     <path fill="#3FA342" d="M880 220 C860 270 880 295 840 318 C872 340 820 365 856 385 C815 405 795 430 830 446 C785 470 775 498 815 512 C765 538 760 568 800 580 C750 605 745 640 780 660 L780 780 L1044 780 L1044 650 C1015 630 1030 600 990 578 C1025 562 1010 532 970 512 C1005 497 985 468 945 448 C975 432 950 402 920 384 C945 364 915 340 905 318 C920 295 895 270 880 220 Z"/>
   </g>
   <path d="M-30 745 C160 712 340 768 512 740 C690 712 860 768 1054 734 L1054 1054 L-30 1054 Z" fill="url(#lake)" stroke="#121212" stroke-width="20"/>
-  <g fill="none" stroke="#163A75" stroke-width="12" stroke-linecap="round">
+  <g fill="none" stroke="#0F2E66" stroke-width="12" stroke-linecap="round">
     <path d="M40 840 C190 815 320 860 450 836"/><path d="M600 834 C730 812 850 856 990 830"/>
     <path d="M130 930 C270 905 400 950 540 926"/><path d="M660 928 C770 908 880 940 1000 920"/>
   </g>
